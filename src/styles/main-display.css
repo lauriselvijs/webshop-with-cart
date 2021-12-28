@@ -1,0 +1,32 @@
+/* grid display */
+.grid-container {
+  margin: 120px 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 80px;
+  grid-row-gap: 120px;
+}
+
+/* header styling */
+.category-name {
+  margin-top: 60px;
+  margin-left: 60px;
+  font-weight: normal;
+  font-size: 44px;
+}
+
+.card {
+  padding: 20px 20px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  /*content: url(../img/buy_cart.png);*/
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}

@@ -1,0 +1,102 @@
+/* product info section */
+.product-info {
+  grid-area: product-info;
+}
+
+/* section for clothe size */
+.sizes {
+  grid-area: sizes;
+}
+
+/* grid for cart items */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* container for product info, quantity and size */
+.container {
+  grid-template-areas:
+    "product-info quantity"
+    "sizes quantity"
+    "sizes quantity";
+  grid-gap: 10px;
+  justify-items: center;
+}
+
+.plus-button {
+  background-color: white;
+  border: 1px;
+  border-style: solid;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.minus-button {
+  background-color: white;
+  border: 1px;
+  border-style: solid;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.size-S {
+  background-color: white;
+  border: 1px;
+  border-style: solid;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px;
+}
+
+.size-M {
+  background-color: white;
+  border: 1px;
+  border-style: solid;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.cart-title-info {
+  padding: 170px;
+}
+
+.view-bag {
+  background-color: white;
+  border: 1px;
+  border-style: solid;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.check-out {
+  background-color: #5ece7b;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 0;
+  border: none;
+}
