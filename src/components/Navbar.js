@@ -8,8 +8,8 @@ class Navbar extends Component {
   render() {
     return (
       <div>
-        <div class="topnav">
-          <div class="topnav-centered">
+        <div className="topnav">
+          <div className="topnav-centered">
             <a href="#green-cart">
               <img src={Cart} className="logo-image" alt="green-cart" />
             </a>

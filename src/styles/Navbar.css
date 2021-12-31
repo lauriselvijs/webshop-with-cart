@@ -4,6 +4,7 @@
   background-color: white;
   overflow: hidden;
   margin-left: 50px;
+  position: relative;
 }
 
 /* Style the links inside the navigation bar */

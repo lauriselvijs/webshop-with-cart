@@ -15,7 +15,7 @@ export class App extends Component {
         <ShoppingCartModal /> 
         <ProductView />
          <ShoppingCart />*/}
-        <ProductView />
+        <ShoppingCartModal />
       </div>
     );
   }

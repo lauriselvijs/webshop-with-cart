@@ -1,3 +1,3 @@
-export const GET_TIMERS = "GET_TIMERS";
-export const ADD_TIMER = "ADD_TIMER";
-export const DELETE_TIMER = "DELETE_TIMER";
+export const GET_ITEMS = "GET_ITEMS";
+export const ADD_ITEM = "ADD_ITEM";
+export const REMOVE_ITEM = "REMOVE_ITEM";
