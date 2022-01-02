@@ -38,7 +38,7 @@ class ShoppingCart extends Component {
 
     return (
       <div className="container">
-        <div class="grid-container">
+        <div class="grid-container-shopping-cart">
           <div class="product-info">
             <h2>Apollo running short</h2>
             <h4>$50.00</h4>

@@ -17,7 +17,22 @@
 }
 
 .card {
+  cursor: pointer;
   padding: 20px 20px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.product-image {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.product-cart {
+  position: absolute;
+  top: 280px;
+  left: 260px;
 }
 
 /* On mouse-over, add a deeper shadow */

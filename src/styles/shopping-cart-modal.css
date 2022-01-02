@@ -1,12 +1,14 @@
-.grid-container-cart {
+.container {
+  margin-bottom: 100px;
+}
+
+.grid-container-cart-modal {
   display: grid;
   align-items: center;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   max-width: 200px;
-  margin-left: 60%;
 }
 
 .product-info {
@@ -20,18 +22,17 @@
   grid-area: 1 / 2 / 4 / 4;
 }
 .product-image {
+  padding-left: 10px;
   grid-area: 1 / 5 / 4 / 6;
 }
 .quantity-increase {
-  padding-left: 140px;
   grid-area: 1 / 4 / 2 / 5;
 }
 .quantity-modal {
-  padding-left: 150px;
+  padding-left: 145px;
   grid-area: 2 / 4 / 3 / 5;
 }
 .quantity-decrease {
-  padding-left: 140px;
   grid-area: 3 / 4 / 4 / 5;
 }
 .total-title {
@@ -117,7 +118,7 @@
   border: 1px;
   border-style: solid;
   color: black;
-  padding: 4px 8px;
+  padding: 4px 11px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
