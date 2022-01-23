@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../styles/shopping-cart-modal.css";
-import Sweater from "../img/sweater.png";
+import ShoppingCartSingle from "../components/ShoppingCartSingle";
 
 class ShoppingCartModal extends Component {
   constructor(props) {
@@ -51,205 +51,37 @@ class ShoppingCartModal extends Component {
     let btn_class_M = this.state.selected_M
       ? "size-M-selected-modal-btn"
       : "size-M-modal-btn";
+
+    const { count } = this.state;
+    const { modalDisplay } = this.props;
     return (
-      <div className="container">
-        <div class="grid-container-cart-modal">
-          <div class="product-info">
-            <h2>Apollo running short</h2>
-            <h4>$50.00</h4>
-          </div>
-          <div class="sizes">
-            <button
-              className={btn_class_S}
-              onClick={this.selectButtonS.bind(this)}
-            >
-              S
-            </button>
-            <button
-              className={btn_class_M}
-              onClick={this.selectButtonM.bind(this)}
-            >
-              M
-            </button>
-          </div>
-          <div class="white-space"></div>
-          <div class="quantity-increase">
-            <button
-              className="plus-button-modal"
-              onClick={this.increaseQuantity.bind(this)}
-            >
-              +
-            </button>
-          </div>
-          <div class="quantity-modal"> {this.state.count}</div>
-          <div class="quantity-decrease">
-            <button
-              className="minus-button-modal"
-              onClick={this.decreaseQuantity.bind(this)}
-            >
-              -
-            </button>
-          </div>
-          <div class="product-image">
-            <img src={Sweater} alt="product" style={{ width: "100%" }} />
-          </div>
-          <div class="product-info">
-            <h2>Apollo running short</h2>
-            <h4>$50.00</h4>
-          </div>
-          <div class="sizes">
-            <button
-              className={btn_class_S}
-              onClick={this.selectButtonS.bind(this)}
-            >
-              S
-            </button>
-            <button
-              className={btn_class_M}
-              onClick={this.selectButtonM.bind(this)}
-            >
-              M
-            </button>
-          </div>
-          <div class="white-space"></div>
-          <div class="quantity-increase">
-            <button
-              className="plus-button-modal"
-              onClick={this.increaseQuantity.bind(this)}
-            >
-              +
-            </button>
-          </div>
-          <div class="quantity-modal"> {this.state.count}</div>
-          <div class="quantity-decrease">
-            <button
-              className="minus-button-modal"
-              onClick={this.decreaseQuantity.bind(this)}
-            >
-              -
-            </button>
-          </div>
-          <div class="product-image">
-            <img src={Sweater} alt="product" style={{ width: "100%" }} />
-          </div>
-
-          <div className="total-title">Total</div>
-          <div className="total-amount">$100</div>
-          <div className="view-bag">
-            <button
-              className="view-bag-button"
-              onClick={this.viewBag.bind(this)}
-            >
-              VIEW BAG
-            </button>
-          </div>
-          <div className="check-out">
-            <button
-              className="check-out-button"
-              onClick={this.checkOut.bind(this)}
-            >
-              CHECK OUT
-            </button>
-          </div>
+      <div className="modal" style={{ display: modalDisplay }}>
+        <div className="title">
+          <span style={{ fontWeight: "bold" }}>My Bag</span>, 2 items
         </div>
-        <div class="grid-container-cart-modal">
-          <div class="product-info">
-            <h2>Apollo running short</h2>
-            <h4>$50.00</h4>
-          </div>
-          <div class="sizes">
-            <button
-              className={btn_class_S}
-              onClick={this.selectButtonS.bind(this)}
-            >
-              S
-            </button>
-            <button
-              className={btn_class_M}
-              onClick={this.selectButtonM.bind(this)}
-            >
-              M
-            </button>
-          </div>
-          <div class="white-space"></div>
-          <div class="quantity-increase">
-            <button
-              className="plus-button-modal"
-              onClick={this.increaseQuantity.bind(this)}
-            >
-              +
-            </button>
-          </div>
-          <div class="quantity-modal"> {this.state.count}</div>
-          <div class="quantity-decrease">
-            <button
-              className="minus-button-modal"
-              onClick={this.decreaseQuantity.bind(this)}
-            >
-              -
-            </button>
-          </div>
-          <div class="product-image">
-            <img src={Sweater} alt="product" style={{ width: "100%" }} />
-          </div>
-          <div class="product-info">
-            <h2>Apollo running short</h2>
-            <h4>$50.00</h4>
-          </div>
-          <div class="sizes">
-            <button
-              className={btn_class_S}
-              onClick={this.selectButtonS.bind(this)}
-            >
-              S
-            </button>
-            <button
-              className={btn_class_M}
-              onClick={this.selectButtonM.bind(this)}
-            >
-              M
-            </button>
-          </div>
-          <div class="white-space"></div>
-          <div class="quantity-increase">
-            <button
-              className="plus-button-modal"
-              onClick={this.increaseQuantity.bind(this)}
-            >
-              +
-            </button>
-          </div>
-          <div class="quantity-modal"> {this.state.count}</div>
-          <div class="quantity-decrease">
-            <button
-              className="minus-button-modal"
-              onClick={this.decreaseQuantity.bind(this)}
-            >
-              -
-            </button>
-          </div>
-          <div class="product-image">
-            <img src={Sweater} alt="product" style={{ width: "100%" }} />
-          </div>
-
-          <div className="total-title">Total</div>
-          <div className="total-amount">$100</div>
-          <div className="view-bag">
-            <button
-              className="view-bag-button"
-              onClick={this.viewBag.bind(this)}
-            >
-              VIEW BAG
-            </button>
-          </div>
-          <div className="check-out">
-            <button
-              className="check-out-button"
-              onClick={this.checkOut.bind(this)}
-            >
-              CHECK OUT
-            </button>
-          </div>
+        <ShoppingCartSingle
+          btn_class_S={btn_class_S}
+          btn_class_M={btn_class_M}
+          count={count}
+          selectButtonS={this.selectButtonS.bind(this)}
+          selectButtonM={this.selectButtonM.bind(this)}
+          increaseQuantity={this.increaseQuantity.bind(this)}
+          decreaseQuantity={this.decreaseQuantity.bind(this)}
+        />
+        <div className="total-section">
+          <span className="total-title">Total</span>
+          <span className="total-amount">$100</span>
+        </div>
+        <div className="footer-modal">
+          <button className="view-bag-button" onClick={this.viewBag.bind(this)}>
+            VIEW BAG
+          </button>
+          <button
+            className="check-out-button"
+            onClick={this.checkOut.bind(this)}
+          >
+            CHECK OUT
+          </button>
         </div>
       </div>
     );

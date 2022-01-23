@@ -1,14 +1,22 @@
 import React, { Component } from "react";
-import "../styles/Navbar.css";
+import "../styles/navbar.css";
 import Cart from "../img/green_cart.png";
-import Currency from "../img/currency.png";
 import ShoppingCart from "../img/shopping_cart.png";
 import BlackCircle from "../img/black_circle.png";
 import ShoppingCartModal from "../components/ShoppingCartModal";
+import CurrencyBtn from "../components/buttons/CurrencyBtn";
+import ShoppingCartBtn from "../components/buttons/ShoppingCartBtn";
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
+
+    this.onWomenLinkClick = this.onWomenLinkClick.bind(this);
+    this.onMenLinkClick = this.onMenLinkClick.bind(this);
+    this.onKidsLinkClick = this.onKidsLinkClick.bind(this);
+    this.selectCartButton = this.selectCartButton.bind(this);
+    this.selectCurrencyButton = this.selectCurrencyButton.bind(this);
+    this.openModal = this.openModal.bind(this);
 
     this.state = {
       selectedWomen: true,
@@ -18,25 +26,29 @@ class Navbar extends Component {
       selectedCurrency: false,
       cartHasAItem: true,
       modelOpen: false,
+      modalDisplay: "none",
     };
   }
 
-  selectButtonWomen() {
+  onWomenLinkClick() {
     this.setState({ selectedWomen: true });
     this.setState({ selectedMen: false });
     this.setState({ selectedKids: false });
+    console.log("women");
   }
 
-  selectButtonMen() {
+  onMenLinkClick() {
     this.setState({ selectedMen: true });
     this.setState({ selectedWomen: false });
     this.setState({ selectedKids: false });
+    console.log("men");
   }
 
-  selectButtonKids() {
+  onKidsLinkClick() {
     this.setState({ selectedKids: true });
     this.setState({ selectedMen: false });
     this.setState({ selectedWomen: false });
+    console.log("kids");
   }
 
   selectCartButton() {
@@ -52,7 +64,9 @@ class Navbar extends Component {
   openModal() {
     this.setState({ cartHasAItem: !this.state.cartHasAItem });
     this.setState({ modelOpen: !this.state.modelOpen });
-    console.log("change");
+    this.setState({ modalDisplay: this.state.modelOpen ? "none" : "block" });
+    this.setState({ selectedCart: true });
+    console.log("modal change");
   }
 
   render() {
@@ -60,9 +74,7 @@ class Navbar extends Component {
     const btn_Men = this.state.selectedMen ? "men-category-selected" : "";
     const btn_Kids = this.state.selectedKids ? "kids-category-selected" : "";
 
-    const { selectedCurrency, cartHasAItem } = this.state;
-
-    const modalDisplay = this.state.modelOpen ? "block" : "none";
+    const { selectedCurrency, cartHasAItem, modalDisplay } = this.state;
 
     return (
       <div>
@@ -75,68 +87,26 @@ class Navbar extends Component {
           <a
             href="#women"
             className={btn_Women}
-            onClick={this.selectButtonWomen.bind(this)}
+            onClick={this.onWomenLinkClick}
           >
             WOMEN
           </a>
-          <a
-            href="#men"
-            className={btn_Men}
-            onClick={this.selectButtonMen.bind(this)}
-          >
+          <a href="#men" className={btn_Men} onClick={this.onMenLinkClick}>
             MEN
           </a>
-          <a
-            href="#kids"
-            className={btn_Kids}
-            onClick={this.selectButtonKids.bind(this)}
-          >
+          <a href="#kids" className={btn_Kids} onClick={this.onKidsLinkClick}>
             KIDS
           </a>
           <div className="topnav-right">
-            <button
-              className="currency-image"
-              onClick={this.selectCartButton.bind(this)}
-            >
-              <div className="currency-link">
-                <span onClick={this.selectCurrencyButton.bind(this)}>
-                  <img src={Currency} alt="currency" />
-                </span>
-                <div className={`menu ${selectedCurrency ? "open" : ""}`}>
-                  <ul>
-                    <li>$ USD</li>
-                    <li>€ EUR</li>
-                    <li>¥ JPY</li>
-                  </ul>
-                </div>
-              </div>
-            </button>
-            <button className="shopping-cart-image">
-              <img
-                onClick={this.openModal.bind(this)}
-                className="cart-image"
-                src={ShoppingCart}
-                alt="shopping-cart"
-              />
-              <div className="modal" style={{ display: modalDisplay }}>
-                <div className="modal-content">
-                  <ShoppingCartModal />
-                </div>
-              </div>
-              {cartHasAItem ? (
-                <div>
-                  <img
-                    className="black-circle"
-                    src={BlackCircle}
-                    alt="black-circle"
-                    style={{ width: "20px" }}
-                  />
-                  <div className="quantity-count">1</div>
-                </div>
-              ) : (
-                ""
-              )}
-            </button>
+            <CurrencyBtn
+              onClick={this.selectCurrencyButton}
+              selectedCurrency={selectedCurrency}
+            />
+            <ShoppingCartBtn
+              cartHasAItem={cartHasAItem}
+              onClick={this.openModal}
+            />
+            <ShoppingCartModal modalDisplay={modalDisplay} />
           </div>
         </div>
       </div>

@@ -1,0 +1,17 @@
+.cart-image {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.black-circle {
+  position: absolute;
+  top: 20px;
+  left: 97.8%;
+}
+
+.quantity-count {
+  color: white;
+  position: absolute;
+  bottom: 37px;
+  left: 98.2%;
+}
