@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "../styles/navbar.css";
 import Cart from "../img/green_cart.png";
-import ShoppingCart from "../img/shopping_cart.png";
-import BlackCircle from "../img/black_circle.png";
 import ShoppingCartModal from "../components/ShoppingCartModal";
 import CurrencyBtn from "../components/buttons/CurrencyBtn";
 import ShoppingCartBtn from "../components/buttons/ShoppingCartBtn";
@@ -102,10 +100,7 @@ class Navbar extends Component {
               onClick={this.selectCurrencyButton}
               selectedCurrency={selectedCurrency}
             />
-            <ShoppingCartBtn
-              cartHasAItem={cartHasAItem}
-              onClick={this.openModal}
-            />
+            <ShoppingCartBtn />
             <ShoppingCartModal modalDisplay={modalDisplay} />
           </div>
         </div>

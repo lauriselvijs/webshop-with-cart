@@ -2,7 +2,7 @@
   display: grid;
   align-items: center;
 }
- 
+
 .product-info {
   padding-left: 30px;
 }
@@ -12,57 +12,7 @@
 }
 
 .quantity-modal {
-  padding-left: 145px;
-}
-
-.size-S-modal-btn {
-  background-color: white;
-  border: 1px;
-  border-style: solid;
-  color: black;
-  padding: 4px 8px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  margin: 20px;
-}
-
-.size-S-selected-modal-btn {
-  background-color: black;
-  border: 1px;
-  border-style: solid;
-  color: white;
-  padding: 4px 8px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  margin: 20px;
-}
-
-.size-M-modal-btn {
-  background-color: white;
-  border: 1px;
-  border-style: solid;
-  color: black;
-  padding: 4px 8px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-}
-
-.size-M-selected-modal-btn {
-  background-color: black;
-  border: 1px;
-  border-style: solid;
-  color: white;
-  padding: 4px 8px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
+  padding-left: 147px;
 }
 
 .plus-button-modal {

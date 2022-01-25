@@ -1,38 +1,37 @@
 import React, { Component } from "react";
 import "../styles/shopping-cart-modal.css";
 import ShoppingCartSingle from "../components/ShoppingCartSingle";
+import { connect } from "react-redux";
+import {
+  decQuantity,
+  incQuantity,
+  selectSize,
+  getCartItems,
+} from "../state/actions/cartActions";
 
-class ShoppingCartModal extends Component {
+export class ShoppingCartModal extends Component {
   constructor(props) {
     super(props);
 
+    this.increaseQuantity = this.increaseQuantity.bind(this);
+    this.decreaseQuantity = this.decreaseQuantity.bind(this);
+
     this.state = {
-      selected_S: true,
-      selected_M: false,
-      count: 1,
       view_bag: false,
       check_out: false,
+      selected: false,
     };
   }
 
-  selectButtonS() {
-    this.setState({ selected_S: !this.state.selected_S });
-    this.setState({ selected_M: false });
+  increaseQuantity(id) {
+    this.props.incQuantity(id);
+    //console.log(id);
   }
 
-  selectButtonM() {
-    this.setState({ selected_M: !this.state.selected_M });
-    this.setState({ selected_S: false });
+  decreaseQuantity(id) {
+    this.props.decQuantity(id);
+    // console.log(id);
   }
-
-  increaseQuantity = () => {
-    this.setState((prev) => ({ count: prev.count + 1 }));
-  };
-
-  decreaseQuantity = () => {
-    if (this.state.count > 1)
-      this.setState((prev) => ({ count: prev.count - 1 }));
-  };
 
   viewBag = () => {
     this.setState({ view_bag: !this.state.view_bag });
@@ -44,33 +43,36 @@ class ShoppingCartModal extends Component {
     console.log("check out");
   };
 
-  render() {
-    let btn_class_S = this.state.selected_S
-      ? "size-S-selected-modal-btn"
-      : "size-S-modal-btn";
-    let btn_class_M = this.state.selected_M
-      ? "size-M-selected-modal-btn"
-      : "size-M-modal-btn";
+  componentDidMount() {
+    this.props.getCartItems();
+  }
 
-    const { count } = this.state;
-    const { modalDisplay } = this.props;
+  render() {
+    const { cartDisplay, cartItems } = this.props.cart;
+
+    const totalAmount = cartItems.reduce(
+      (total, item) => total + parseInt(item.price),
+      0
+    );
+
     return (
-      <div className="modal" style={{ display: modalDisplay }}>
+      <div className="modal" style={{ display: cartDisplay }}>
         <div className="title">
-          <span style={{ fontWeight: "bold" }}>My Bag</span>, 2 items
+          <span style={{ fontWeight: "bold" }}>My Bag</span>, {cartItems.length}{" "}
+          items
         </div>
-        <ShoppingCartSingle
-          btn_class_S={btn_class_S}
-          btn_class_M={btn_class_M}
-          count={count}
-          selectButtonS={this.selectButtonS.bind(this)}
-          selectButtonM={this.selectButtonM.bind(this)}
-          increaseQuantity={this.increaseQuantity.bind(this)}
-          decreaseQuantity={this.decreaseQuantity.bind(this)}
-        />
+        {cartItems.map((item, index) => (
+          <ShoppingCartSingle
+            key={index}
+            item={item}
+            increaseQuantity={this.increaseQuantity.bind(this, item.id)}
+            decreaseQuantity={this.decreaseQuantity.bind(this, item.id)}
+          />
+        ))}
+
         <div className="total-section">
           <span className="total-title">Total</span>
-          <span className="total-amount">$100</span>
+          <span className="total-amount">${totalAmount}</span>
         </div>
         <div className="footer-modal">
           <button className="view-bag-button" onClick={this.viewBag.bind(this)}>
@@ -88,4 +90,13 @@ class ShoppingCartModal extends Component {
   }
 }
 
-export default ShoppingCartModal;
+const mapStateToProps = (state) => ({
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps, {
+  decQuantity,
+  incQuantity,
+  selectSize,
+  getCartItems,
+})(ShoppingCartModal);

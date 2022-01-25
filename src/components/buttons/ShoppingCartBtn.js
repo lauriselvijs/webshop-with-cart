@@ -2,20 +2,32 @@ import React, { Component } from "react";
 import "../../styles/buttons/shopping-cart-btn.css";
 import ShoppingCart from "../../img/shopping_cart.png";
 import BlackCircle from "../../img/black_circle.png";
+import { connect } from "react-redux";
+import { openCart } from "../../state/actions/cartActions";
 
-export default class ShoppingCartBtn extends Component {
+export class ShoppingCartBtn extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onCartBtnClick = this.onCartBtnClick.bind(this);
+  }
+
+  onCartBtnClick() {
+    this.props.openCart();
+  }
+
   render() {
-    const { onClick, cartHasAItem } = this.props;
+    const { cartItems } = this.props.cart;
 
     return (
       <>
         <img
-          onClick={onClick}
+          onClick={this.onCartBtnClick}
           className="cart-image"
           src={ShoppingCart}
           alt="shopping-cart"
         />
-        {cartHasAItem ? (
+        {cartItems.length !== 0 ? (
           <div>
             <img
               className="black-circle"
@@ -23,7 +35,7 @@ export default class ShoppingCartBtn extends Component {
               alt="black-circle"
               style={{ width: "20px" }}
             />
-            <div className="quantity-count">1</div>
+            <div className="quantity-count">{cartItems.length}</div>
           </div>
         ) : (
           ""
@@ -32,3 +44,9 @@ export default class ShoppingCartBtn extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps, { openCart })(ShoppingCartBtn);

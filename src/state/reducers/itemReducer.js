@@ -1,6 +1,8 @@
 import { GET_ITEMS } from "../actions/types";
 
 const initialState = {
+  categories: [],
+  currencies: [],
   items: [],
   loading: false,
 };

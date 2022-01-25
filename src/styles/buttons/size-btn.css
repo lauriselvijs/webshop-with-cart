@@ -1,0 +1,25 @@
+.size-modal-btn {
+  background-color: white;
+  border: 1px;
+  border-style: solid;
+  color: black;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px;
+}
+
+.size-selected-modal-btn {
+  background-color: black;
+  border: 1px;
+  border-style: solid;
+  color: white;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px;
+}

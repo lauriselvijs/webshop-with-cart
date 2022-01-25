@@ -1,32 +1,42 @@
 import React, { Component } from "react";
-import Sweater from "../img/sweater.png";
 import "../styles/shopping-cart-single.css";
+import { selectSize } from "../state/actions/cartActions";
+import { connect } from "react-redux";
+import SizeBtn from "../components/buttons/SizeBtn";
 
-class ShoppingCartSingle extends Component {
+export class ShoppingCartSingle extends Component {
+  constructor(props) {
+    super(props);
+
+    this.selectButton = this.selectButton.bind(this);
+
+    this.state = {
+      selected: false,
+    };
+  }
+
+  selectButton(id, selectSize) {
+    this.props.selectSize(id, selectSize);
+  }
+
   render() {
-    const {
-      btn_class_S,
-      btn_class_M,
-      selectButtonS,
-      selectButtonM,
-      increaseQuantity,
-      count,
-      decreaseQuantity,
-    } = this.props;
+    const { item, increaseQuantity, decreaseQuantity } = this.props;
 
     return (
       <div className="container">
         <div className="product-info">
-          <h2>Apollo running short</h2>
-          <h4>$50.00</h4>
+          <h2>{item.name}</h2>
+          <h4>$ {item.price}</h4>
         </div>
         <div className="sizes">
-          <button className={btn_class_S} onClick={selectButtonS}>
-            S
-          </button>
-          <button className={btn_class_M} onClick={selectButtonM}>
-            M
-          </button>
+          {item.sizes.map((size, index) => (
+            <SizeBtn
+              key={index}
+              size={size}
+              selectButton={this.selectButton.bind(this, item.id, size)}
+              selectedSize={item.selectedSize}
+            />
+          ))}
         </div>
         <div className="white-space"></div>
         <div className="quantity-increase">
@@ -34,17 +44,22 @@ class ShoppingCartSingle extends Component {
             +
           </button>
         </div>
-        <div className="quantity-modal"> {count}</div>
+        <div className="quantity-modal"> {item.count}</div>
         <div className="quantity-decrease">
           <button className="minus-button-modal" onClick={decreaseQuantity}>
             -
           </button>
         </div>
         <div className="product-image">
-          <img src={Sweater} alt="product" style={{ width: "100%" }} />
+          <img src={item.img[0]} alt="product" style={{ width: "200%" }} />
         </div>
       </div>
     );
   }
 }
-export default ShoppingCartSingle;
+
+const mapStateToProps = (state) => ({
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps, { selectSize })(ShoppingCartSingle);
