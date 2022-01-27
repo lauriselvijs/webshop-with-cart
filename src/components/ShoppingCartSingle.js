@@ -10,9 +10,7 @@ export class ShoppingCartSingle extends Component {
 
     this.selectButton = this.selectButton.bind(this);
 
-    this.state = {
-      selected: false,
-    };
+    this.state = {};
   }
 
   selectButton(id, selectSize) {
@@ -38,7 +36,6 @@ export class ShoppingCartSingle extends Component {
             />
           ))}
         </div>
-        <div className="white-space"></div>
         <div className="quantity-increase">
           <button className="plus-button-modal" onClick={increaseQuantity}>
             +

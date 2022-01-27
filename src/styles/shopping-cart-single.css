@@ -1,18 +1,35 @@
-.container {
-  display: grid;
-  align-items: center;
-}
-
 .product-info {
-  padding-left: 30px;
+  grid-area: info;
 }
-
 .product-image {
+  grid-area: image;
+}
+.quantity-modal {
+  grid-area: quantity;
   padding-left: 10px;
 }
+.plus-button-modal {
+  grid-area: plus;
+}
+.minus-button-modal {
+  grid-area: minus;
+}
 
-.quantity-modal {
-  padding-left: 147px;
+.sizes {
+  grid-area: sizes;
+}
+
+.container {
+  display: grid;
+  grid-template:
+    "info info info    plus     image"
+    "info info  info   quantity image"
+    "sizes sizes sizes minus    image";
+  align-items: center;
+  grid-gap: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .plus-button-modal {

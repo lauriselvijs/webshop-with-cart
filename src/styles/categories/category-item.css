@@ -1,0 +1,7 @@
+.category-selected {
+  border-bottom: 2px solid green;
+}
+
+.category {
+  border-bottom: none;
+}

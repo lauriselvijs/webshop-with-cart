@@ -36,34 +36,6 @@
   padding: 20px;
 }
 
-.currency-image {
-  cursor: pointer;
-  border: none;
-  background: none;
-  padding-right: 20px;
-}
-
-.shopping-cart-image {
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-
-.women-category-selected {
-  color: green;
-  border-bottom: 2px solid green;
-}
-
-.men-category-selected {
-  color: green;
-  border-bottom: 2px solid green;
-}
-
-.kids-category-selected {
-  color: green;
-  border-bottom: 2px solid green;
-}
-
 ul {
   margin: 0;
   padding: 0;

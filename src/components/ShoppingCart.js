@@ -1,8 +1,15 @@
 import React, { Component } from "react";
-import Sweater from "../img/sweater.png";
 import "../styles/shopping-cart.css";
+import { connect } from "react-redux";
+import {
+  decQuantity,
+  incQuantity,
+  selectSize,
+  getCartItems,
+} from "../state/actions/cartActions";
+import ShoppingCartSingle from "./ShoppingCartSingle";
 
-class ShoppingCart extends Component {
+export class ShoppingCart extends Component {
   constructor(props) {
     super(props);
 
@@ -23,59 +30,43 @@ class ShoppingCart extends Component {
     this.setState({ selected_S: false });
   }
 
-  increaseQuantity = () => {
-    this.setState((prev) => ({ count: prev.count + 1 }));
+  increaseQuantity = (id) => {
+    this.props.incQuantity(id);
   };
 
-  decreaseQuantity = () => {
-    if (this.state.count > 1)
-      this.setState((prev) => ({ count: prev.count - 1 }));
+  decreaseQuantity = (id) => {
+    this.props.decQuantity(id);
   };
 
   render() {
-    let btn_class_S = this.state.selected_S ? "size-S-selected" : "size-S";
-    let btn_class_M = this.state.selected_M ? "size-M-selected" : "size-M";
+    const { cartItems } = this.props.cart;
 
     return (
-      <div className="container">
-        <div class="grid-container-shopping-cart">
-          <div class="product-info">
-            <h2>Apollo running short</h2>
-            <h4>$50.00</h4>
+      <>
+        <hr style={{ width: "95%", color: "lightgray" }} />
+        {cartItems.map((item, index) => (
+          <div className="shopping-cart">
+            <ShoppingCartSingle
+              key={index}
+              item={item}
+              increaseQuantity={this.increaseQuantity.bind(this, item.id)}
+              decreaseQuantity={this.decreaseQuantity.bind(this, item.id)}
+            />
+            <hr style={{ width: "95%", color: "lightgray" }} />
           </div>
-          <div class="sizes">
-            <button
-              className={btn_class_S}
-              onClick={this.selectButtonS.bind(this)}
-            >
-              S
-            </button>
-            <button
-              className={btn_class_M}
-              onClick={this.selectButtonM.bind(this)}
-            >
-              M
-            </button>
-          </div>
-          <div class="white-space"></div>
-          <div class="quantity-increase">
-            <button className="plus-button" onClick={this.increaseQuantity}>
-              +
-            </button>
-          </div>
-          <div class="quantity"> {this.state.count}</div>
-          <div class="quantity-decrease">
-            <button className="minus-button" onClick={this.decreaseQuantity}>
-              -
-            </button>
-          </div>
-          <div class="product-image">
-            <img src={Sweater} alt="product" style={{ width: "100%" }} />
-          </div>
-        </div>
-      </div>
+        ))}
+      </>
     );
   }
 }
 
-export default ShoppingCart;
+const mapStateToProps = (state) => ({
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps, {
+  decQuantity,
+  incQuantity,
+  selectSize,
+  getCartItems,
+})(ShoppingCart);

@@ -25,12 +25,10 @@ export class ShoppingCartModal extends Component {
 
   increaseQuantity(id) {
     this.props.incQuantity(id);
-    //console.log(id);
   }
 
   decreaseQuantity(id) {
     this.props.decQuantity(id);
-    // console.log(id);
   }
 
   viewBag = () => {
@@ -51,7 +49,7 @@ export class ShoppingCartModal extends Component {
     const { cartDisplay, cartItems } = this.props.cart;
 
     const totalAmount = cartItems.reduce(
-      (total, item) => total + parseInt(item.price),
+      (total, item) => total + parseInt(item.price) * parseInt(item.count),
       0
     );
 
@@ -70,10 +68,8 @@ export class ShoppingCartModal extends Component {
           />
         ))}
 
-        <div className="total-section">
-          <span className="total-title">Total</span>
-          <span className="total-amount">${totalAmount}</span>
-        </div>
+        <span className="total-title">Total</span>
+        <span className="total-amount">${totalAmount}</span>
         <div className="footer-modal">
           <button className="view-bag-button" onClick={this.viewBag.bind(this)}>
             VIEW BAG

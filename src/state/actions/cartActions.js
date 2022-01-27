@@ -21,10 +21,10 @@ export const removeItem = (id) => {
   };
 };
 
-export const addItem = (item) => {
+export const addItem = (item, id) => {
   return {
     type: ADD_ITEM,
-    payload: item,
+    payload: { item, id },
   };
 };
 
