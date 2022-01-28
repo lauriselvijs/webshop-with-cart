@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import CategoryItem from "./CategoryItem";
 import "../../styles/categories/categories.css";
-import { setCategory } from "../../state/actions/categoriesActions";
+import {
+  setCategory,
+  setCurrentSelectedCategory,
+} from "../../state/actions/categoriesActions";
 
 export class Categories extends Component {
   constructor(props) {
@@ -15,6 +18,7 @@ export class Categories extends Component {
 
   selectCategory(category) {
     this.props.setCategory(category);
+    this.props.setCurrentSelectedCategory();
   }
 
   render() {
@@ -41,4 +45,7 @@ const mapStateToProps = (state) => ({
   categories: state.categories,
 });
 
-export default connect(mapStateToProps, { setCategory })(Categories);
+export default connect(mapStateToProps, {
+  setCategory,
+  setCurrentSelectedCategory,
+})(Categories);

@@ -10,6 +10,8 @@ export const GET_CART_ITEMS = "GET_CART_ITEMS";
 // Clothes
 export const GET_CLOTHES = "GET_CLOTHES";
 export const SET_HOVER = "SET_HOVER";
+export const GET_CLOTHES_ITEM_BY_ID = "GET_CLOTHES_ITEM_BY_ID";
+export const SELECT_CLOTHES_BY_SIZE = "SELECT_CLOTHES_BY_SIZE";
 
 // Tech
 export const GET_TECH = "GET_TECH";
@@ -22,3 +24,7 @@ export const SET_CURRENCY_SELECTED = "SET_CURRENCY_SELECTED";
 // Categories
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const SET_CATEGORY = "SET_CATEGORY";
+export const SET_CURRENT_SELECTED_CATEGORY = "SET_CURRENT_SELECTED_CATEGORY";
+
+// Loading
+export const SET_LOADING = "SET_LOADING";

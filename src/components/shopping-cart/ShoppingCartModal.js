@@ -1,34 +1,17 @@
 import React, { Component } from "react";
-import "../styles/shopping-cart-modal.css";
-import ShoppingCartSingle from "../components/ShoppingCartSingle";
+import "../../styles/shopping-cart-modal.css";
 import { connect } from "react-redux";
-import {
-  decQuantity,
-  incQuantity,
-  selectSize,
-  getCartItems,
-} from "../state/actions/cartActions";
+import { getCartItems } from "../../state/actions/cartActions";
+import ClothesShoppingCart from "../categories/clothes/ClothesShoppingCart";
 
 export class ShoppingCartModal extends Component {
   constructor(props) {
     super(props);
 
-    this.increaseQuantity = this.increaseQuantity.bind(this);
-    this.decreaseQuantity = this.decreaseQuantity.bind(this);
-
     this.state = {
       view_bag: false,
       check_out: false,
-      selected: false,
     };
-  }
-
-  increaseQuantity(id) {
-    this.props.incQuantity(id);
-  }
-
-  decreaseQuantity(id) {
-    this.props.decQuantity(id);
   }
 
   viewBag = () => {
@@ -59,15 +42,7 @@ export class ShoppingCartModal extends Component {
           <span style={{ fontWeight: "bold" }}>My Bag</span>, {cartItems.length}{" "}
           items
         </div>
-        {cartItems.map((item, index) => (
-          <ShoppingCartSingle
-            key={index}
-            item={item}
-            increaseQuantity={this.increaseQuantity.bind(this, item.id)}
-            decreaseQuantity={this.decreaseQuantity.bind(this, item.id)}
-          />
-        ))}
-
+        <ClothesShoppingCart />
         <span className="total-title">Total</span>
         <span className="total-amount">${totalAmount}</span>
         <div className="footer-modal">
@@ -91,8 +66,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  decQuantity,
-  incQuantity,
-  selectSize,
   getCartItems,
 })(ShoppingCartModal);

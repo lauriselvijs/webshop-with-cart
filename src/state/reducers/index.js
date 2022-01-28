@@ -4,6 +4,7 @@ import clothesReducer from "./clothesReducer";
 import techReducer from "./techReducer";
 import currencyReducer from "./currencyReducer";
 import categoriesReducer from "./categoriesReducer";
+import loadingReducer from "./loadingReducer";
 
 const reducers = combineReducers({
   cart: cartReducer,
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   tech: techReducer,
   currency: currencyReducer,
   categories: categoriesReducer,
+  loading: loadingReducer,
 });
 
 export default reducers;

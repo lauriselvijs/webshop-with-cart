@@ -1,19 +1,11 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import {
-  getCategories,
-  setCategory,
-} from "../../state/actions/categoriesActions";
 import "../../styles/categories/category-item.css";
 import { capitalizeFirstLetter } from "../utils/stringUtils";
+import { Link } from "react-router-dom";
 
-export class CategoryItem extends Component {
-  linkClick(category) {
-    setCategory(category);
-  }
-
+export default class CategoryItem extends Component {
   render() {
-    const { category } = this.props;
+    const { category, selectCategory } = this.props;
 
     let categorySelectedClass = "category";
 
@@ -24,22 +16,13 @@ export class CategoryItem extends Component {
     }
 
     return (
-      <a
-        href={`#${category.categoryName.toLowerCase()}`}
-        onClick={this.linkClick.bind(this, category.categoryName)}
+      <Link
+        to={`${category.categoryName.toLowerCase()}`}
+        onClick={selectCategory}
         className={categorySelectedClass}
       >
         {capitalizeFirstLetter(category.categoryName)}
-      </a>
+      </Link>
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  categories: state.categories,
-});
-
-export default connect(mapStateToProps, {
-  getCategories,
-  setCategory,
-})(CategoryItem);

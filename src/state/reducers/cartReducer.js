@@ -69,7 +69,6 @@ export default function cartReducer(state = initialState, action) {
           if (item.id === action.payload.id) {
             return { ...item, selectedSize: action.payload.size };
           }
-          console.log(action.payload.id);
           return item;
         }),
       };

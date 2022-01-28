@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import BuyCart from "../img/buy_cart.png";
-import "../styles/product-view-single.css";
+import BuyCart from "../../img/buy_cart.png";
+import "../../../styles/product-view-single.css";
 import { connect } from "react-redux";
-import { setHover } from "../state/actions/clothesActions";
-import { addItem } from "../state/actions/cartActions";
+import { setHover } from "../../../state/actions/clothesActions";
+import { addItem } from "../../../state/actions/cartActions";
 
-export class ProductViewSingle extends Component {
+export class TechView extends Component {
   constructor(props) {
     super(props);
     this.addedToCart = this.addedToCart.bind(this);
@@ -66,4 +66,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   setHover,
   addItem,
-})(ProductViewSingle);
+})(TechView);

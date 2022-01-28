@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "../styles/navbar.css";
-import Cart from "../img/green_cart.png";
-import ShoppingCartModal from "../components/ShoppingCartModal";
+import ShoppingCartModal from "../components/shopping-cart/ShoppingCartModal";
 import CurrencyBtn from "../components/buttons/CurrencyBtn";
 import ShoppingCartBtn from "../components/buttons/ShoppingCartBtn";
 import Categories from "../components/categories/Categories";
+import Logo from "../components/Logo";
 
 class Navbar extends Component {
   render() {
@@ -12,9 +12,7 @@ class Navbar extends Component {
       <div>
         <div className="topnav">
           <div className="topnav-centered">
-            <a href="#green-cart">
-              <img src={Cart} className="logo-image" alt="green-cart" />
-            </a>
+            <Logo />
           </div>
           <Categories />
           <div className="topnav-right">

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import "../styles/shopping-cart-single.css";
-import { selectSize } from "../state/actions/cartActions";
+import "../../../styles/shopping-cart-single.css";
+import { selectSize } from "../../../state/actions/cartActions";
 import { connect } from "react-redux";
-import SizeBtn from "../components/buttons/SizeBtn";
+import SizeBtn from "../../../components/buttons/SizeBtn";
 
-export class ShoppingCartSingle extends Component {
+export class ClothesShoppingCartSingle extends Component {
   constructor(props) {
     super(props);
 
@@ -59,4 +59,6 @@ const mapStateToProps = (state) => ({
   cart: state.cart,
 });
 
-export default connect(mapStateToProps, { selectSize })(ShoppingCartSingle);
+export default connect(mapStateToProps, { selectSize })(
+  ClothesShoppingCartSingle
+);
