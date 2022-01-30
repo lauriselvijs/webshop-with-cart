@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import "../../../styles/shopping-cart-single.css";
-import { selectSize } from "../../../state/actions/cartActions";
+import "../../styles/shopping-cart-single.css";
+import { selectSize, removeItem } from "../../state/actions/cartActions";
 import { connect } from "react-redux";
-import SizeBtn from "../../../components/buttons/SizeBtn";
+import SizeBtn from "../buttons/SizeBtn";
+import QuantityBtn from "../buttons/QuantityBtn";
 
-export class ClothesShoppingCartSingle extends Component {
+export class ProductShoppingCartSingle extends Component {
   constructor(props) {
     super(props);
 
@@ -18,7 +19,7 @@ export class ClothesShoppingCartSingle extends Component {
   }
 
   render() {
-    const { item, increaseQuantity, decreaseQuantity } = this.props;
+    const { item } = this.props;
 
     return (
       <div className="container">
@@ -36,17 +37,11 @@ export class ClothesShoppingCartSingle extends Component {
             />
           ))}
         </div>
-        <div className="quantity-increase">
-          <button className="plus-button-modal" onClick={increaseQuantity}>
-            +
-          </button>
-        </div>
-        <div className="quantity-modal"> {item.count}</div>
-        <div className="quantity-decrease">
-          <button className="minus-button-modal" onClick={decreaseQuantity}>
-            -
-          </button>
-        </div>
+        <QuantityBtn
+          itemCount={item.count}
+          itemId={item.id}
+          selectedSize={item.selectedSize}
+        />
         <div className="product-image">
           <img src={item.img[0]} alt="product" style={{ width: "200%" }} />
         </div>
@@ -59,6 +54,6 @@ const mapStateToProps = (state) => ({
   cart: state.cart,
 });
 
-export default connect(mapStateToProps, { selectSize })(
-  ClothesShoppingCartSingle
+export default connect(mapStateToProps, { selectSize, removeItem })(
+  ProductShoppingCartSingle
 );

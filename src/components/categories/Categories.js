@@ -8,33 +8,13 @@ import {
 } from "../../state/actions/categoriesActions";
 
 export class Categories extends Component {
-  constructor(props) {
-    super(props);
-
-    this.selectCategory = this.selectCategory.bind(this);
-
-    this.state = {};
-  }
-
-  selectCategory(category) {
-    this.props.setCategory(category);
-    this.props.setCurrentSelectedCategory();
-  }
-
   render() {
     const { categories } = this.props.categories;
 
     return (
       <>
         {categories.map((category, index) => (
-          <CategoryItem
-            key={index}
-            category={category}
-            selectCategory={this.selectCategory.bind(
-              this,
-              category.categoryName
-            )}
-          />
+          <CategoryItem key={index} category={category} />
         ))}
       </>
     );

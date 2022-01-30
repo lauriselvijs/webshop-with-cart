@@ -7,6 +7,7 @@ import {
   DECREASE_QUANTITY,
   SELECT_SIZE,
 } from "./types";
+import store from "../store";
 
 export const getCartItems = () => {
   return {
@@ -21,11 +22,22 @@ export const removeItem = (id) => {
   };
 };
 
-export const addItem = (item, id) => {
-  return {
-    type: ADD_ITEM,
-    payload: { item, id },
-  };
+export const addItem = (item) => {
+  const hasItem = store
+    .getState()
+    .cart.cartItems.some((cartItem) => cartItem.id === item.id);
+
+  if (hasItem) {
+    return {
+      type: INCREASE_QUANTITY,
+      payload: item.id,
+    };
+  } else {
+    return {
+      type: ADD_ITEM,
+      payload: item,
+    };
+  }
 };
 
 export const openCart = () => {
@@ -41,10 +53,21 @@ export const incQuantity = (id) => {
   };
 };
 export const decQuantity = (id) => {
-  return {
-    type: DECREASE_QUANTITY,
-    payload: id,
-  };
+  const oneItemLeft = store
+    .getState()
+    .cart.cartItems.some((cartItem) => cartItem.count === 1);
+
+  if (!oneItemLeft) {
+    return {
+      type: DECREASE_QUANTITY,
+      payload: id,
+    };
+  } else {
+    return {
+      type: REMOVE_ITEM,
+      payload: id,
+    };
+  }
 };
 export const selectSize = (id, size) => {
   return {

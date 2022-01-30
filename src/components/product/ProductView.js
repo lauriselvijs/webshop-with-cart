@@ -1,26 +1,25 @@
 import React, { Component } from "react";
-import "../../../styles/product-view.css";
-import { withRouter } from "../../helpers/routerHOC";
+import "../../styles/product-view.css";
+import { withRouter } from "../helpers/routerHOC";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import {
-  setHover,
-  getClothesItemById,
-} from "../../../state/actions/clothesActions";
-import { setLoading } from "../../../state/actions/loadingActions";
-import { addItem } from "../../../state/actions/cartActions";
-import { selectClothesBySize } from "../../../state/actions/clothesActions";
-
-import SizeBtn from "../../buttons/SizeBtn";
-
-class ClothesView extends Component {
+import { getClothesItemById } from "../../state/actions/clothesActions";
+import { setLoading } from "../../state/actions/loadingActions";
+import { addItem, selectSize } from "../../state/actions/cartActions";
+import { selectClothesBySize } from "../../state/actions/clothesActions";
+import SizeBtn from "../buttons/SizeBtn";
+import RemoveBtn from "../buttons/RemoveBtn";
+class ProductView extends Component {
   constructor(props) {
     super(props);
 
     this.addToCart = this.addToCart.bind(this);
     this.selectButton = this.selectButton.bind(this);
 
-    this.state = {};
+    this.state = {
+      selectedSize: "",
+      itemCount: 1,
+    };
   }
 
   componentDidMount() {
@@ -30,18 +29,20 @@ class ClothesView extends Component {
     this.props.setLoading(false);
   }
 
-  addToCart() {
-    this.setState({ added_to_cart: !this.state.added_to_cart });
-    console.log("added to card");
+  addToCart(item, selectedSize, count) {
+    this.props.addItem({ ...item, selectedSize, count });
+    this.props.selectSize(item.id, selectedSize);
   }
 
   selectButton(size) {
-    this.props.selectClothesBySize(size);
+    this.setState({ selectedSize: size });
   }
 
   render() {
     const { clothesItem } = this.props.clothes;
     const { loading } = this.props.loading;
+
+    const { selectedSize, itemCount } = this.state;
 
     return (
       <div className="parent">
@@ -88,7 +89,7 @@ class ClothesView extends Component {
                   key={index}
                   size={size}
                   selectButton={this.selectButton.bind(this, size)}
-                  selectedSize={clothesItem.selectedSize}
+                  selectedSize={selectedSize || clothesItem.sizes[0]}
                 />
               ))}
             </div>
@@ -99,10 +100,16 @@ class ClothesView extends Component {
             <div className="add-to-cart-section">
               <button
                 className="add-to-cart"
-                onClick={this.addToCart.bind(this)}
+                onClick={this.addToCart.bind(
+                  this,
+                  clothesItem,
+                  selectedSize || clothesItem.sizes[0],
+                  itemCount
+                )}
               >
                 ADD TO CART
               </button>
+              <RemoveBtn productId={clothesItem.id} />
             </div>
             <div className="info">
               <p>{clothesItem.desc}</p>
@@ -122,10 +129,10 @@ const mapStateToProps = (state) => ({
 export default compose(
   withRouter,
   connect(mapStateToProps, {
-    setHover,
     addItem,
     getClothesItemById,
     setLoading,
     selectClothesBySize,
+    selectSize,
   })
-)(ClothesView);
+)(ProductView);

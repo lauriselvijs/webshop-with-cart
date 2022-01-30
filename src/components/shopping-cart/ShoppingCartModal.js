@@ -2,27 +2,15 @@ import React, { Component } from "react";
 import "../../styles/shopping-cart-modal.css";
 import { connect } from "react-redux";
 import { getCartItems } from "../../state/actions/cartActions";
-import ClothesShoppingCart from "../categories/clothes/ClothesShoppingCart";
+import ProductShoppingCart from "../shopping-cart/ProductShoppingCart";
+import { Link } from "react-router-dom";
 
 export class ShoppingCartModal extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      view_bag: false,
-      check_out: false,
-    };
+    this.state = {};
   }
-
-  viewBag = () => {
-    this.setState({ view_bag: !this.state.view_bag });
-    console.log("view bag");
-  };
-
-  checkOut = () => {
-    this.setState({ check_out: !this.state.check_out });
-    console.log("check out");
-  };
 
   componentDidMount() {
     this.props.getCartItems();
@@ -36,25 +24,27 @@ export class ShoppingCartModal extends Component {
       0
     );
 
+    const totalAmountItems = cartItems.reduce(
+      (total, item) => total + parseInt(item.count),
+      0
+    );
+
     return (
       <div className="modal" style={{ display: cartDisplay }}>
         <div className="title">
-          <span style={{ fontWeight: "bold" }}>My Bag</span>, {cartItems.length}{" "}
+          <span style={{ fontWeight: "bold" }}>My Bag</span>, {totalAmountItems}{" "}
           items
         </div>
-        <ClothesShoppingCart />
+        <ProductShoppingCart />
         <span className="total-title">Total</span>
         <span className="total-amount">${totalAmount}</span>
         <div className="footer-modal">
-          <button className="view-bag-button" onClick={this.viewBag.bind(this)}>
-            VIEW BAG
-          </button>
-          <button
-            className="check-out-button"
-            onClick={this.checkOut.bind(this)}
-          >
-            CHECK OUT
-          </button>
+          <Link to="/shopping-cart">
+            <button className="view-bag-button">VIEW BAG</button>
+          </Link>
+          <Link to="/check-out">
+            <button className="check-out-button">CHECK OUT</button>
+          </Link>
         </div>
       </div>
     );

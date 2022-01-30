@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import "../../../styles/main-display.css";
+import "../../styles/main-display.css";
 import LoadingOverlay from "react-loading-overlay";
 import { connect } from "react-redux";
-import { getClothes } from "../../../state/actions/clothesActions";
-import ClothesPageSingle from "./ClothesPageSingle";
+import { getClothes } from "../../state/actions/clothesActions";
+import ProductPageSingle from "./ProductPageSingle";
 
-export class ClothesPage extends Component {
+export class ProductPage extends Component {
   constructor(props) {
     super(props);
     this.onCategoryNameChange = this.onCategoryNameChange.bind(this);
@@ -29,7 +29,7 @@ export class ClothesPage extends Component {
         <LoadingOverlay active={false} className="main-display">
           <div className="grid-container">
             {clothes.map((item, index) => (
-              <ClothesPageSingle key={index} item={item} />
+              <ProductPageSingle key={index} item={item} />
             ))}
           </div>
         </LoadingOverlay>
@@ -44,4 +44,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getClothes,
-})(ClothesPage);
+})(ProductPage);

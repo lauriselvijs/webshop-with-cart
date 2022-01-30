@@ -2,10 +2,28 @@ import React, { Component } from "react";
 import "../../styles/categories/category-item.css";
 import { capitalizeFirstLetter } from "../utils/stringUtils";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import {
+  setCategory,
+  setCurrentSelectedCategory,
+} from "../../state/actions/categoriesActions";
 
-export default class CategoryItem extends Component {
+export class CategoryItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.selectCategory = this.selectCategory.bind(this);
+
+    this.state = {};
+  }
+
+  selectCategory(category) {
+    this.props.setCategory(category);
+    this.props.setCurrentSelectedCategory();
+  }
+
   render() {
-    const { category, selectCategory } = this.props;
+    const { category } = this.props;
 
     let categorySelectedClass = "category";
 
@@ -18,7 +36,7 @@ export default class CategoryItem extends Component {
     return (
       <Link
         to={`${category.categoryName.toLowerCase()}`}
-        onClick={selectCategory}
+        onClick={this.selectCategory.bind(this, category.categoryName)}
         className={categorySelectedClass}
       >
         {capitalizeFirstLetter(category.categoryName)}
@@ -26,3 +44,12 @@ export default class CategoryItem extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  categories: state.categories,
+});
+
+export default connect(mapStateToProps, {
+  setCategory,
+  setCurrentSelectedCategory,
+})(CategoryItem);

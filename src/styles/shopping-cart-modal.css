@@ -13,6 +13,7 @@
   display: inline-block;
   margin: 10px;
   padding-top: 20px;
+  padding-left: 10%;
 }
 
 .title {
@@ -38,7 +39,7 @@
 }
 
 .view-bag-button {
-  min-width: 47%;
+  min-width: 40%;
   background-color: white;
   border: 1px;
   border-style: solid;
@@ -52,7 +53,7 @@
 }
 
 .check-out-button {
-  min-width: 47%;
+  min-width: 40%;
   background-color: #5ece7b;
   border: 1px;
   border-style: solid;

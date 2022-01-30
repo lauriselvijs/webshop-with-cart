@@ -19,6 +19,11 @@ export class ShoppingCartBtn extends Component {
   render() {
     const { cartItems } = this.props.cart;
 
+    const totalAmountItems = cartItems.reduce(
+      (total, item) => total + parseInt(item.count),
+      0
+    );
+
     return (
       <>
         <img
@@ -35,7 +40,7 @@ export class ShoppingCartBtn extends Component {
               alt="black-circle"
               style={{ width: "20px" }}
             />
-            <div className="quantity-count">{cartItems.length}</div>
+            <div className="quantity-count">{totalAmountItems}</div>
           </div>
         ) : (
           ""

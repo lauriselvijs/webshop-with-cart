@@ -6,6 +6,7 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   SELECT_SIZE,
+  CHANGE_SIZE,
 } from "../actions/types";
 
 const initialState = {
@@ -28,11 +29,10 @@ export default function cartReducer(state = initialState, action) {
         ...state,
         cartItems: state.cartItems.filter((item) => item.id !== action.payload),
       };
-    // fix only one item can add
     case ADD_ITEM:
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload.item],
+        cartItems: [...state.cartItems, action.payload],
       };
     case OPEN_CART:
       return {
@@ -44,10 +44,12 @@ export default function cartReducer(state = initialState, action) {
       return {
         ...state,
         cartItems: state.cartItems.map((item) => {
-          if (item.id === action.payload) {
-            if (item.count < item.totalCount)
-              return { ...item, count: parseInt(item.count) + 1 };
-          }
+          if (item.id === action.payload)
+            return {
+              ...item,
+              count: parseInt(item.count) + 1,
+              selectedSize: action.payload.selectedSize,
+            };
           return item;
         }),
       };

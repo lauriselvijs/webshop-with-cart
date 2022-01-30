@@ -1,6 +1,5 @@
 import {
   GET_CLOTHES,
-  SET_HOVER,
   GET_CLOTHES_ITEM_BY_ID,
   SELECT_CLOTHES_BY_SIZE,
 } from "./types";
@@ -8,13 +7,6 @@ import {
 export const getClothes = () => {
   return {
     type: GET_CLOTHES,
-  };
-};
-
-export const setHover = (id, hover = false) => {
-  return {
-    type: SET_HOVER,
-    payload: { id, hover },
   };
 };
 

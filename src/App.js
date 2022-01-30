@@ -1,58 +1,47 @@
 import React, { Component } from "react";
 import Navbar from "./components/Navbar";
 import "./App.css";
-import MainDisplay from "./components/MainDisplay";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ClothesPage from "./components/categories/clothes/ClothesPage";
-import TechPage from "./components/categories/tech/TechPage";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import ProductPage from "./components/product/ProductPage";
 import CategoryName from "./components/categories/CategoryName";
-import ClothesView from "./components/categories/clothes/ClothesView";
+import ProductView from "./components/product/ProductView";
+import ShoppingCart from "./components/shopping-cart/ShoppingCart";
+import { connect } from "react-redux";
 
 export class App extends Component {
   render() {
+    const { selectedCategory } = this.props.categories;
+
     return (
       <div>
         <Router>
           <Navbar />
-
           <Routes>
             <Route
-              path="/"
+              path={"/"}
+              element={
+                <>{selectedCategory === "all" && <Navigate to="/all" />}</>
+              }
+            ></Route>
+            <Route
+              path={`/${selectedCategory}`}
               element={
                 <>
                   <CategoryName />
-                  <MainDisplay />
+                  <ProductPage />
                 </>
               }
             ></Route>
             <Route
-              path="/all"
-              element={
-                <>
-                  <CategoryName />
-                  <MainDisplay />
-                </>
-              }
+              path={`/${selectedCategory}/:id`}
+              element={<ProductView />}
             ></Route>
-            <Route
-              path="/clothes"
-              element={
-                <>
-                  <CategoryName />
-                  <ClothesPage />
-                </>
-              }
-            ></Route>
-            <Route path="/clothes/:id" element={<ClothesView />}></Route>
-            <Route
-              path="/tech"
-              element={
-                <>
-                  <CategoryName />
-                  <TechPage />
-                </>
-              }
-            ></Route>
+            <Route path="shopping-cart" element={<ShoppingCart />}></Route>
           </Routes>
         </Router>
       </div>
@@ -60,4 +49,8 @@ export class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  categories: state.categories,
+});
+
+export default connect(mapStateToProps, null)(App);
