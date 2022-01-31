@@ -6,6 +6,7 @@ export const INCREASE_QUANTITY = "INCREASE_QUANTITY";
 export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 export const SELECT_SIZE = "SELECT_SIZE";
 export const GET_CART_ITEMS = "GET_CART_ITEMS";
+export const SELECT_COLOR_CODE = "SELECT_COLOR_CODE";
 
 // Clothes
 export const GET_CLOTHES = "GET_CLOTHES";

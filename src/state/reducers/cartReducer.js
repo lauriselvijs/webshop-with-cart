@@ -6,7 +6,7 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   SELECT_SIZE,
-  CHANGE_SIZE,
+  SELECT_COLOR_CODE,
 } from "../actions/types";
 
 const initialState = {
@@ -48,7 +48,6 @@ export default function cartReducer(state = initialState, action) {
             return {
               ...item,
               count: parseInt(item.count) + 1,
-              selectedSize: action.payload.selectedSize,
             };
           return item;
         }),
@@ -69,7 +68,20 @@ export default function cartReducer(state = initialState, action) {
         ...state,
         cartItems: state.cartItems.map((item) => {
           if (item.id === action.payload.id) {
-            return { ...item, selectedSize: action.payload.size };
+            return { ...item, selectedSize: action.payload.value };
+          }
+          return item;
+        }),
+      };
+    case SELECT_COLOR_CODE:
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) => {
+          if (item.id === action.payload.id) {
+            return {
+              ...item,
+              selectedColorCode: action.payload.value,
+            };
           }
           return item;
         }),

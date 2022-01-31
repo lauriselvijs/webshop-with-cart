@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "../../styles/shopping-cart-modal.css";
 import ProductShoppingCartSingle from "./ProductShoppingCartSingle";
 import { connect } from "react-redux";
 import {
@@ -37,8 +36,9 @@ export class ProductShoppingCart extends Component {
     return (
       <>
         {cartItems.map((item, index) => (
-          <div key={index} className="shopping-cart">
+          <>
             <ProductShoppingCartSingle
+              key={index}
               item={item}
               increaseQuantity={this.increaseQuantity.bind(
                 this,
@@ -51,7 +51,8 @@ export class ProductShoppingCart extends Component {
                 item.selectedSize
               )}
             />
-          </div>
+            <hr style={{ width: "95%", color: "lightgray" }} />)
+          </>
         ))}
       </>
     );

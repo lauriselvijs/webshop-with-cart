@@ -3,13 +3,20 @@ import BuyCart from "../../img/buy_cart.png";
 import "../../styles/product-view-single.css";
 import { connect } from "react-redux";
 import { selectClothesBySize } from "../../state/actions/clothesActions";
-import { addItem } from "../../state/actions/cartActions";
+import {
+  addItem,
+  decQuantity,
+  selectAttribute,
+} from "../../state/actions/cartActions";
 import { Link } from "react-router-dom";
+import TrashCan from "../../img/trash_can.png";
 
 export class ProductPageSingle extends Component {
   constructor(props) {
     super(props);
     this.addedToCart = this.addedToCart.bind(this);
+    this.addedToCartSwatch = this.addedToCartSwatch.bind(this);
+    this.removeFromCart = this.removeFromCart.bind(this);
     this.mouseOver = this.mouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
     this.mouseOverCartBtn = this.mouseOverCartBtn.bind(this);
@@ -18,19 +25,33 @@ export class ProductPageSingle extends Component {
     this.state = {
       linkDisabled: false,
       hover: false,
+      count: 1,
     };
   }
 
-  addedToCart(item, id) {
-    this.props.addItem(item, id);
-    console.log("added to cart", this.state.linkDisabled);
+  addedToCart(item, selectedSize, selectedAttributeType, count) {
+    this.props.addItem({
+      ...item,
+      selectedSize,
+      count,
+    });
+    this.props.selectAttribute(item.id, selectedAttributeType, selectedSize);
   }
 
-  mouseOver = () => {
+  addedToCartSwatch(item, selectedColor, selectedAttributeType, count) {
+    this.props.addItem({
+      ...item,
+      selectedColor,
+      count,
+    });
+    this.props.selectAttribute(item.id, selectedAttributeType, selectedColor);
+  }
+
+  mouseOver() {
     this.setState({
       hover: true,
     });
-  };
+  }
 
   mouseOut() {
     this.setState({
@@ -38,11 +59,15 @@ export class ProductPageSingle extends Component {
     });
   }
 
-  mouseOverCartBtn = () => {
+  removeFromCart(id) {
+    this.props.decQuantity(id);
+  }
+
+  mouseOverCartBtn() {
     this.setState({
       linkDisabled: true,
     });
-  };
+  }
 
   mouseOutCartBtn() {
     this.setState({
@@ -52,40 +77,74 @@ export class ProductPageSingle extends Component {
 
   render() {
     const { item } = this.props;
-    const { linkDisabled, hover } = this.state;
+    const { hover, count } = this.state;
     return (
-      <Link
-        className="clothes-page-single-link"
-        to={!linkDisabled ? `/clothes/${item.id}` : "#"}
+      <div
+        className="card"
+        onMouseEnter={this.mouseOver.bind(this, item.id)}
+        onMouseLeave={this.mouseOut.bind(this, item.id)}
+        title="Click on product name to view product"
       >
-        <div
-          className="card"
-          onMouseOver={this.mouseOver.bind(this, item.id)}
-          onMouseOut={this.mouseOut.bind(this, item.id)}
-        >
-          <img
-            src={item.img}
-            alt="product"
-            className="product-image"
-            style={{ width: "100%" }}
-          />
-          {hover ? (
+        <img
+          src={item.img[0]}
+          alt="product"
+          className="product-image"
+          style={{ width: "100%", height: "100%" }}
+        />
+        {hover && (
+          <>
+            {item.attributeType === "text" && (
+              <>
+                <img
+                  src={BuyCart}
+                  alt="product-cart"
+                  className="product-cart"
+                  style={{ width: "15%" }}
+                  onClick={this.addedToCart.bind(
+                    this,
+                    item,
+                    item.sizes[0],
+                    item.attributeType,
+                    count
+                  )}
+                />
+              </>
+            )}
+            {item.attributeType === "swatch" && (
+              <>
+                <img
+                  src={BuyCart}
+                  alt="product-cart"
+                  className="product-cart"
+                  style={{ width: "15%" }}
+                  onClick={this.addedToCartSwatch.bind(
+                    this,
+                    item,
+                    item.colors[0].code,
+                    item.attributeType,
+                    count
+                  )}
+                />
+              </>
+            )}
             <img
-              src={BuyCart}
-              alt="product-cart"
-              className="product-cart"
-              style={{ width: "15%" }}
-              onClick={this.addedToCart.bind(this, item, item.id)}
+              src={TrashCan}
+              alt="delete-button"
+              className="delete-btn"
+              style={{ width: "10%" }}
+              onClick={this.removeFromCart.bind(this, item.id)}
               onMouseOver={this.mouseOverCartBtn}
               onMouseOut={this.mouseOutCartBtn}
             />
-          ) : null}
-          <div className="container">
+          </>
+        )}
+        <Link className="clothes-page-single-link" to={`/clothes/${item.id}`}>
+          <div className="container-product-page-single">
             <p>{item.name}</p>
             <b>${item.price}</b>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
     );
   }
 }
@@ -97,4 +156,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   addItem,
   selectClothesBySize,
+  decQuantity,
+  selectAttribute,
 })(ProductPageSingle);

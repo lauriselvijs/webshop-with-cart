@@ -12,10 +12,18 @@
   position: relative;
   top: 0;
   left: 0;
+  max-height: 350px;
 }
+
 .product-cart {
   position: absolute;
-  top: 65%;
+  top: 72%;
+  left: 75%;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 88%;
   left: 75%;
 }
 
@@ -24,8 +32,7 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-/* Add some padding inside the card container */
-.container {
+.container-product-page-single {
   padding: 2px 16px;
 }
 

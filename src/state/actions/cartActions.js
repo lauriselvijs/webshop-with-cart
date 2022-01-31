@@ -6,6 +6,7 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   SELECT_SIZE,
+  SELECT_COLOR_CODE,
 } from "./types";
 import store from "../store";
 
@@ -69,9 +70,32 @@ export const decQuantity = (id) => {
     };
   }
 };
+
+export const selectAttribute = (id, attribute, value) => {
+  if (attribute === "text") {
+    console.log(id, attribute, value);
+    return {
+      type: SELECT_SIZE,
+      payload: { id, value },
+    };
+  } else if (attribute === "swatch") {
+    return {
+      type: SELECT_COLOR_CODE,
+      payload: { id, value },
+    };
+  }
+};
+
 export const selectSize = (id, size) => {
   return {
     type: SELECT_SIZE,
     payload: { id, size },
+  };
+};
+
+export const selectColorCode = (id, selectColorCode) => {
+  return {
+    type: SELECT_COLOR_CODE,
+    payload: { id, selectColorCode },
   };
 };

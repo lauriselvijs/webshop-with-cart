@@ -4,7 +4,9 @@ import {
   incQuantity,
   decQuantity,
   selectSize,
+  selectAttribute,
 } from "../../state/actions/cartActions";
+import "../../styles/buttons/qty-btn.css";
 
 export class QuantityBtn extends Component {
   constructor(props) {
@@ -16,37 +18,44 @@ export class QuantityBtn extends Component {
     this.state = {};
   }
 
-  increaseQuantity(id, selectedSize) {
+  increaseQuantity(id, attribute, selectedValue) {
     this.props.incQuantity(id);
-    this.props.selectSize(id, selectedSize);
+    this.props.selectAttribute(id, attribute, selectedValue);
   }
 
-  decreaseQuantity(id, selectedSize) {
+  decreaseQuantity(id, attribute, selectedValue) {
     this.props.decQuantity(id);
-    this.props.selectSize(id, selectedSize);
+    this.props.selectAttribute(id, attribute, selectedValue);
   }
 
   render() {
-    const { itemId, itemCount, selectedSize } = this.props;
+    const { itemId, itemCount, selectedSize, selectedAttributeType } =
+      this.props;
     return (
       <>
-        <div className="quantity-increase">
-          <button
-            className="plus-button-modal"
-            onClick={this.increaseQuantity.bind(this, itemId, selectedSize)}
-          >
-            +
-          </button>
-        </div>
-        <div className="quantity-modal">{itemCount}</div>
-        <div className="quantity-decrease">
-          <button
-            className="minus-button-modal"
-            onClick={this.decreaseQuantity.bind(this, itemId, selectedSize)}
-          >
-            -
-          </button>
-        </div>
+        <button
+          className="plus-button-modal"
+          onClick={this.increaseQuantity.bind(
+            this,
+            itemId,
+            selectedAttributeType,
+            selectedSize
+          )}
+        >
+          +
+        </button>
+        <div className="item-count">{itemCount}</div>
+        <button
+          className="minus-button-modal"
+          onClick={this.decreaseQuantity.bind(
+            this,
+            itemId,
+            selectedAttributeType,
+            selectedSize
+          )}
+        >
+          -
+        </button>
       </>
     );
   }
@@ -60,4 +69,5 @@ export default connect(mapStateToProps, {
   incQuantity,
   decQuantity,
   selectSize,
+  selectAttribute,
 })(QuantityBtn);
