@@ -1,0 +1,7 @@
+.loading-overlay {
+  padding-top: 50px;
+  padding-bottom: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+  z-index: 1;
+}

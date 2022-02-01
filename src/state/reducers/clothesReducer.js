@@ -9,7 +9,7 @@ const initialState = {
     {
       id: "1",
       name: "Apollo Running Pants",
-      price: "25",
+      price: 844.02,
       attributeType: "text",
       sizes: ["s", "m", "l"],
       img: [
@@ -24,7 +24,7 @@ const initialState = {
     {
       id: "2",
       name: "Apollo Running Shirt",
-      price: "50",
+      price: 33.0,
       attributeType: "text",
       sizes: ["s", "m", "l"],
       img: [
@@ -38,7 +38,7 @@ const initialState = {
     {
       id: "3",
       name: "Apollo Running Shirt",
-      price: "50",
+      price: 55.34,
       attributeType: "swatch",
       colors: [
         { color: "green", code: "#008000" },

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../styles/shopping-cart-single.css";
+import "../../styles/shopping-cart/shopping-cart-single.css";
 import {
   selectSize,
   removeItem,
@@ -11,16 +11,37 @@ import QuantityBtn from "../buttons/QuantityBtn";
 import ColorBtn from "../buttons/ColorBtn";
 import LeftArrow from "../../img/left_arrow.png";
 import RightArrow from "../../img/right_arrow.png";
-import { withRouter } from "../helpers/routerHOC";
-import { compose } from "redux";
+import { formatMoney } from "../utils/formatUtils";
 
-export class ProductShoppingCartSingle extends Component {
+export class ShoppingCartSingle extends Component {
   constructor(props) {
     super(props);
 
     this.selectButton = this.selectButton.bind(this);
+    this.onLeftArrowClick = this.onLeftArrowClick.bind(this);
+    this.onRightArrowClick = this.onRightArrowClick.bind(this);
 
-    this.state = {};
+    this.state = {
+      itemIndex: 0,
+    };
+  }
+
+  onLeftArrowClick() {
+    if (0 < this.state.itemIndex) {
+      this.setState({
+        itemIndex: this.state.itemIndex - 1,
+      });
+    }
+  }
+
+  onRightArrowClick() {
+    const { item } = this.props;
+
+    if (item.img.length - 1 > this.state.itemIndex) {
+      this.setState({
+        itemIndex: this.state.itemIndex + 1,
+      });
+    }
   }
 
   selectButton(id, attribute, selectedValue) {
@@ -29,12 +50,17 @@ export class ProductShoppingCartSingle extends Component {
 
   render() {
     const { item } = this.props;
+    const { chosenCurrencyName } = this.props.currency;
+    const { cartOpen } = this.props.cart;
+
+    const { itemIndex } = this.state;
+
     return (
       <div className="container">
         <div className="left-section">
           <div className="product-info">
             <h2>{item.name}</h2>
-            <h4>$ {item.price}</h4>
+            <h4>{formatMoney(item.price, chosenCurrencyName)}</h4>
           </div>
           <div className="attribute">
             {item.attributeType === "text" &&
@@ -87,7 +113,27 @@ export class ProductShoppingCartSingle extends Component {
             />
           )}
         </div>
-        <img className="product-image" src={item.img[0]} alt="product" />
+        {!cartOpen && (
+          <img
+            className="left-arrow"
+            src={LeftArrow}
+            alt="left arrow"
+            onClick={this.onLeftArrowClick}
+          />
+        )}
+        <img
+          className="product-image"
+          src={item.img[itemIndex]}
+          alt="product"
+        />
+        {!cartOpen && (
+          <img
+            className="right-arrow"
+            src={RightArrow}
+            alt="right arrow"
+            onClick={this.onRightArrowClick}
+          />
+        )}
       </div>
     );
   }
@@ -95,10 +141,11 @@ export class ProductShoppingCartSingle extends Component {
 
 const mapStateToProps = (state) => ({
   cart: state.cart,
+  currency: state.currency,
 });
 
 export default connect(mapStateToProps, {
   selectSize,
   removeItem,
   selectAttribute,
-})(ProductShoppingCartSingle);
+})(ShoppingCartSingle);

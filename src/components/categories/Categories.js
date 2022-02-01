@@ -6,17 +6,35 @@ import {
   setCategory,
   setCurrentSelectedCategory,
 } from "../../state/actions/categoriesActions";
+import gql from "graphql-tag";
+import { Query } from "@apollo/client/react/components";
+
+const CATEGORY_QUERY = gql`
+  query {
+    categories {
+      name
+    }
+  }
+`;
 
 export class Categories extends Component {
   render() {
-    const { categories } = this.props.categories;
+    // const { categories } = this.props.categories;
 
     return (
-      <>
-        {categories.map((category, index) => (
-          <CategoryItem key={index} category={category} />
-        ))}
-      </>
+      <Query query={CATEGORY_QUERY}>
+        {({ loading, error, data }) => {
+          if (loading) return <h4>Loading...</h4>;
+          if (error) console.log(error);
+          return (
+            <>
+              {data.categories.map((category, index) => (
+                <CategoryItem key={index} category={category} />
+              ))}
+            </>
+          );
+        }}
+      </Query>
     );
   }
 }

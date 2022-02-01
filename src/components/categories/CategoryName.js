@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "../../styles/main-display.css";
+import "../../styles/categories/category-name.css";
 
 export class CategoryName extends Component {
   render() {

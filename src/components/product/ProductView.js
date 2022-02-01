@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../styles/product-view.css";
+import "../../styles/product/product-view.css";
 import { withRouter } from "../helpers/routerHOC";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -14,6 +14,7 @@ import { selectClothesBySize } from "../../state/actions/clothesActions";
 import SizeBtn from "../buttons/SizeBtn";
 import RemoveBtn from "../buttons/RemoveBtn";
 import ColorBtn from "../buttons/ColorBtn";
+import { formatMoney } from "../utils/formatUtils";
 
 class ProductView extends Component {
   constructor(props) {
@@ -74,6 +75,7 @@ class ProductView extends Component {
   render() {
     const { clothesItem } = this.props.clothes;
     const { loading } = this.props.loading;
+    const { chosenCurrencyName } = this.props.currency;
 
     const { selectedSize, selectedColorCode, itemCount, mainImageUrl } =
       this.state;
@@ -132,7 +134,7 @@ class ProductView extends Component {
             </div>
             <div className="price">
               <h4>PRICE:</h4>
-              <h4>${clothesItem.price}</h4>
+              <h4>{formatMoney(clothesItem.price, chosenCurrencyName)}</h4>
             </div>
             <div className="add-to-cart-section">
               {clothesItem.attributeType === "text" && (
@@ -179,6 +181,7 @@ class ProductView extends Component {
 const mapStateToProps = (state) => ({
   clothes: state.clothes,
   loading: state.loading,
+  currency: state.currency,
 });
 
 export default compose(

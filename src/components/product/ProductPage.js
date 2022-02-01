@@ -1,9 +1,27 @@
 import React, { Component } from "react";
-import "../../styles/main-display.css";
-import LoadingOverlay from "react-loading-overlay";
+import "../../styles/product/product-page.css";
 import { connect } from "react-redux";
 import { getClothes } from "../../state/actions/clothesActions";
 import ProductPageSingle from "./ProductPageSingle";
+import gql from "graphql-tag";
+import { Query } from "@apollo/client/react/components";
+
+const PRODUCT_QUERY = gql`
+  query ProductQuery($title: String!) {
+    category(input: { title: $title }) {
+      name
+      products {
+        id
+        prices {
+          currency {
+            label
+          }
+          amount
+        }
+      }
+    }
+  }
+`;
 
 export class ProductPage extends Component {
   constructor(props) {
@@ -23,16 +41,13 @@ export class ProductPage extends Component {
 
   render() {
     const { clothes } = this.props.clothes;
-
     return (
       <>
-        <LoadingOverlay active={false} className="main-display">
-          <div className="grid-container">
-            {clothes.map((item, index) => (
-              <ProductPageSingle key={index} item={item} />
-            ))}
-          </div>
-        </LoadingOverlay>
+        <div className="grid-container">
+          {clothes.map((item, index) => (
+            <ProductPageSingle key={index} item={item} />
+          ))}
+        </div>
       </>
     );
   }

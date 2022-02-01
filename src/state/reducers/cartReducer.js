@@ -7,6 +7,7 @@ import {
   DECREASE_QUANTITY,
   SELECT_SIZE,
   SELECT_COLOR_CODE,
+  UPDATE_PRICE_VALUES,
 } from "../actions/types";
 
 const initialState = {
@@ -85,6 +86,11 @@ export default function cartReducer(state = initialState, action) {
           }
           return item;
         }),
+      };
+    case UPDATE_PRICE_VALUES:
+      return {
+        ...state,
+        cartItems: action.payload,
       };
     default:
       return state;

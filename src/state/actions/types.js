@@ -13,13 +13,11 @@ export const GET_CLOTHES = "GET_CLOTHES";
 export const GET_CLOTHES_ITEM_BY_ID = "GET_CLOTHES_ITEM_BY_ID";
 export const SELECT_CLOTHES_BY_SIZE = "SELECT_CLOTHES_BY_SIZE";
 
-// Tech
-export const GET_TECH = "GET_TECH";
-
 // Currency
 export const GET_CURRENCY = "GET_CURRENCY";
 export const SET_CURRENCY = "SET_CURRENCY";
 export const SET_CURRENCY_SELECTED = "SET_CURRENCY_SELECTED";
+export const UPDATE_PRICE_VALUES = "UPDATE_PRICE_VALUES";
 
 // Categories
 export const GET_CATEGORIES = "GET_CATEGORIES";

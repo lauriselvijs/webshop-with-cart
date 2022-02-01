@@ -7,6 +7,18 @@ import {
   getCurrency,
   setCurrencySelected,
 } from "../../state/actions/currencyActions";
+import { updatePriceValues } from "../../state/actions/cartActions";
+import gql from "graphql-tag";
+import { Query } from "@apollo/client/react/components";
+
+const CURRENCY_QUERY = gql`
+  query {
+    currencies {
+      label
+      symbol
+    }
+  }
+`;
 
 export class CurrencyBtn extends Component {
   constructor(props) {
@@ -23,35 +35,45 @@ export class CurrencyBtn extends Component {
 
   setCurrencySelected(currencyName, symbol) {
     this.props.setCurrency(currencyName, symbol);
+    this.props.updatePriceValues();
   }
 
   render() {
-    const { currencyList, currencySelected } = this.props.currency;
+    const { currencySelected } = this.props.currency;
 
     return (
-      <>
-        <img
-          src={Currency}
-          alt="currency"
-          onClick={this.selectCurrencyButton}
-        />
-        <div className={`menu ${currencySelected ? "open" : ""}`}>
-          <ul>
-            {currencyList.map((currency, index) => (
-              <li
-                onClick={this.setCurrencySelected.bind(
-                  this,
-                  currency.currencyName,
-                  currency.symbol
-                )}
-                key={index}
-              >
-                {currency.symbol} {currency.currencyName}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </>
+      <Query query={CURRENCY_QUERY}>
+        {({ loading, error, data }) => {
+          if (loading) return <h4>Loading...</h4>;
+          if (error) console.log(error);
+
+          return (
+            <>
+              <img
+                src={Currency}
+                alt="currency"
+                onClick={this.selectCurrencyButton}
+              />
+              <div className={`menu ${currencySelected ? "open" : ""}`}>
+                <ul>
+                  {data.currencies.map((currency, index) => (
+                    <li
+                      onClick={this.setCurrencySelected.bind(
+                        this,
+                        currency.label,
+                        currency.symbol
+                      )}
+                      key={index}
+                    >
+                      {currency.symbol} {currency.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          );
+        }}
+      </Query>
     );
   }
 }
@@ -64,4 +86,5 @@ export default connect(mapStateToProps, {
   getCurrency,
   setCurrency,
   setCurrencySelected,
+  updatePriceValues,
 })(CurrencyBtn);

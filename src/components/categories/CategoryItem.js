@@ -35,11 +35,11 @@ export class CategoryItem extends Component {
 
     return (
       <Link
-        to={`${category.categoryName.toLowerCase()}`}
-        onClick={this.selectCategory.bind(this, category.categoryName)}
+        to={`${category.name.toLowerCase()}`}
+        onClick={this.selectCategory.bind(this, category.name)}
         className={categorySelectedClass}
       >
-        {capitalizeFirstLetter(category.categoryName)}
+        {capitalizeFirstLetter(category.name)}
       </Link>
     );
   }

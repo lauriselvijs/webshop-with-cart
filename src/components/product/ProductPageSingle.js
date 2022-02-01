@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import BuyCart from "../../img/buy_cart.png";
-import "../../styles/product-view-single.css";
+import "../../styles/product/product-view-single.css";
 import { connect } from "react-redux";
 import { selectClothesBySize } from "../../state/actions/clothesActions";
 import {
@@ -10,6 +10,7 @@ import {
 } from "../../state/actions/cartActions";
 import { Link } from "react-router-dom";
 import TrashCan from "../../img/trash_can.png";
+import { formatMoney } from "../utils/formatUtils";
 
 export class ProductPageSingle extends Component {
   constructor(props) {
@@ -78,6 +79,8 @@ export class ProductPageSingle extends Component {
   render() {
     const { item } = this.props;
     const { hover, count } = this.state;
+    const { chosenCurrencyName } = this.props.currency;
+
     return (
       <div
         className="card"
@@ -141,7 +144,7 @@ export class ProductPageSingle extends Component {
         <Link className="clothes-page-single-link" to={`/clothes/${item.id}`}>
           <div className="container-product-page-single">
             <p>{item.name}</p>
-            <b>${item.price}</b>
+            <b>{formatMoney(item.price, chosenCurrencyName)}</b>
           </div>
         </Link>
       </div>
@@ -151,6 +154,7 @@ export class ProductPageSingle extends Component {
 
 const mapStateToProps = (state) => ({
   clothes: state.clothes,
+  currency: state.currency,
 });
 
 export default connect(mapStateToProps, {

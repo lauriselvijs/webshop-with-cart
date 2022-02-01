@@ -12,10 +12,12 @@ import CategoryName from "./components/categories/CategoryName";
 import ProductView from "./components/product/ProductView";
 import ShoppingCart from "./components/shopping-cart/ShoppingCart";
 import { connect } from "react-redux";
+import LoadingOverlay from "react-loading-overlay";
 
 export class App extends Component {
   render() {
     const { selectedCategory } = this.props.categories;
+    const { cartOpen } = this.props.cart;
 
     return (
       <div>
@@ -32,16 +34,33 @@ export class App extends Component {
               path={`/${selectedCategory}`}
               element={
                 <>
-                  <CategoryName />
-                  <ProductPage />
+                  <LoadingOverlay active={cartOpen} className="loading-overlay">
+                    <CategoryName />
+                    <ProductPage />
+                  </LoadingOverlay>
                 </>
               }
             ></Route>
             <Route
               path={`/${selectedCategory}/:id`}
-              element={<ProductView />}
+              element={
+                <>
+                  <LoadingOverlay active={cartOpen} className="loading-overlay">
+                    <ProductView />
+                  </LoadingOverlay>
+                </>
+              }
             ></Route>
-            <Route path="shopping-cart" element={<ShoppingCart />}></Route>
+            <Route
+              path="shopping-cart"
+              element={
+                <>
+                  <LoadingOverlay active={cartOpen} className="loading-overlay">
+                    <ShoppingCart />
+                  </LoadingOverlay>
+                </>
+              }
+            ></Route>
           </Routes>
         </Router>
       </div>
@@ -51,6 +70,7 @@ export class App extends Component {
 
 const mapStateToProps = (state) => ({
   categories: state.categories,
+  cart: state.cart,
 });
 
 export default connect(mapStateToProps, null)(App);

@@ -7,6 +7,7 @@ import {
   DECREASE_QUANTITY,
   SELECT_SIZE,
   SELECT_COLOR_CODE,
+  UPDATE_PRICE_VALUES,
 } from "./types";
 import store from "../store";
 
@@ -73,7 +74,6 @@ export const decQuantity = (id) => {
 
 export const selectAttribute = (id, attribute, value) => {
   if (attribute === "text") {
-    console.log(id, attribute, value);
     return {
       type: SELECT_SIZE,
       payload: { id, value },
@@ -97,5 +97,29 @@ export const selectColorCode = (id, selectColorCode) => {
   return {
     type: SELECT_COLOR_CODE,
     payload: { id, selectColorCode },
+  };
+};
+
+export const updatePriceValues = () => {
+  const cartItemArray = store.getState().cart.cartItems;
+  const productsArr = store.getState().currency.products;
+  const chosenCurrencyName = store.getState().currency.chosenCurrencyName;
+
+  const newCartItemArr = cartItemArray.map((cartItem) => {
+    let result = productsArr.filter((product) => product.id === cartItem.id);
+
+    let newPrice = result[0].prices.find(
+      (newPrice) => newPrice.currency.label === chosenCurrencyName
+    ).amount;
+
+    if (newPrice) {
+      return { ...cartItem, price: newPrice };
+    }
+    return cartItem;
+  });
+
+  return {
+    type: UPDATE_PRICE_VALUES,
+    payload: newCartItemArr,
   };
 };
