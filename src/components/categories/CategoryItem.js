@@ -3,10 +3,7 @@ import "../../styles/categories/category-item.css";
 import { capitalizeFirstLetter } from "../utils/stringUtils";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  setCategory,
-  setCurrentSelectedCategory,
-} from "../../state/actions/categoriesActions";
+import { setCurrentSelectedCategory } from "../../state/actions/categoriesActions";
 
 export class CategoryItem extends Component {
   constructor(props) {
@@ -18,16 +15,16 @@ export class CategoryItem extends Component {
   }
 
   selectCategory(category) {
-    this.props.setCategory(category);
-    this.props.setCurrentSelectedCategory();
+    this.props.setCurrentSelectedCategory(category);
   }
 
   render() {
     const { category } = this.props;
+    const { selectedCategory } = this.props.categories;
 
     let categorySelectedClass = "category";
 
-    if (category.selected) {
+    if (category.name === selectedCategory) {
       categorySelectedClass = "category-selected";
     } else {
       categorySelectedClass = "category";
@@ -50,6 +47,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  setCategory,
   setCurrentSelectedCategory,
 })(CategoryItem);

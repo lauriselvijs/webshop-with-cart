@@ -1,17 +1,26 @@
 import React, { Component } from "react";
 import "../../styles/product/product-page.css";
 import { connect } from "react-redux";
-import { getClothes } from "../../state/actions/clothesActions";
 import ProductPageSingle from "./ProductPageSingle";
 import gql from "graphql-tag";
 import { Query } from "@apollo/client/react/components";
 
-const PRODUCT_QUERY = gql`
-  query ProductQuery($title: String!) {
+const PRODUCTS_QUERY = gql`
+  query ProductsQuery($title: String!) {
     category(input: { title: $title }) {
       name
       products {
         id
+        name
+        inStock
+        gallery
+        brand
+        attributes {
+          type
+          items {
+            displayValue
+          }
+        }
         prices {
           currency {
             label
@@ -35,28 +44,31 @@ export class ProductPage extends Component {
     this.setState({ hover: false });
   }
 
-  componentDidMount() {
-    this.props.getClothes();
-  }
+  componentDidMount() {}
 
   render() {
-    const { clothes } = this.props.clothes;
+    const { selectedCategory } = this.props.categories;
+
     return (
-      <>
-        <div className="grid-container">
-          {clothes.map((item, index) => (
-            <ProductPageSingle key={index} item={item} />
-          ))}
-        </div>
-      </>
+      <Query query={PRODUCTS_QUERY} variables={{ title: selectedCategory }}>
+        {({ loading, error, data }) => {
+          if (loading) return <h4>Loading...</h4>;
+          if (error) console.log(error);
+          return (
+            <div className="grid-container">
+              {data.category.products.map((product, index) => (
+                <ProductPageSingle key={index} product={product} />
+              ))}
+            </div>
+          );
+        }}
+      </Query>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  clothes: state.clothes,
+  categories: state.categories,
 });
 
-export default connect(mapStateToProps, {
-  getClothes,
-})(ProductPage);
+export default connect(mapStateToProps, {})(ProductPage);

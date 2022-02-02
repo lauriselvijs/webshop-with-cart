@@ -13,6 +13,7 @@
   top: 0;
   left: 0;
   max-height: 350px;
+  max-width: 350px;
 }
 
 .product-cart {
@@ -36,7 +37,7 @@
   padding: 2px 16px;
 }
 
-.clothes-page-single-link {
+.product-page-single-link {
   text-decoration: none;
   color: black;
 }

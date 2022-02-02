@@ -1,8 +1,4 @@
-import {
-  GET_CATEGORIES,
-  SET_CATEGORY,
-  SET_CURRENT_SELECTED_CATEGORY,
-} from "./types";
+import { GET_CATEGORIES, SET_CURRENT_SELECTED_CATEGORY } from "./types";
 
 export const getCategories = () => {
   return {
@@ -10,15 +6,9 @@ export const getCategories = () => {
   };
 };
 
-export const setCategory = (category) => {
-  return {
-    type: SET_CATEGORY,
-    payload: category,
-  };
-};
-
-export const setCurrentSelectedCategory = () => {
+export const setCurrentSelectedCategory = (category) => {
   return {
     type: SET_CURRENT_SELECTED_CATEGORY,
+    payload: category,
   };
 };

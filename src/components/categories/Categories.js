@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import CategoryItem from "./CategoryItem";
 import "../../styles/categories/categories.css";
-import {
-  setCategory,
-  setCurrentSelectedCategory,
-} from "../../state/actions/categoriesActions";
+import { setCurrentSelectedCategory } from "../../state/actions/categoriesActions";
 import gql from "graphql-tag";
 import { Query } from "@apollo/client/react/components";
 
@@ -19,8 +16,6 @@ const CATEGORY_QUERY = gql`
 
 export class Categories extends Component {
   render() {
-    // const { categories } = this.props.categories;
-
     return (
       <Query query={CATEGORY_QUERY}>
         {({ loading, error, data }) => {
@@ -44,6 +39,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  setCategory,
   setCurrentSelectedCategory,
 })(Categories);

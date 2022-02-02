@@ -3,25 +3,60 @@ import "../../styles/product/product-view.css";
 import { withRouter } from "../helpers/routerHOC";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { getClothesItemById } from "../../state/actions/clothesActions";
 import { setLoading } from "../../state/actions/loadingActions";
 import {
   addItem,
   selectSize,
   selectAttribute,
 } from "../../state/actions/cartActions";
-import { selectClothesBySize } from "../../state/actions/clothesActions";
 import SizeBtn from "../buttons/SizeBtn";
 import RemoveBtn from "../buttons/RemoveBtn";
 import ColorBtn from "../buttons/ColorBtn";
 import { formatMoney } from "../utils/formatUtils";
+import gql from "graphql-tag";
+import { Query } from "@apollo/client/react/components";
+import {
+  findPrice,
+  checkIfHasAttribute,
+  getAttributeArray,
+} from "../utils/reduceUtils";
+import parse from "html-react-parser";
+import AddBtn from "../buttons/AddBtn";
+import { getAttributesAsObj } from "../utils/findUtils";
+
+const PRODUCT_QUERY = gql`
+  query ProductQuery($id: String!) {
+    product(id: $id) {
+      id
+      name
+      brand
+      inStock
+      gallery
+      brand
+      description
+      prices {
+        currency {
+          label
+        }
+        amount
+      }
+      attributes {
+        type
+        name
+        items {
+          displayValue
+          value
+        }
+      }
+    }
+  }
+`;
 
 class ProductView extends Component {
   constructor(props) {
     super(props);
 
     this.addToCart = this.addToCart.bind(this);
-    this.addToCartSwatch = this.addToCartSwatch.bind(this);
     this.selectSizeBtn = this.selectSizeBtn.bind(this);
     this.selectColorBtn = this.selectColorBtn.bind(this);
     this.setMainImage = this.setMainImage.bind(this);
@@ -35,29 +70,14 @@ class ProductView extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.setLoading(true);
-    const id = this.props.match.params.id;
-    this.props.getClothesItemById(id);
-    this.props.setLoading(false);
-  }
-
-  addToCart(item, selectedAttributeType, selectedSize, count) {
-    this.props.addItem({
-      ...item,
-      selectedSize,
-      count,
-    });
-    this.props.selectAttribute(item.id, selectedAttributeType, selectedSize);
-  }
-
-  addToCartSwatch(item, selectedAttributeType, selectedColor, count) {
-    this.props.addItem({
-      ...item,
-      selectedColor,
-      count,
-    });
-    this.props.selectAttribute(item.id, selectedAttributeType, selectedColor);
+  addToCart(product, atrrObj, count) {
+    console.log(atrrObj);
+    // this.props.addItem({
+    //  ...product,
+    //  atrrObj,
+    //  count,
+    //});
+    //this.props.selectAttribute(item.id, selectedAttributeType, selectedSize);
   }
 
   selectSizeBtn(size) {
@@ -73,113 +93,123 @@ class ProductView extends Component {
   }
 
   render() {
-    const { clothesItem } = this.props.clothes;
-    const { loading } = this.props.loading;
     const { chosenCurrencyName } = this.props.currency;
 
     const { selectedSize, selectedColorCode, itemCount, mainImageUrl } =
       this.state;
 
+    const id = this.props.match.params.id;
+
     return (
-      <div className="parent">
-        {loading ? (
-          <>Loading...</>
-        ) : (
-          <>
-            {clothesItem.img.map((image, index) => (
-              <div className={`thumbnail-${index + 1}`}>
-                <img
-                  onClick={this.setMainImage.bind(this, image)}
-                  src={image}
-                  alt="product"
-                  style={{ width: "20%" }}
-                />
+      <Query query={PRODUCT_QUERY} variables={{ id }}>
+        {({ loading, error, data }) => {
+          if (loading) return <h4>Loading...</h4>;
+          if (error) console.log(error);
+          const { product } = data;
+
+          const price = findPrice(product, chosenCurrencyName);
+
+          const textAttrArr = getAttributeArray(product, "text");
+          const swatchAttrArr = getAttributeArray(product, "swatch");
+
+          const attrObj = getAttributesAsObj(
+            textAttrArr,
+            swatchAttrArr,
+            selectedSize,
+            selectedColorCode
+          );
+
+          return (
+            <div className="product-view-container">
+              <div className="thumbnails">
+                {product.gallery.map((image, index) => (
+                  <img
+                    key={index}
+                    className="thumbnail"
+                    onClick={this.setMainImage.bind(this, image)}
+                    src={image}
+                    alt="product"
+                  />
+                ))}
               </div>
-            ))}
-            <div className="white-space"> </div>
-            <div className="main-image">
               <img
-                src={mainImageUrl || clothesItem.img[0]}
+                className="main-image"
+                src={mainImageUrl || product.gallery[0]}
                 alt="product"
-                style={{ width: "100%" }}
               />
-            </div>
-            <div className="product-name">
-              <h2>{clothesItem.name}</h2>
-              <h4>SIZE:</h4>
-            </div>
-            <div className="size">
-              {clothesItem.attributeType === "text" &&
-                clothesItem.sizes.map((size, index) => (
-                  <SizeBtn
-                    key={index}
-                    size={size}
-                    selectButton={this.selectSizeBtn.bind(this, size)}
-                    selectedSize={selectedSize || clothesItem.sizes[0]}
-                  />
-                ))}
-
-              {clothesItem.attributeType === "swatch" &&
-                clothesItem.colors.map((color, index) => (
-                  <ColorBtn
-                    key={index}
-                    colorCode={color.code}
-                    colorName={color.color}
-                    selectButton={this.selectColorBtn.bind(this, color.code)}
-                    selectedColorCode={
-                      selectedColorCode || clothesItem.colors[0].code
-                    }
-                  />
-                ))}
-            </div>
-            <div className="price">
-              <h4>PRICE:</h4>
-              <h4>{formatMoney(clothesItem.price, chosenCurrencyName)}</h4>
-            </div>
-            <div className="add-to-cart-section">
-              {clothesItem.attributeType === "text" && (
-                <button
-                  className="add-to-cart"
-                  onClick={this.addToCart.bind(
-                    this,
-                    clothesItem,
-                    clothesItem.attributeType,
-                    selectedSize || clothesItem.sizes[0],
-                    itemCount
+              <div className="product-view-right-section">
+                <div className="product-name">
+                  <h1>{product.brand}</h1>
+                  <h2>{product.name}</h2>
+                </div>
+                <div className="text-attribute">
+                  {checkIfHasAttribute(product, "text") && (
+                    <>
+                      <h4>{textAttrArr.name.toUpperCase()}:</h4>
+                      {textAttrArr.items.map((size, index) => (
+                        <SizeBtn
+                          key={index}
+                          size={size.displayValue}
+                          selectButton={this.selectSizeBtn.bind(
+                            this,
+                            size.displayValue
+                          )}
+                          selectedSize={
+                            selectedSize || textAttrArr.items[0].displayValue
+                          }
+                        />
+                      ))}
+                    </>
                   )}
-                >
-                  ADD TO CART
-                </button>
-              )}
-              {clothesItem.attributeType === "swatch" && (
-                <button
-                  className="add-to-cart"
-                  onClick={this.addToCartSwatch.bind(
-                    this,
-                    clothesItem,
-                    clothesItem.attributeType,
-                    selectedColorCode || clothesItem.colors[0].code,
-                    itemCount
-                  )}
-                >
-                  ADD TO CART
-                </button>
-              )}
+                </div>
+                {checkIfHasAttribute(product, "swatch") && (
+                  <>
+                    <h4>{swatchAttrArr.name.toUpperCase()}:</h4>
+                    {swatchAttrArr.items.map((color, index) => (
+                      <ColorBtn
+                        key={index}
+                        colorCode={color.value}
+                        colorName={color.displayValue}
+                        selectButton={this.selectColorBtn.bind(
+                          this,
+                          color.value
+                        )}
+                        selectedColorCode={
+                          selectedColorCode || swatchAttrArr.items[0].value
+                        }
+                      />
+                    ))}
+                  </>
+                )}
 
-              <RemoveBtn productId={clothesItem.id} />
+                <div className="price-section">
+                  <h4>PRICE:</h4>
+                  <h4 className="price-value">
+                    {formatMoney(price, chosenCurrencyName)}
+                  </h4>
+                </div>
+                <div className="add-to-cart-section">
+                  <AddBtn
+                    addToCart={this.addToCart.bind(
+                      this,
+                      product,
+                      attrObj,
+                      itemCount
+                    )}
+                  />
+                  <RemoveBtn productId={product.id} />
+                </div>
+                <div className="info">{parse(product.description)}</div>
+              </div>
             </div>
-            <div className="info">
-              <p>{clothesItem.desc}</p>
-            </div>
-          </>
-        )}
-      </div>
+          );
+        }}
+      </Query>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  clothes: state.clothes,
   loading: state.loading,
   currency: state.currency,
 });
@@ -188,9 +218,7 @@ export default compose(
   withRouter,
   connect(mapStateToProps, {
     addItem,
-    getClothesItemById,
     setLoading,
-    selectClothesBySize,
     selectSize,
     selectAttribute,
   })
