@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import "../../styles/shopping-cart/shopping-cart-single.css";
 import {
-  selectSize,
   removeItem,
-  selectAttribute,
+  setSelectedAttribute,
 } from "../../state/actions/cartActions";
 import { connect } from "react-redux";
 import SizeBtn from "../buttons/SizeBtn";
@@ -12,12 +11,18 @@ import ColorBtn from "../buttons/ColorBtn";
 import LeftArrow from "../../img/left_arrow.png";
 import RightArrow from "../../img/right_arrow.png";
 import { formatMoney } from "../utils/formatUtils";
+import {
+  findPrice,
+  checkIfHasAttribute,
+  getAttributeObj,
+} from "../utils/reduceUtils";
 
 export class ShoppingCartSingle extends Component {
   constructor(props) {
     super(props);
 
-    this.selectButton = this.selectButton.bind(this);
+    this.selectColorButton = this.selectColorButton.bind(this);
+    this.selectSizeButton = this.selectSizeButton.bind(this);
     this.onLeftArrowClick = this.onLeftArrowClick.bind(this);
     this.onRightArrowClick = this.onRightArrowClick.bind(this);
 
@@ -37,15 +42,29 @@ export class ShoppingCartSingle extends Component {
   onRightArrowClick() {
     const { item } = this.props;
 
-    if (item.img.length - 1 > this.state.itemIndex) {
+    if (item.gallery.length - 1 > this.state.itemIndex) {
       this.setState({
         itemIndex: this.state.itemIndex + 1,
       });
     }
   }
 
-  selectButton(id, attribute, selectedValue) {
-    this.props.selectAttribute(id, attribute, selectedValue);
+  selectSizeButton(id, size) {
+    const attrObj = {
+      size: size,
+      color: "",
+    };
+
+    this.props.setSelectedAttribute(id, attrObj);
+  }
+
+  selectColorButton(id, color) {
+    const attrObj = {
+      size: "",
+      color: color,
+    };
+
+    this.props.setSelectedAttribute(id, attrObj);
   }
 
   render() {
@@ -53,87 +72,89 @@ export class ShoppingCartSingle extends Component {
     const { chosenCurrencyName } = this.props.currency;
     const { cartOpen } = this.props.cart;
 
+    const price = findPrice(item, chosenCurrencyName);
+
     const { itemIndex } = this.state;
+
+    const textAttrArr = getAttributeObj(item, "text");
+    const swatchAttrArr = getAttributeObj(item, "swatch");
 
     return (
       <div className="container">
         <div className="left-section">
           <div className="product-info">
+            <h1>{item.brand}</h1>
             <h2>{item.name}</h2>
-            <h4>{formatMoney(item.price, chosenCurrencyName)}</h4>
+            <h4>{formatMoney(price, chosenCurrencyName)}</h4>
           </div>
-          <div className="attribute">
-            {item.attributeType === "text" &&
-              item.sizes.map((size, index) => (
-                <SizeBtn
-                  key={index}
-                  size={size}
-                  selectButton={this.selectButton.bind(
-                    this,
-                    item.id,
-                    item.attributeType,
-                    size
-                  )}
-                  selectedSize={item.selectedSize}
-                />
-              ))}
-            {item.attributeType === "swatch" &&
-              item.colors.map((color, index) => (
-                <ColorBtn
-                  key={index}
-                  colorCode={color.code}
-                  colorName={color.color}
-                  selectButton={this.selectButton.bind(
-                    this,
-                    item.id,
-                    item.attributeType,
-                    color.code
-                  )}
-                  selectedColorCode={item.selectedColorCode}
-                />
-              ))}
+
+          <div className="text-attribute">
+            {checkIfHasAttribute(item, "text") && (
+              <>
+                <h4>{textAttrArr.name.toUpperCase()}:</h4>
+                {textAttrArr.items.map((size, index) => (
+                  <SizeBtn
+                    key={index}
+                    size={size.displayValue}
+                    selectSizeButton={this.selectSizeButton.bind(
+                      this,
+                      item.id,
+                      size.displayValue
+                    )}
+                    selectedSize={item.attrObj.size}
+                  />
+                ))}
+              </>
+            )}
+          </div>
+          <div className="swatch-attribute">
+            {checkIfHasAttribute(item, "swatch") && (
+              <>
+                <h4>{swatchAttrArr.name.toUpperCase()}:</h4>
+                {swatchAttrArr.items.map((color, index) => (
+                  <ColorBtn
+                    key={index}
+                    colorCode={color.value}
+                    colorName={color.displayValue}
+                    selectColorButton={this.selectColorButton.bind(
+                      this,
+                      item.id,
+                      color.value
+                    )}
+                    selectedColorCode={item.attrObj.color}
+                  />
+                ))}
+              </>
+            )}
           </div>
         </div>
         <div className="white-space"></div>
         <div className="qty-section">
-          {item.attributeType === "text" && (
-            <QuantityBtn
-              itemCount={item.count}
-              itemId={item.id}
-              selectedAttributeType={item.attributeType}
-              selectedSize={item.selectedSize}
-            />
-          )}
-          {item.attributeType === "swatch" && (
-            <QuantityBtn
-              itemCount={item.count}
-              itemId={item.id}
-              selectedAttributeType={item.attributeType}
-              selectedSize={item.selectedColorCode}
-            />
-          )}
+          <QuantityBtn itemCount={item.count} itemId={item.id} />
         </div>
         {!cartOpen && (
-          <img
-            className="left-arrow"
-            src={LeftArrow}
-            alt="left arrow"
-            onClick={this.onLeftArrowClick}
-          />
+          <>
+            <img
+              className="right-arrow"
+              src={RightArrow}
+              alt="right arrow"
+              onClick={this.onRightArrowClick}
+              style={{ pointerEvents: "all" }}
+            />
+            <img
+              className="left-arrow"
+              src={LeftArrow}
+              alt="left arrow"
+              onClick={this.onLeftArrowClick}
+              style={{ pointerEvents: "all" }}
+            />
+          </>
         )}
         <img
           className="product-image"
-          src={item.img[itemIndex]}
+          src={item.gallery[itemIndex]}
           alt="product"
         />
-        {!cartOpen && (
-          <img
-            className="right-arrow"
-            src={RightArrow}
-            alt="right arrow"
-            onClick={this.onRightArrowClick}
-          />
-        )}
       </div>
     );
   }
@@ -145,7 +166,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  selectSize,
   removeItem,
-  selectAttribute,
+  setSelectedAttribute,
 })(ShoppingCartSingle);

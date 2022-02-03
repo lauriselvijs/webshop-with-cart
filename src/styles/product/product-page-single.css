@@ -7,6 +7,25 @@
   min-width: 300px;
 }
 
+.card-out-of-stock {
+  cursor: pointer;
+  padding: 20px 20px;
+  position: relative;
+  top: 0;
+  left: 0;
+  min-width: 300px;
+  opacity: 0.5;
+}
+
+.out-of-stock {
+  font-size: 28px;
+  color: black;
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  opacity: 1;
+}
+
 .product-image {
   display: flex;
   position: relative;

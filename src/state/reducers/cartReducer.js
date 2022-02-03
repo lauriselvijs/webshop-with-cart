@@ -5,9 +5,7 @@ import {
   OPEN_CART,
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
-  SELECT_SIZE,
-  SELECT_COLOR_CODE,
-  UPDATE_PRICE_VALUES,
+  SET_SELECTED_ATTRIBUTE,
 } from "../actions/types";
 
 const initialState = {
@@ -15,7 +13,6 @@ const initialState = {
   cartOpen: false,
   itemCounter: "0",
   loading: false,
-  cartDisplay: "none",
 };
 
 export default function cartReducer(state = initialState, action) {
@@ -28,7 +25,9 @@ export default function cartReducer(state = initialState, action) {
     case REMOVE_ITEM:
       return {
         ...state,
-        cartItems: state.cartItems.filter((item) => item.id !== action.payload),
+        cartItems: state.cartItems.filter(
+          (item) => item.id !== action.payload.id
+        ),
       };
     case ADD_ITEM:
       return {
@@ -39,13 +38,12 @@ export default function cartReducer(state = initialState, action) {
       return {
         ...state,
         cartOpen: !state.cartOpen,
-        cartDisplay: state.cartOpen ? "none" : "block",
       };
     case INCREASE_QUANTITY:
       return {
         ...state,
         cartItems: state.cartItems.map((item) => {
-          if (item.id === action.payload)
+          if (item.id === action.payload.id)
             return {
               ...item,
               count: parseInt(item.count) + 1,
@@ -57,40 +55,22 @@ export default function cartReducer(state = initialState, action) {
       return {
         ...state,
         cartItems: state.cartItems.map((item) => {
-          if (item.id === action.payload) {
+          if (item.id === action.payload.id) {
             if (item.count > 1)
               return { ...item, count: parseInt(item.count) - 1 };
           }
           return item;
         }),
       };
-    case SELECT_SIZE:
+    case SET_SELECTED_ATTRIBUTE:
       return {
         ...state,
         cartItems: state.cartItems.map((item) => {
           if (item.id === action.payload.id) {
-            return { ...item, selectedSize: action.payload.value };
+            return { ...item, attrObj: action.payload.attrObj };
           }
           return item;
         }),
-      };
-    case SELECT_COLOR_CODE:
-      return {
-        ...state,
-        cartItems: state.cartItems.map((item) => {
-          if (item.id === action.payload.id) {
-            return {
-              ...item,
-              selectedColorCode: action.payload.value,
-            };
-          }
-          return item;
-        }),
-      };
-    case UPDATE_PRICE_VALUES:
-      return {
-        ...state,
-        cartItems: action.payload,
       };
     default:
       return state;

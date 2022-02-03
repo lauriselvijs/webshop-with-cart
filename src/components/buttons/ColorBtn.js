@@ -4,7 +4,7 @@ import "../../styles/buttons/color-btn.css";
 
 export default class ColorBtn extends Component {
   render() {
-    const { colorName, colorCode, selectedColorCode, selectButton } =
+    const { colorName, colorCode, selectedColorCode, selectColorButton } =
       this.props;
 
     let colorBtnClass = "color-btn";
@@ -19,7 +19,7 @@ export default class ColorBtn extends Component {
       <button
         className={colorBtnClass}
         style={{ backgroundColor: colorCode }}
-        onClick={selectButton}
+        onClick={selectColorButton}
       ></button>
     );
   }

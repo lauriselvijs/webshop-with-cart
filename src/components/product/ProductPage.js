@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import ProductPageSingle from "./ProductPageSingle";
 import gql from "graphql-tag";
 import { Query } from "@apollo/client/react/components";
+import Loader from "../helpers/Loader";
 
 const PRODUCTS_QUERY = gql`
   query ProductsQuery($title: String!) {
@@ -17,8 +18,10 @@ const PRODUCTS_QUERY = gql`
         brand
         attributes {
           type
+          name
           items {
             displayValue
+            value
           }
         }
         prices {
@@ -33,26 +36,13 @@ const PRODUCTS_QUERY = gql`
 `;
 
 export class ProductPage extends Component {
-  constructor(props) {
-    super(props);
-    this.onCategoryNameChange = this.onCategoryNameChange.bind(this);
-
-    this.state = {};
-  }
-
-  onCategoryNameChange() {
-    this.setState({ hover: false });
-  }
-
-  componentDidMount() {}
-
   render() {
     const { selectedCategory } = this.props.categories;
 
     return (
       <Query query={PRODUCTS_QUERY} variables={{ title: selectedCategory }}>
         {({ loading, error, data }) => {
-          if (loading) return <h4>Loading...</h4>;
+          if (loading) return <Loader />;
           if (error) console.log(error);
           return (
             <div className="grid-container">

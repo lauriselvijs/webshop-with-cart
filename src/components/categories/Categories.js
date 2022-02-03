@@ -5,6 +5,7 @@ import "../../styles/categories/categories.css";
 import { setCurrentSelectedCategory } from "../../state/actions/categoriesActions";
 import gql from "graphql-tag";
 import { Query } from "@apollo/client/react/components";
+import Loader from "../helpers/Loader";
 
 const CATEGORY_QUERY = gql`
   query {
@@ -19,7 +20,7 @@ export class Categories extends Component {
     return (
       <Query query={CATEGORY_QUERY}>
         {({ loading, error, data }) => {
-          if (loading) return <h4>Loading...</h4>;
+          if (loading) return <Loader />;
           if (error) console.log(error);
           return (
             <>

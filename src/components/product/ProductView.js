@@ -4,11 +4,7 @@ import { withRouter } from "../helpers/routerHOC";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { setLoading } from "../../state/actions/loadingActions";
-import {
-  addItem,
-  selectSize,
-  selectAttribute,
-} from "../../state/actions/cartActions";
+import { addItem } from "../../state/actions/cartActions";
 import SizeBtn from "../buttons/SizeBtn";
 import RemoveBtn from "../buttons/RemoveBtn";
 import ColorBtn from "../buttons/ColorBtn";
@@ -18,11 +14,11 @@ import { Query } from "@apollo/client/react/components";
 import {
   findPrice,
   checkIfHasAttribute,
-  getAttributeArray,
+  getAttributeObj,
 } from "../utils/reduceUtils";
 import parse from "html-react-parser";
 import AddBtn from "../buttons/AddBtn";
-import { getAttributesAsObj } from "../utils/findUtils";
+import Loader from "../helpers/Loader";
 
 const PRODUCT_QUERY = gql`
   query ProductQuery($id: String!) {
@@ -63,21 +59,19 @@ class ProductView extends Component {
 
     this.state = {
       selectedSize: "",
-      selectedColor: "",
+      selectedColorCode: "",
       itemCount: 1,
       selectedAttributeType: "",
       mainImageUrl: "",
     };
   }
 
-  addToCart(product, atrrObj, count) {
-    console.log(atrrObj);
-    // this.props.addItem({
-    //  ...product,
-    //  atrrObj,
-    //  count,
-    //});
-    //this.props.selectAttribute(item.id, selectedAttributeType, selectedSize);
+  addToCart(product, attrObj, count) {
+    this.props.addItem({
+      ...product,
+      attrObj,
+      count,
+    });
   }
 
   selectSizeBtn(size) {
@@ -103,21 +97,21 @@ class ProductView extends Component {
     return (
       <Query query={PRODUCT_QUERY} variables={{ id }}>
         {({ loading, error, data }) => {
-          if (loading) return <h4>Loading...</h4>;
+          if (loading) return <Loader />;
           if (error) console.log(error);
           const { product } = data;
 
           const price = findPrice(product, chosenCurrencyName);
 
-          const textAttrArr = getAttributeArray(product, "text");
-          const swatchAttrArr = getAttributeArray(product, "swatch");
+          const { inStock } = product;
 
-          const attrObj = getAttributesAsObj(
-            textAttrArr,
-            swatchAttrArr,
-            selectedSize,
-            selectedColorCode
-          );
+          const textAttrArr = getAttributeObj(product, "text");
+          const swatchAttrArr = getAttributeObj(product, "swatch");
+
+          const attrObj = {
+            size: selectedSize || textAttrArr?.items[0].displayValue,
+            color: selectedColorCode || swatchAttrArr?.items[0].value,
+          };
 
           return (
             <div className="product-view-container">
@@ -150,7 +144,7 @@ class ProductView extends Component {
                         <SizeBtn
                           key={index}
                           size={size.displayValue}
-                          selectButton={this.selectSizeBtn.bind(
+                          selectSizeButton={this.selectSizeBtn.bind(
                             this,
                             size.displayValue
                           )}
@@ -162,25 +156,27 @@ class ProductView extends Component {
                     </>
                   )}
                 </div>
-                {checkIfHasAttribute(product, "swatch") && (
-                  <>
-                    <h4>{swatchAttrArr.name.toUpperCase()}:</h4>
-                    {swatchAttrArr.items.map((color, index) => (
-                      <ColorBtn
-                        key={index}
-                        colorCode={color.value}
-                        colorName={color.displayValue}
-                        selectButton={this.selectColorBtn.bind(
-                          this,
-                          color.value
-                        )}
-                        selectedColorCode={
-                          selectedColorCode || swatchAttrArr.items[0].value
-                        }
-                      />
-                    ))}
-                  </>
-                )}
+                <div className="swatch-attribute">
+                  {checkIfHasAttribute(product, "swatch") && (
+                    <>
+                      <h4>{swatchAttrArr.name.toUpperCase()}:</h4>
+                      {swatchAttrArr.items.map((color, index) => (
+                        <ColorBtn
+                          key={index}
+                          colorCode={color.value}
+                          colorName={color.displayValue}
+                          selectColorButton={this.selectColorBtn.bind(
+                            this,
+                            color.value
+                          )}
+                          selectedColorCode={
+                            selectedColorCode || swatchAttrArr.items[0].value
+                          }
+                        />
+                      ))}
+                    </>
+                  )}
+                </div>
 
                 <div className="price-section">
                   <h4>PRICE:</h4>
@@ -188,17 +184,19 @@ class ProductView extends Component {
                     {formatMoney(price, chosenCurrencyName)}
                   </h4>
                 </div>
-                <div className="add-to-cart-section">
-                  <AddBtn
-                    addToCart={this.addToCart.bind(
-                      this,
-                      product,
-                      attrObj,
-                      itemCount
-                    )}
-                  />
-                  <RemoveBtn productId={product.id} />
-                </div>
+                {inStock && (
+                  <div className="add-to-cart-section">
+                    <AddBtn
+                      addToCart={this.addToCart.bind(
+                        this,
+                        product,
+                        attrObj || {},
+                        itemCount
+                      )}
+                    />
+                    <RemoveBtn productId={product.id} />
+                  </div>
+                )}
                 <div className="info">{parse(product.description)}</div>
               </div>
             </div>
@@ -219,7 +217,5 @@ export default compose(
   connect(mapStateToProps, {
     addItem,
     setLoading,
-    selectSize,
-    selectAttribute,
   })
 )(ProductView);

@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  incQuantity,
-  decQuantity,
-  selectSize,
-  selectAttribute,
-} from "../../state/actions/cartActions";
+import { incQuantity, decQuantity } from "../../state/actions/cartActions";
 import "../../styles/buttons/qty-btn.css";
 
 export class QuantityBtn extends Component {
@@ -18,41 +13,28 @@ export class QuantityBtn extends Component {
     this.state = {};
   }
 
-  increaseQuantity(id, attribute, selectedValue) {
+  increaseQuantity(id) {
     this.props.incQuantity(id);
-    this.props.selectAttribute(id, attribute, selectedValue);
   }
 
-  decreaseQuantity(id, attribute, selectedValue) {
+  decreaseQuantity(id) {
     this.props.decQuantity(id);
-    this.props.selectAttribute(id, attribute, selectedValue);
   }
 
   render() {
-    const { itemId, itemCount, selectedSize, selectedAttributeType } =
-      this.props;
+    const { itemId, itemCount } = this.props;
     return (
       <>
         <button
           className="plus-button-modal"
-          onClick={this.increaseQuantity.bind(
-            this,
-            itemId,
-            selectedAttributeType,
-            selectedSize
-          )}
+          onClick={this.increaseQuantity.bind(this, itemId)}
         >
           +
         </button>
         <div className="item-count">{itemCount}</div>
         <button
           className="minus-button-modal"
-          onClick={this.decreaseQuantity.bind(
-            this,
-            itemId,
-            selectedAttributeType,
-            selectedSize
-          )}
+          onClick={this.decreaseQuantity.bind(this, itemId)}
         >
           -
         </button>
@@ -68,6 +50,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   incQuantity,
   decQuantity,
-  selectSize,
-  selectAttribute,
 })(QuantityBtn);

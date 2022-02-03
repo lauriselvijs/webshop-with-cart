@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 
 export class SizeBtn extends Component {
   render() {
-    const { selectButton, size, selectedSize } = this.props;
+    const { selectSizeButton, size, selectedSize } = this.props;
+
     let sizeBtnClass = "size-modal-btn";
 
     if (selectedSize === size) {
@@ -13,7 +14,7 @@ export class SizeBtn extends Component {
       sizeBtnClass = "size-modal-btn";
     }
     return (
-      <button className={sizeBtnClass} onClick={selectButton}>
+      <button className={sizeBtnClass} onClick={selectSizeButton}>
         {size}
       </button>
     );
