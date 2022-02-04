@@ -1,0 +1,15 @@
+.total-title {
+  font-size: 20px;
+  float: left;
+  padding-left: 30px;
+  padding-top: 20px;
+  font-weight: bold;
+}
+
+.total-amount {
+  font-size: 20px;
+  float: right;
+  padding-right: 30px;
+  padding-top: 20px;
+  font-weight: bold;
+}

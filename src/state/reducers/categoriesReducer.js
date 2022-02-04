@@ -7,7 +7,7 @@ const initialState = {
   selectedCategory: "all",
 };
 
-export default function clothesReducer(state = initialState, action) {
+export default function categoriesReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CATEGORIES:
       return {

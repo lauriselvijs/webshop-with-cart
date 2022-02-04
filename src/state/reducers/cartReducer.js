@@ -6,12 +6,12 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   SET_SELECTED_ATTRIBUTE,
+  UPDATE_CART,
 } from "../actions/types";
 
 const initialState = {
   cartItems: [],
   cartOpen: false,
-  itemCounter: "0",
   loading: false,
 };
 
@@ -39,6 +39,7 @@ export default function cartReducer(state = initialState, action) {
         ...state,
         cartOpen: !state.cartOpen,
       };
+    case UPDATE_CART:
     case INCREASE_QUANTITY:
       return {
         ...state,
@@ -62,6 +63,7 @@ export default function cartReducer(state = initialState, action) {
           return item;
         }),
       };
+    case UPDATE_CART:
     case SET_SELECTED_ATTRIBUTE:
       return {
         ...state,

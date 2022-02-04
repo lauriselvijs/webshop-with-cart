@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../../styles/buttons/add-btn.css";
+import PropTypes from "prop-types";
 
 export default class AddBtn extends Component {
   render() {
@@ -11,3 +12,11 @@ export default class AddBtn extends Component {
     );
   }
 }
+
+AddBtn.propTypes = {
+  addToCart: PropTypes.func,
+};
+
+AddBtn.defaultProps = {
+  addToCart: () => {},
+};

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { selectColorCode } from "../../state/actions/cartActions";
 import "../../styles/buttons/color-btn.css";
+import PropTypes from "prop-types";
 
 export default class ColorBtn extends Component {
   render() {
@@ -24,3 +24,17 @@ export default class ColorBtn extends Component {
     );
   }
 }
+
+ColorBtn.propTypes = {
+  colorName: PropTypes.string,
+  colorCode: PropTypes.string,
+  selectedColorCode: PropTypes.string,
+  selectColorButton: PropTypes.func,
+};
+
+ColorBtn.defaultProps = {
+  colorName: "white",
+  colorCode: "#00000",
+  selectedColorCode: "#00000",
+  selectColorButton: () => {},
+};

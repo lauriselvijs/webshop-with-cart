@@ -1,0 +1,35 @@
+.footer-modal {
+  width: 100%;
+  display: inline-block;
+  margin: 10px;
+  padding-top: 20px;
+  padding-left: 10%;
+}
+
+.view-bag-button {
+  min-width: 40%;
+  background-color: white;
+  border: 1px;
+  border-style: solid;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 50px;
+  margin: 6px;
+}
+
+.check-out-button {
+  min-width: 40%;
+  background-color: #5ece7b;
+  border: 1px;
+  border-style: solid;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 50px;
+  margin: 6px;
+}

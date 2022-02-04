@@ -1,0 +1,6 @@
+.right-arrow {
+  position: absolute;
+  padding-left: 85%;
+  padding-top: 10%;
+  z-index: 1;
+}

@@ -1,0 +1,8 @@
+.out-of-stock {
+  font-size: 28px;
+  color: black;
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  opacity: 1;
+}

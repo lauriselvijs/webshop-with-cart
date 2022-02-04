@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { incQuantity, decQuantity } from "../../state/actions/cartActions";
 import "../../styles/buttons/qty-btn.css";
+import PropTypes from "prop-types";
 
 export class QuantityBtn extends Component {
   constructor(props) {
@@ -42,6 +43,16 @@ export class QuantityBtn extends Component {
     );
   }
 }
+
+QuantityBtn.propTypes = {
+  itemId: PropTypes.string,
+  itemCount: PropTypes.number,
+};
+
+QuantityBtn.defaultProps = {
+  itemId: "1",
+  itemCount: 1,
+};
 
 const mapStateToProps = (state) => ({
   cart: state.cart,

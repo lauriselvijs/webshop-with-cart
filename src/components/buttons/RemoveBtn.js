@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../../styles/buttons/remove-btn.css";
 import { decQuantity } from "../../state/actions/cartActions";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 export class RemoveBtn extends Component {
   constructor(props) {
@@ -28,6 +29,14 @@ export class RemoveBtn extends Component {
     );
   }
 }
+
+RemoveBtn.propTypes = {
+  productId: PropTypes.string,
+};
+
+RemoveBtn.defaultProps = {
+  productId: "1",
+};
 
 const mapStateToProps = (state) => ({
   cart: state.cart,

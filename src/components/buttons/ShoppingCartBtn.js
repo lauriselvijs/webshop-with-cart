@@ -4,6 +4,7 @@ import ShoppingCart from "../../img/shopping_cart.png";
 import BlackCircle from "../../img/black_circle.png";
 import { connect } from "react-redux";
 import { openCart } from "../../state/actions/cartActions";
+import PropTypes from "prop-types";
 
 export class ShoppingCartBtn extends Component {
   constructor(props) {
@@ -49,6 +50,14 @@ export class ShoppingCartBtn extends Component {
     );
   }
 }
+
+ShoppingCartBtn.propTypes = {
+  cartItems: PropTypes.array,
+};
+
+ShoppingCartBtn.defaultProps = {
+  cartItems: [],
+};
 
 const mapStateToProps = (state) => ({
   cart: state.cart,

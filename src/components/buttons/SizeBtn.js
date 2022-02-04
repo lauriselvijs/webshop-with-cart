@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../../styles/buttons/size-btn.css";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 export class SizeBtn extends Component {
   render() {
@@ -20,6 +21,18 @@ export class SizeBtn extends Component {
     );
   }
 }
+
+SizeBtn.propTypes = {
+  selectSizeButton: PropTypes.func,
+  size: PropTypes.string,
+  selectedSize: PropTypes.string,
+};
+
+SizeBtn.defaultProps = {
+  selectSizeButton: () => {},
+  size: "S",
+  selectedSize: "S",
+};
 
 const mapStateToProps = (state) => ({
   cart: state.cart,

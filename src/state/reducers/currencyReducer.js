@@ -5,49 +5,6 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  products: [
-    {
-      name: "tech",
-      id: "1",
-      prices: [
-        {
-          currency: {
-            label: "USD",
-          },
-          amount: 844.02,
-        },
-        {
-          currency: {
-            label: "EUR",
-          },
-          amount: 606.67,
-        },
-        {
-          currency: {
-            label: "AUD",
-          },
-          amount: 1088.79,
-        },
-        {
-          currency: {
-            label: "JPY",
-          },
-          amount: 91147.25,
-        },
-        {
-          currency: {
-            label: "RUB",
-          },
-          amount: 63826.91,
-        },
-      ],
-    },
-  ],
-  currencyList: [
-    { currencyName: "USD", symbol: "$" },
-    { currencyName: "EUR", symbol: "€" },
-    { currencyName: "JPY", symbol: "¥" },
-  ],
   chosenCurrencyName: "USD",
   chosenSymbol: "$",
   currencySelected: false,

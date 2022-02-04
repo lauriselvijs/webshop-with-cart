@@ -7,10 +7,10 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import ProductPage from "./components/product/ProductPage";
-import CategoryName from "./components/categories/CategoryName";
-import ProductView from "./components/product/ProductView";
-import ShoppingCart from "./components/shopping-cart/ShoppingCart";
+import ProductPage from "./components/ProductPage/ProductPage";
+import CategoryName from "./components/Categories/CategoryName";
+import ProductView from "./components/ProductVIew/ProductView";
+import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import { connect } from "react-redux";
 import LoadingOverlay from "react-loading-overlay";
 

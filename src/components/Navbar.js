@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "../styles/navbar.css";
-import ShoppingCartModal from "../components/shopping-cart/ShoppingCartModal";
+import ShoppingCartModal from "../components/ShoppingCart/ShoppingCartModal";
 import CurrencyBtn from "../components/buttons/CurrencyBtn";
 import ShoppingCartBtn from "../components/buttons/ShoppingCartBtn";
-import Categories from "../components/categories/Categories";
+import Categories from "../components/Categories";
 import Logo from "../components/Logo";
 
 class Navbar extends Component {

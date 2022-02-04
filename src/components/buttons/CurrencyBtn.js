@@ -9,7 +9,8 @@ import {
 } from "../../state/actions/currencyActions";
 import gql from "graphql-tag";
 import { Query } from "@apollo/client/react/components";
-import Loader from "../helpers/Loader";
+import Loader from "../Loader";
+import PropTypes from "prop-types";
 
 const CURRENCY_QUERY = gql`
   query {
@@ -47,6 +48,8 @@ export class CurrencyBtn extends Component {
           if (loading) return <Loader />;
           if (error) console.log(error);
 
+          const { currencies } = data;
+
           return (
             <>
               <img
@@ -57,11 +60,11 @@ export class CurrencyBtn extends Component {
               {currencySelected && (
                 <>
                   <div
-                    className={`menu ${currencySelected ? "open" : ""}`}
+                    className="menu"
                     style={cartOpen ? { zIndex: "3" } : { zIndex: "2" }}
                   >
                     <ul>
-                      {data.currencies.map((currency, index) => (
+                      {currencies.map((currency, index) => (
                         <li
                           onClick={this.setCurrencySelected.bind(
                             this,
@@ -84,6 +87,18 @@ export class CurrencyBtn extends Component {
     );
   }
 }
+
+CurrencyBtn.propTypes = {
+  currencySelected: PropTypes.bool,
+  cartOpen: PropTypes.bool,
+  currencies: PropTypes.array,
+};
+
+CurrencyBtn.defaultProps = {
+  currencySelected: false,
+  cartOpen: false,
+  currencies: [],
+};
 
 const mapStateToProps = (state) => ({
   currency: state.currency,

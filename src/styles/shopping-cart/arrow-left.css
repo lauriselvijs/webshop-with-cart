@@ -1,0 +1,6 @@
+.left-arrow {
+  position: absolute;
+  padding-left: 63%;
+  padding-top: 10%;
+  z-index: 1;
+}

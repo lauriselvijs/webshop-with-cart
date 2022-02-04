@@ -1,0 +1,17 @@
+.product-image {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  top: 0;
+  left: 0;
+  max-height: 350px;
+  max-width: 350px;
+}
+
+.main-image-product-view {
+  width: 40%;
+  height: 40%;
+}

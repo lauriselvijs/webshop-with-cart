@@ -6,6 +6,7 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   SET_SELECTED_ATTRIBUTE,
+  UPDATE_CART,
 } from "./types";
 import store from "../store";
 
@@ -31,8 +32,7 @@ export const addItem = (item) => {
 
   if (hasItem) {
     return {
-      type: SET_SELECTED_ATTRIBUTE,
-      INCREASE_QUANTITY,
+      type: UPDATE_CART,
       payload: { id, attrObj },
     };
   } else {
