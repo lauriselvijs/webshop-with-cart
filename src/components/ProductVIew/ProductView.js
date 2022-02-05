@@ -123,7 +123,7 @@ class ProductView extends Component {
                 {product.gallery.map((image, index) => (
                   <ProductThumbnail
                     key={index}
-                    onClick={this.setMainImage.bind(this, image)}
+                    setMainImage={this.setMainImage.bind(this, image)}
                     src={image}
                   />
                 ))}
@@ -209,12 +209,14 @@ ProductView.propTypes = {
   chosenCurrencyName: PropTypes.string,
   id: PropTypes.string,
   product: PropTypes.object,
+  addItem: PropTypes.func,
 };
 
 ProductView.defaultProps = {
   chosenCurrencyName: "USD",
   id: "1",
   product: {},
+  addItem: () => {},
 };
 
 const mapStateToProps = (state) => ({

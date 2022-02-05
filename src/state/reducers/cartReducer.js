@@ -37,7 +37,7 @@ export default function cartReducer(state = initialState, action) {
     case OPEN_CART:
       return {
         ...state,
-        cartOpen: !state.cartOpen,
+        cartOpen: state.cartItems.length > 0 && !state.cartOpen,
       };
     case UPDATE_CART:
     case INCREASE_QUANTITY:

@@ -140,12 +140,18 @@ ProductPageSingle.propTypes = {
   product: PropTypes.object,
   chosenCurrencyName: PropTypes.string,
   selectedCategory: PropTypes.string,
+  addItem: PropTypes.func,
+  decQuantity: PropTypes.func,
+  setSelectedAttribute: PropTypes.func,
 };
 
 ProductPageSingle.defaultProps = {
   product: {},
   chosenCurrencyName: "USD",
   selectedCategory: "All",
+  addItem: () => {},
+  decQuantity: () => {},
+  setSelectedAttribute: () => {},
 };
 
 const mapStateToProps = (state) => ({

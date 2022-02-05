@@ -2,8 +2,11 @@
   position: absolute;
   z-index: 2; /* Sit on top */
   left: 0;
-  top: 76px;
+  top: -30px;
   margin-left: 60%;
   background-color: white;
   padding: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  transform: scale(0.8, 0.7);
 }

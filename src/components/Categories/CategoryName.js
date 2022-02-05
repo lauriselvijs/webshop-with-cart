@@ -23,4 +23,4 @@ const mapStateToProps = (state) => ({
   categories: state.categories,
 });
 
-export default connect(mapStateToProps, null)(CategoryName);
+export default connect(mapStateToProps)(CategoryName);

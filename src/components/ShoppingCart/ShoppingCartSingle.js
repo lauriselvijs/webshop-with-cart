@@ -158,12 +158,16 @@ ShoppingCartSingle.propTypes = {
   item: PropTypes.object,
   chosenCurrencyName: PropTypes.string,
   cartOpen: PropTypes.bool,
+  removeItem: PropTypes.func,
+  setSelectedAttribute: PropTypes.func,
 };
 
 ShoppingCartSingle.defaultProps = {
   item: {},
   chosenCurrencyName: "USD",
   cartOpen: false,
+  removeItem: () => {},
+  setSelectedAttribute: () => {},
 };
 
 const mapStateToProps = (state) => ({

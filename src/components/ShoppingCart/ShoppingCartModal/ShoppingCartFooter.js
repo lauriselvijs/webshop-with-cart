@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../../../styles/shopping-cart/shopping-cart-modal/shopping-cart-footer.css";
 import { connect } from "react-redux";
 import { openCart } from "../../../state/actions/cartActions";
+import PropTypes from "prop-types";
 
 export class ShoppingCartFooter extends Component {
   constructor(props) {
@@ -18,21 +19,29 @@ export class ShoppingCartFooter extends Component {
   render() {
     return (
       <div className="footer-modal">
-        <Link to="/shopping-cart">
-          <button onClick={this.onViewBagBtnClick} className="view-bag-button">
+        <>
+          <Link
+            onClick={this.onViewBagBtnClick}
+            className="view-bag-button"
+            to="/shopping-cart"
+          >
             VIEW BAG
-          </button>
-        </Link>
-        <Link to="/check-out">
-          <button className="check-out-button">CHECK OUT</button>
-        </Link>
+          </Link>
+          <Link className="check-out-button" to="/check-out">
+            CHECK OUT
+          </Link>
+        </>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  cart: state.cart,
-});
+ShoppingCartFooter.propTypes = {
+  openCart: PropTypes.func,
+};
 
-export default connect(mapStateToProps, { openCart })(ShoppingCartFooter);
+ShoppingCartFooter.defaultProps = {
+  openCart: () => {},
+};
+
+export default connect(null, { openCart })(ShoppingCartFooter);

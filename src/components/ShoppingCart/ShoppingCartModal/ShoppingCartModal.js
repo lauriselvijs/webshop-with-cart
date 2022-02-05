@@ -3,7 +3,6 @@ import "../../../styles/shopping-cart/shopping-cart-modal/shopping-cart-modal.cs
 import { connect } from "react-redux";
 import { getCartItems } from "../../../state/actions/cartActions";
 import ProductShoppingCart from "../ShoppingCart";
-import { Link } from "react-router-dom";
 import {
   getTotalItemCount,
   getTotalItemAmount,
@@ -11,6 +10,7 @@ import {
 import ShoppingCartTitle from "./ShoppingCartTitle";
 import ShoppingCartTotal from "./ShoppingCartTotal";
 import ShoppingCartFooter from "./ShoppingCartFooter";
+import PropTypes from "prop-types";
 
 export class ShoppingCartModal extends Component {
   constructor(props) {
@@ -47,6 +47,22 @@ export class ShoppingCartModal extends Component {
     );
   }
 }
+
+ShoppingCartModal.propTypes = {
+  cartOpen: PropTypes.bool,
+  cartItems: PropTypes.array,
+  chosenSymbol: PropTypes.string,
+  chosenCurrencyName: PropTypes.string,
+  getCartItems: PropTypes.func,
+};
+
+ShoppingCartModal.defaultProps = {
+  cartOpen: false,
+  cartItems: [],
+  chosenSymbol: "$",
+  chosenCurrencyName: "USD",
+  getCartItems: () => {},
+};
 
 const mapStateToProps = (state) => ({
   cart: state.cart,

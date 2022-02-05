@@ -32,10 +32,12 @@ export class RemoveBtn extends Component {
 
 RemoveBtn.propTypes = {
   productId: PropTypes.string,
+  decQuantity: PropTypes.func,
 };
 
 RemoveBtn.defaultProps = {
   productId: "1",
+  decQuantity: () => {},
 };
 
 const mapStateToProps = (state) => ({

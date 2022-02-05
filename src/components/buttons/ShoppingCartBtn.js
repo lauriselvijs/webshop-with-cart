@@ -39,7 +39,6 @@ export class ShoppingCartBtn extends Component {
               className="black-circle"
               src={BlackCircle}
               alt="black-circle"
-              style={{ width: "20px" }}
             />
             <div className="quantity-count">{totalAmountItems}</div>
           </div>
@@ -53,10 +52,12 @@ export class ShoppingCartBtn extends Component {
 
 ShoppingCartBtn.propTypes = {
   cartItems: PropTypes.array,
+  openCart: PropTypes.func,
 };
 
 ShoppingCartBtn.defaultProps = {
   cartItems: [],
+  openCart: () => {},
 };
 
 const mapStateToProps = (state) => ({

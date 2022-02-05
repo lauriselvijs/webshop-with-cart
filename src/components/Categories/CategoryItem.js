@@ -37,7 +37,7 @@ export class CategoryItem extends Component {
         onClick={this.selectCategory.bind(this, category.name)}
         className={categorySelectedClass}
       >
-        {capitalizeFirstLetter(category.name)}
+        {category.name.toUpperCase()}
       </Link>
     );
   }
@@ -46,11 +46,13 @@ export class CategoryItem extends Component {
 CategoryItem.propTypes = {
   category: PropTypes.object,
   selectedCategory: PropTypes.string,
+  setCurrentSelectedCategory: PropTypes.func,
 };
 
 CategoryItem.defaultProps = {
   category: {},
   selectedCategory: "All",
+  setCurrentSelectedCategory: () => {},
 };
 
 const mapStateToProps = (state) => ({

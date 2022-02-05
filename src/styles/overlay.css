@@ -1,0 +1,13 @@
+.grey-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.grey-overlay-inactive {
+  padding-top: 20px;
+}

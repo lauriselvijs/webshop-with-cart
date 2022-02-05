@@ -74,4 +74,4 @@ const mapStateToProps = (state) => ({
   categories: state.categories,
 });
 
-export default connect(mapStateToProps, {})(ProductPage);
+export default connect(mapStateToProps)(ProductPage);

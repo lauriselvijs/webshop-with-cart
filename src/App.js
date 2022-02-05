@@ -55,7 +55,10 @@ export class App extends Component {
               path="shopping-cart"
               element={
                 <>
-                  <LoadingOverlay active={cartOpen} className="loading-overlay">
+                  <LoadingOverlay
+                    active={cartOpen}
+                    className="loading-overlay-shopping-cart"
+                  >
                     <ShoppingCart />
                   </LoadingOverlay>
                 </>
