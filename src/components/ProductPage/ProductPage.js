@@ -6,6 +6,7 @@ import gql from "graphql-tag";
 import { Query } from "@apollo/client/react/components";
 import Loader from "../Loader";
 import PropTypes from "prop-types";
+import { setCurrentSelectedCategory } from "../../state/actions/categoriesActions";
 
 const PRODUCTS_QUERY = gql`
   query ProductsQuery($title: String!) {
@@ -37,11 +38,16 @@ const PRODUCTS_QUERY = gql`
 `;
 
 export class ProductPage extends Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.category !== prevProps.category) {
+      this.props.setCurrentSelectedCategory(this.props.category);
+    }
+  }
   render() {
-    const { selectedCategory } = this.props.categories;
+    const { category } = this.props;
 
     return (
-      <Query query={PRODUCTS_QUERY} variables={{ title: selectedCategory }}>
+      <Query query={PRODUCTS_QUERY} variables={{ title: category }}>
         {({ loading, error, data }) => {
           if (loading) return <Loader />;
           if (error) console.log(error);
@@ -61,17 +67,13 @@ export class ProductPage extends Component {
 }
 
 ProductPage.propTypes = {
-  selectedCategory: PropTypes.string,
   products: PropTypes.array,
+  setCurrentSelectedCategory: PropTypes.func,
 };
 
 ProductPage.defaultProps = {
-  selectedCategory: "All",
   products: [],
+  setCurrentSelectedCategory: () => {},
 };
 
-const mapStateToProps = (state) => ({
-  categories: state.categories,
-});
-
-export default connect(mapStateToProps)(ProductPage);
+export default connect(null, { setCurrentSelectedCategory })(ProductPage);

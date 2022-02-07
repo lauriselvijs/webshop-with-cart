@@ -13,6 +13,7 @@ import ProductView from "./components/ProductVIew/ProductView";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import { connect } from "react-redux";
 import LoadingOverlay from "react-loading-overlay";
+import Overlay from "./components/Overlay";
 
 export class App extends Component {
   render() {
@@ -31,12 +32,34 @@ export class App extends Component {
               }
             ></Route>
             <Route
-              path={`/${selectedCategory}`}
+              path={"/all"}
               element={
                 <>
                   <LoadingOverlay active={cartOpen} className="loading-overlay">
                     <CategoryName />
-                    <ProductPage />
+                    <ProductPage category="all" />
+                  </LoadingOverlay>
+                </>
+              }
+            ></Route>
+            <Route
+              path={"/clothes"}
+              element={
+                <>
+                  <LoadingOverlay active={cartOpen} className="loading-overlay">
+                    <CategoryName />
+                    <ProductPage category="clothes" />
+                  </LoadingOverlay>
+                </>
+              }
+            ></Route>
+            <Route
+              path={"/tech"}
+              element={
+                <>
+                  <LoadingOverlay active={cartOpen} className="loading-overlay">
+                    <CategoryName />
+                    <ProductPage category="tech" />
                   </LoadingOverlay>
                 </>
               }
