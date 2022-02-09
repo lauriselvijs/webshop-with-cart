@@ -1,10 +1,41 @@
+.menu-list {
+  position: relative;
+}
+
 .menu {
   position: absolute;
-  top: 60px;
+  top: 55px;
   background: white;
-  padding: 10px;
-  right: 10px;
   text-align: center;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   cursor: default;
+  margin: 0px;
+  padding: 0px;
+  z-index: 2;
+}
+
+.currency-simbol-btn {
+  font-size: 26px;
+  font-weight: normal;
+  cursor: default;
+}
+
+.currency-list-item {
+  padding: 15px;
+  padding-right: 30px;
+}
+
+.currency-list-item:hover {
+  background-color: #e5e5e5;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  font-size: 20px;
+  padding: 20px;
+  white-space: nowrap;
 }

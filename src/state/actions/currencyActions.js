@@ -13,8 +13,9 @@ export const setCurrency = (currencyName, symbol) => {
   };
 };
 
-export const setCurrencySelected = () => {
+export const setCurrencySelected = (open) => {
   return {
     type: SET_CURRENCY_SELECTED,
+    payload: open,
   };
 };

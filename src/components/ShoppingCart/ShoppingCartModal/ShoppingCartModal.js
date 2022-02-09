@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../../../styles/shopping-cart/shopping-cart-modal/shopping-cart-modal.css";
 import { connect } from "react-redux";
 import { getCartItems } from "../../../state/actions/cartActions";
-import ProductShoppingCart from "../ShoppingCart";
+import ShoppingCartProductView from "./ShoppingCartProductView";
 import {
   getTotalItemCount,
   getTotalItemAmount,
@@ -35,7 +35,7 @@ export class ShoppingCartModal extends Component {
       cartOpen && (
         <div className="modal">
           <ShoppingCartTitle totalAmountItems={totalAmountItems} />
-          <ProductShoppingCart />
+          <ShoppingCartProductView />
           <ShoppingCartTotal
             chosenSymbol={chosenSymbol}
             totalAmount={totalAmount}

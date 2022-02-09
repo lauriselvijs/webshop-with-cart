@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../styles/navbar.css";
-import ShoppingCartModal from "../components/ShoppingCart/ShoppingCartModal";
 import CurrencyBtn from "../components/buttons/CurrencyBtn";
 import ShoppingCartBtn from "../components/buttons/ShoppingCartBtn";
 import Categories from "../components/Categories";
@@ -18,7 +17,6 @@ class Navbar extends Component {
           <div className="topnav-right">
             <CurrencyBtn />
             <ShoppingCartBtn />
-            <ShoppingCartModal />
           </div>
         </div>
       </div>

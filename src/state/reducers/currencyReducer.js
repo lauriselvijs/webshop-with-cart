@@ -25,7 +25,7 @@ export default function getReducer(state = initialState, action) {
     case SET_CURRENCY_SELECTED:
       return {
         ...state,
-        currencySelected: !state.currencySelected,
+        currencySelected: action.payload,
       };
     default:
       return state;

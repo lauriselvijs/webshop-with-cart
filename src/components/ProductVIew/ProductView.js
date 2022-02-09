@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { addItem } from "../../state/actions/cartActions";
 import SizeBtn from "../buttons/SizeBtn";
-import RemoveBtn from "../buttons/RemoveBtn";
 import ColorBtn from "../buttons/ColorBtn";
 import { formatMoney } from "../../utils/formatUtils";
 import gql from "graphql-tag";
@@ -23,6 +22,7 @@ import ProductName from "../product/ProductName";
 import ProductAttrName from "../product/ProductAttrName";
 import ProductDesc from "./ProductDesc";
 import PropTypes from "prop-types";
+import OutOfStock from "../ProductPage/OutOfStock";
 
 const PRODUCT_QUERY = gql`
   query ProductQuery($id: String!) {
@@ -128,8 +128,13 @@ class ProductView extends Component {
                   />
                 ))}
               </div>
+              {!inStock && <OutOfStock className="out-of-stock-product-view" />}
               <MainProductImage
-                className="main-image-product-view"
+                className={
+                  inStock
+                    ? "main-image-product-view"
+                    : "product-out-of-stock-product-view"
+                }
                 src={mainImageUrl || gallery[0]}
               />
               <div className="product-view-right-section">
@@ -192,7 +197,6 @@ class ProductView extends Component {
                         itemCount
                       )}
                     />
-                    <RemoveBtn productId={id} />
                   </div>
                 )}
                 <ProductDesc description={description} />

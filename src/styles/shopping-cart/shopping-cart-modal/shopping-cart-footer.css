@@ -7,30 +7,49 @@
 }
 
 .view-bag-button {
-  min-width: 40%;
-  background-color: white;
-  border: 1px;
-  border-style: solid;
-  color: black;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  margin-top: 50px;
-  margin: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+
+  position: static;
+  width: 140px;
+  height: 43px;
+  left: 0px;
+  top: 0px;
+
+  background: #ffffff;
+  border: 1px solid #1d1f22;
+  box-sizing: border-box;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 10px;
 }
 
 .check-out-button,
 .check-out-button:visited {
-  text-decoration: none;
-  min-width: 40%;
-  background-color: #5ece7b;
-  border: 1px;
-  border-style: solid;
-  padding: 15px 32px;
-  text-align: center;
-  font-size: 16px;
-  margin-top: 50px;
-  margin: 6px;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+
+  position: static;
+  width: 140px;
+  height: 43px;
+  left: 0px;
+  top: 0px;
+
+  background: #5ece7b;
+  box-sizing: border-box;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 10px;
 }

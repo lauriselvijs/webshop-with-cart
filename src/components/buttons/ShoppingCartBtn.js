@@ -5,16 +5,37 @@ import BlackCircle from "../../img/black_circle.png";
 import { connect } from "react-redux";
 import { openCart } from "../../state/actions/cartActions";
 import PropTypes from "prop-types";
+import ShoppingCartModal from "../ShoppingCart/ShoppingCartModal/ShoppingCartModal";
 
 export class ShoppingCartBtn extends Component {
   constructor(props) {
     super(props);
 
+    this.wrapperRef = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.onCartBtnClick = this.onCartBtnClick.bind(this);
   }
 
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+      this.props.openCart(false);
+    }
+  }
+
   onCartBtnClick() {
-    this.props.openCart();
+    const { cartOpen } = this.props.cart;
+    const { currencySelected } = this.props.currency;
+
+    cartOpen && this.props.openCart(false);
+    !cartOpen && this.props.openCart(true);
   }
 
   render() {
@@ -26,7 +47,7 @@ export class ShoppingCartBtn extends Component {
     );
 
     return (
-      <>
+      <div className="shopping-cart-nav-bar" ref={this.wrapperRef}>
         <img
           onClick={this.onCartBtnClick}
           className="cart-image"
@@ -34,7 +55,7 @@ export class ShoppingCartBtn extends Component {
           alt="shopping-cart"
         />
         {cartItems.length !== 0 ? (
-          <div>
+          <div className="cart-item-counter">
             <img
               className="black-circle"
               src={BlackCircle}
@@ -45,7 +66,8 @@ export class ShoppingCartBtn extends Component {
         ) : (
           ""
         )}
-      </>
+        <ShoppingCartModal />
+      </div>
     );
   }
 }
@@ -62,6 +84,7 @@ ShoppingCartBtn.defaultProps = {
 
 const mapStateToProps = (state) => ({
   cart: state.cart,
+  currency: state.currency,
 });
 
 export default connect(mapStateToProps, { openCart })(ShoppingCartBtn);

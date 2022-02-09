@@ -2,17 +2,18 @@ import React, { Component } from "react";
 import ShoppingCartSingle from "./ShoppingCartSingle";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import "../../styles/shopping-cart/shopping-cart.css";
 
 export class ShoppingCart extends Component {
   render() {
     const { cartItems, cartOpen } = this.props.cart;
     return (
       <>
-        {!cartOpen && <hr style={{ width: "95%", color: "lightgray" }} />}
+        {!cartOpen && <hr />}
         {cartItems.map((item, index) => (
           <div key={index}>
             <ShoppingCartSingle item={item} />
-            {!cartOpen && <hr style={{ width: "95%", color: "lightgray" }} />}
+            {!cartOpen && <hr />}
           </div>
         ))}
       </>

@@ -8,13 +8,11 @@ import {
   setSelectedAttribute,
 } from "../../state/actions/cartActions";
 import { Link } from "react-router-dom";
-import TrashCan from "../../img/trash_can.png";
 import PropTypes from "prop-types";
 import { findPrice, getAttributeObj } from "../../utils/reduceUtils";
 import MainProductImg from "../product/MainProductImg";
 import OutOfStock from "./OutOfStock";
 import AddCartBtn from "../buttons/AddCartBtn";
-import RemoveTrashCanBtn from "../buttons/RemoveTrashCanBtn";
 import ProductPageSingleName from "./ProductPageSingleName";
 import ProductPrice from "../product/ProductPrice";
 
@@ -113,12 +111,6 @@ export class ProductPageSingle extends Component {
                 )}
                 onMouseEnterBtn={this.onMouseEnterBtn.bind(this, id)}
                 onMouseLeaveBtn={this.onMouseLeaveBtn.bind(this, id)}
-              />
-              <RemoveTrashCanBtn
-                src={TrashCan}
-                removeFromCart={this.removeFromCart.bind(this, id)}
-                onMouseEnterBtn={this.onMouseEnterBtn}
-                onMouseLeaveBtn={this.onMouseLeaveBtn}
               />
             </>
           )}

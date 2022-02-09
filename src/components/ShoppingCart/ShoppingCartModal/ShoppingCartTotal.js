@@ -11,7 +11,7 @@ export default class ShoppingCartTotal extends Component {
       <>
         <span className="total-title">Total</span>
         <span className="total-amount">
-          {chosenSymbol} {formatMoney(totalAmount, chosenCurrencyName)}
+          {formatMoney(totalAmount, chosenCurrencyName)}
         </span>
       </>
     );

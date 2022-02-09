@@ -33,19 +33,10 @@
 /* Right-aligned section inside the top navigation */
 .topnav-right {
   float: right;
+  display: flex;
+  justify-content: space-between;
   margin-left: auto;
   padding: 20px;
   margin-right: 40px;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-li {
-  font-size: 20px;
-  padding: 10px;
-  white-space: nowrap;
+  width: 8%;
 }

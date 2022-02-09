@@ -43,9 +43,10 @@ export const addItem = (item) => {
   }
 };
 
-export const openCart = () => {
+export const openCart = (open) => {
   return {
     type: OPEN_CART,
+    payload: open,
   };
 };
 

@@ -137,7 +137,7 @@ export class ShoppingCartSingle extends Component {
           <QuantityBtn itemCount={count} itemId={id} />
         </div>
         <MainProductImg src={gallery[itemIndex]} />
-        {!cartOpen && (
+        {!cartOpen && gallery.length > 1 && (
           <>
             <ArrowRight
               src={RightArrow}

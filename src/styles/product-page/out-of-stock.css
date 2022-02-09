@@ -6,3 +6,12 @@
   left: 30%;
   opacity: 1;
 }
+
+.out-of-stock-product-view {
+  font-size: 28px;
+  color: black;
+  position: absolute;
+  top: 28%;
+  left: 20%;
+  opacity: 1;
+}

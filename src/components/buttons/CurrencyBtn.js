@@ -24,22 +24,43 @@ const CURRENCY_QUERY = gql`
 export class CurrencyBtn extends Component {
   constructor(props) {
     super(props);
+
+    this.wrapperRef = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.selectCurrencyButton = this.selectCurrencyButton.bind(this);
     this.setCurrencySelected = this.setCurrencySelected.bind(this);
 
     this.state = {};
   }
 
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+      this.props.setCurrencySelected(false);
+    }
+  }
+
   selectCurrencyButton() {
-    this.props.setCurrencySelected();
+    const { currencySelected } = this.props.currency;
+
+    currencySelected && this.props.setCurrencySelected(false);
+    !currencySelected && this.props.setCurrencySelected(true);
   }
 
   setCurrencySelected(currencyName, symbol) {
     this.props.setCurrency(currencyName, symbol);
+    this.props.setCurrencySelected();
   }
 
   render() {
-    const { currencySelected } = this.props.currency;
+    const { currencySelected, chosenSymbol } = this.props.currency;
     const { cartOpen } = this.props.cart;
 
     return (
@@ -49,23 +70,21 @@ export class CurrencyBtn extends Component {
           if (error) console.log(error);
 
           const { currencies } = data;
-
           return (
-            <>
-              <img
-                src={Currency}
-                alt="currency"
+            <div className="menu-list" ref={this.wrapperRef}>
+              <div
+                className="currency-simbol-btn"
                 onClick={this.selectCurrencyButton}
-              />
+              >
+                {chosenSymbol}
+              </div>
               {currencySelected && (
                 <>
-                  <div
-                    className="menu"
-                    style={cartOpen ? { zIndex: "3" } : { zIndex: "2" }}
-                  >
-                    <ul>
+                  <div className="menu">
+                    <ul className="currency-list">
                       {currencies.map((currency, index) => (
                         <li
+                          className="currency-list-item"
                           onClick={this.setCurrencySelected.bind(
                             this,
                             currency.label,
@@ -80,7 +99,7 @@ export class CurrencyBtn extends Component {
                   </div>
                 </>
               )}
-            </>
+            </div>
           );
         }}
       </Query>
