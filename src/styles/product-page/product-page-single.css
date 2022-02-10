@@ -1,12 +1,12 @@
 .card {
   position: relative;
   cursor: pointer;
-  padding-top: 20px;
+  padding-top: 10px;
   padding-bottom: 20px;
   top: 0;
   left: 0;
-  width: auto;
-  height: auto;
+  width: 386px;
+  height: 444px;
   text-align: center;
 }
 
@@ -16,7 +16,6 @@
   padding: 20px 20px;
   top: 0;
   left: 0;
-  min-width: 300px;
   opacity: 0.5;
 }
 
@@ -31,6 +30,7 @@
 
 .container-product-page-single-footer {
   padding: 2px 16px;
+  text-align: left;
 }
 
 .product-page-single-link {

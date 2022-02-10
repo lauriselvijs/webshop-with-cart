@@ -1,7 +1,22 @@
-.category-selected {
-  border-bottom: 2px solid green;
+.category-selected,
+.category-selected:visited {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+
+  /* --c-primary */
+  color: #5ece7b;
+
+  border-bottom: 2px solid #5ece7b;
 }
 
 .category {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
   border-bottom: none;
 }

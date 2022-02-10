@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "../../../styles/shopping-cart/shopping-cart-modal/shopping-cart-modal.css";
 import { connect } from "react-redux";
 import { getCartItems } from "../../../state/actions/cartActions";
-import ShoppingCartProductView from "./ShoppingCartProductView";
 import {
   getTotalItemCount,
   getTotalItemAmount,
@@ -11,6 +10,7 @@ import ShoppingCartTitle from "./ShoppingCartTitle";
 import ShoppingCartTotal from "./ShoppingCartTotal";
 import ShoppingCartFooter from "./ShoppingCartFooter";
 import PropTypes from "prop-types";
+import ShoppingCartProductView from "./ShoppingCartProductView";
 
 export class ShoppingCartModal extends Component {
   constructor(props) {

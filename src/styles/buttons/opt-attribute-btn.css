@@ -1,4 +1,4 @@
-.size-attr-btn {
+.opt-attr-btn {
   width: fit-content;
   height: fit-content;
 
@@ -16,7 +16,7 @@
   margin: 5px;
 }
 
-.size-selected-attr-btn {
+.opt-attr-selected-btn {
   width: fit-content;
   height: fit-content;
 

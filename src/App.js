@@ -9,11 +9,10 @@ import {
 } from "react-router-dom";
 import ProductPage from "./components/ProductPage/ProductPage";
 import CategoryName from "./components/Categories/CategoryName";
-import ProductView from "./components/ProductVIew/ProductView";
+import ProductView from "./components/ProductView/ProductView";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import { connect } from "react-redux";
 import LoadingOverlay from "react-loading-overlay";
-import Overlay from "./components/Overlay";
 
 export class App extends Component {
   render() {
@@ -28,7 +27,9 @@ export class App extends Component {
             <Route
               path={"/"}
               element={
-                <>{selectedCategory === "all" && <Navigate to="/all" />}</>
+                <>
+                  <Navigate to={`/${selectedCategory}`} />
+                </>
               }
             ></Route>
             <Route
@@ -78,10 +79,7 @@ export class App extends Component {
               path="shopping-cart"
               element={
                 <>
-                  <LoadingOverlay
-                    active={cartOpen}
-                    className="loading-overlay-shopping-cart"
-                  >
+                  <LoadingOverlay active={cartOpen} className="loading-overlay">
                     <ShoppingCart />
                   </LoadingOverlay>
                 </>

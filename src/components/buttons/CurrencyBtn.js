@@ -61,7 +61,6 @@ export class CurrencyBtn extends Component {
 
   render() {
     const { currencySelected, chosenSymbol } = this.props.currency;
-    const { cartOpen } = this.props.cart;
 
     return (
       <Query query={CURRENCY_QUERY}>
@@ -76,7 +75,7 @@ export class CurrencyBtn extends Component {
                 className="currency-simbol-btn"
                 onClick={this.selectCurrencyButton}
               >
-                {chosenSymbol}
+                {chosenSymbol} {currencySelected ? "⌄" : "⌃"}
               </div>
               {currencySelected && (
                 <>

@@ -23,18 +23,19 @@ export class QuantityBtn extends Component {
   }
 
   render() {
-    const { itemId, itemCount } = this.props;
+    const { itemId, itemCount, plusBtnClass, minusBtnClass, itemCountClass } =
+      this.props;
     return (
       <>
         <button
-          className="plus-button-modal"
+          className={plusBtnClass}
           onClick={this.increaseQuantity.bind(this, itemId)}
         >
           +
         </button>
-        <div className="item-count">{itemCount}</div>
+        <div className={itemCountClass}>{itemCount}</div>
         <button
-          className="minus-button-modal"
+          className={minusBtnClass}
           onClick={this.decreaseQuantity.bind(this, itemId)}
         >
           -
@@ -47,11 +48,17 @@ export class QuantityBtn extends Component {
 QuantityBtn.propTypes = {
   itemId: PropTypes.string,
   itemCount: PropTypes.number,
+  plusBtnClass: PropTypes.string,
+  minusBtnClass: PropTypes.string,
+  itemCountClass: PropTypes.string,
 };
 
 QuantityBtn.defaultProps = {
   itemId: "1",
   itemCount: 1,
+  plusBtnClass: "plus-button-modal",
+  minusBtnClass: "minus-button-modal",
+  itemCountClass: "item-count",
 };
 
 const mapStateToProps = (state) => ({

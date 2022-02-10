@@ -1,4 +1,6 @@
 .plus-button-modal {
+  width: 45px;
+  height: 45px;
   background-color: white;
   border: 1px;
   border-style: solid;
@@ -11,6 +13,8 @@
 }
 
 .minus-button-modal {
+  width: 45px;
+  height: 45px;
   background-color: white;
   border: 1px;
   border-style: solid;
@@ -20,4 +24,43 @@
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+}
+
+.item-count {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 160%;
+
+  align-items: center;
+  text-align: center;
+
+  color: #1d1f22;
+}
+
+.shopping-cart-modal-prod-single-plus-btn {
+  border: 1px solid #1d1f22;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  background-color: white;
+}
+
+.shopping-cart-modal-prod-single-minus-btn {
+  border: 1px solid #1d1f22;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  background-color: white;
+}
+
+.shopping-cart-modal-prod-single-item-count-btn {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+
+  color: #1d1f22;
 }

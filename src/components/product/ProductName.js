@@ -8,8 +8,8 @@ export default class ProductName extends Component {
 
     return (
       <div className={className}>
-        <h1>{brand}</h1>
-        <h2>{name}</h2>
+        <div className="brand">{brand}</div>
+        <div className="name">{name}</div>
       </div>
     );
   }

@@ -16,3 +16,7 @@
   text-align: center;
   justify-content: space-between;
 }
+
+.gallery-arrow-section {
+  position: relative;
+}

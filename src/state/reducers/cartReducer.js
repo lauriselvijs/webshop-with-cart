@@ -39,7 +39,6 @@ export default function cartReducer(state = initialState, action) {
         ...state,
         cartOpen: action.payload,
       };
-    case UPDATE_CART:
     case INCREASE_QUANTITY:
       return {
         ...state,

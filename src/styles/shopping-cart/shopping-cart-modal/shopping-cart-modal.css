@@ -6,5 +6,8 @@
   padding: 10px;
   padding-bottom: 0px;
   margin-bottom: 0px;
-  min-width: 325px;
+  width: 335px;
+  height: fit-content;
+  max-height: 540px;
+  overflow: scroll;
 }

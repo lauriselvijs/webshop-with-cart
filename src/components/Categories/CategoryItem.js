@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../../styles/categories/category-item.css";
-import { capitalizeFirstLetter } from "../../utils/stringUtils";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCurrentSelectedCategory } from "../../state/actions/categoriesActions";

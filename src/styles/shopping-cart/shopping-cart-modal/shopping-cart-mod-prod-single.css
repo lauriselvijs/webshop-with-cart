@@ -1,0 +1,15 @@
+.attribute-section {
+  transform: scale(1, 0.8);
+  padding: 0px;
+  margin: 0px;
+}
+
+.container-shopping-cart-mod-prod-single {
+  display: flex;
+}
+
+.shopping-cart-modal-prod-single-main-img-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

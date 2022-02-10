@@ -1,15 +1,26 @@
 .total-title {
-  font-size: 20px;
   float: left;
   padding-left: 30px;
   padding-top: 20px;
-  font-weight: bold;
+
+  font-family: "Roboto Condensed", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+
+  color: #1d1f22;
 }
 
 .total-amount {
-  font-size: 20px;
   float: right;
   padding-right: 30px;
   padding-top: 20px;
+
+  font-style: normal;
   font-weight: bold;
+  font-size: 16px;
+  line-height: 160%;
+
+  color: #1d1f22;
 }

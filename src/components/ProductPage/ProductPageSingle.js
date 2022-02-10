@@ -9,7 +9,7 @@ import {
 } from "../../state/actions/cartActions";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { findPrice, getAttributeObj } from "../../utils/reduceUtils";
+import { findPrice, getAttributeArr } from "../../utils/reduceUtils";
 import MainProductImg from "../product/MainProductImg";
 import OutOfStock from "./OutOfStock";
 import AddCartBtn from "../buttons/AddCartBtn";
@@ -78,12 +78,14 @@ export class ProductPageSingle extends Component {
 
     const { inStock, id, brand, name, gallery } = product;
 
-    const textAttrArr = getAttributeObj(product, "text");
-    const swatchAttrArr = getAttributeObj(product, "swatch");
+    const textAttrArr = getAttributeArr(product, "text");
+    const swatchAttrArr = getAttributeArr(product, "swatch");
 
     const attrObj = {
-      size: textAttrArr?.items[0].displayValue || "",
-      color: swatchAttrArr?.items[0].value || "",
+      size: textAttrArr[0]?.items[0].displayValue,
+      usbType: textAttrArr[1]?.items[0].displayValue,
+      touchId: textAttrArr[2]?.items[0].displayValue,
+      color: swatchAttrArr[0]?.items[0].value,
     };
 
     return (
@@ -116,10 +118,15 @@ export class ProductPageSingle extends Component {
           )}
 
           <div className="container-product-page-single-footer">
-            <ProductPageSingleName brand={brand} name={name} />
+            <ProductPageSingleName
+              brand={brand}
+              name={name}
+              className="product-page-cart-product-name"
+            />
             <ProductPrice
               price={price}
               chosenCurrencyName={chosenCurrencyName}
+              className="product-page-cart-product-price"
             />
           </div>
         </Link>

@@ -6,28 +6,24 @@ import "../../styles/shopping-cart/shopping-cart.css";
 
 export class ShoppingCart extends Component {
   render() {
-    const { cartItems, cartOpen } = this.props.cart;
+    const { cartItems } = this.props.cart;
     return (
-      <>
-        {!cartOpen && <hr />}
+      <div className="shopping-cart">
         {cartItems.map((item, index) => (
           <div key={index}>
             <ShoppingCartSingle item={item} />
-            {!cartOpen && <hr />}
           </div>
         ))}
-      </>
+      </div>
     );
   }
 }
 
 ShoppingCart.propTypes = {
-  cartOpen: PropTypes.bool,
   cartItems: PropTypes.array,
 };
 
 ShoppingCart.defaultProps = {
-  cartOpen: false,
   cartItems: [],
 };
 

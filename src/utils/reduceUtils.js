@@ -5,8 +5,8 @@ export const findPrice = (product, chosenCurrencyName) =>
 export const checkIfHasAttribute = (product, attributeName) =>
   product.attributes.some((attribute) => attribute.type === attributeName);
 
-export const getAttributeObj = (product, attributeName) =>
-  product.attributes.find((attribute) => attribute.type === attributeName);
+export const getAttributeArr = (product, attributeName) =>
+  product.attributes.filter((attribute) => attribute.type === attributeName);
 
 export const getTotalItemCount = (cartItems) =>
   cartItems.reduce((total, item) => total + parseInt(item.count), 0);

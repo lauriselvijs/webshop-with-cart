@@ -1,6 +1,12 @@
 .out-of-stock {
-  font-size: 28px;
-  color: black;
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 160%;
+
+  color: #8d8f9a;
+
   position: absolute;
   top: 40%;
   left: 30%;
@@ -8,10 +14,14 @@
 }
 
 .out-of-stock-product-view {
-  font-size: 28px;
-  color: black;
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 160%;
+
+  color: #8d8f9a;
+
   position: absolute;
-  top: 28%;
-  left: 20%;
   opacity: 1;
 }

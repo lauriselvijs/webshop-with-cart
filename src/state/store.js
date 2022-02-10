@@ -13,7 +13,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistConfig = {
   key: "persist-key",
   storage,
-  blacklist: ["currency", "categories", "cart"],
+  blacklist: ["currency", "cart"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

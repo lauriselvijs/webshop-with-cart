@@ -13,7 +13,7 @@ export class ShoppingCartFooter extends Component {
   }
 
   onViewBagBtnClick() {
-    this.props.openCart();
+    this.props.openCart(false);
   }
 
   render() {

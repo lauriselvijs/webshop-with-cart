@@ -9,6 +9,7 @@ import {
   UPDATE_CART,
 } from "./types";
 import store from "../store";
+import { v4 as uuidv4 } from "uuid";
 
 export const getCartItems = () => {
   return {
@@ -28,12 +29,34 @@ export const addItem = (item) => {
     .getState()
     .cart.cartItems.some((cartItem) => cartItem.id === item.id);
 
+  let newItem = {};
+
+  if (!hasItem) {
+    const uniqueId = uuidv4();
+    newItem = { ...item, uniqueId };
+  } else {
+    Object.assign(newItem, item);
+  }
+
+  const hasSameAttribute = store
+    .getState()
+    .cart.cartItems.some(
+      (cartItem) =>
+        cartItem.uniqueId === newItem.uniqueId &&
+        newItem.attrObj.size === cartItem.attrObj.size &&
+        newItem.attrObj.usbType === cartItem.attrObj.usbType &&
+        newItem.attrObj.touchId === cartItem.attrObj.touchId &&
+        newItem.attrObj.color === cartItem.attrObj.color
+    );
+
+  console.log(hasSameAttribute);
+
   const { id, attrObj } = item;
 
-  if (hasItem) {
+  if (hasSameAttribute) {
     return {
-      type: UPDATE_CART,
-      payload: { id, attrObj },
+      type: INCREASE_QUANTITY,
+      payload: { id },
     };
   } else {
     return {

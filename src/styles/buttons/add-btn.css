@@ -1,11 +1,25 @@
 .add-to-cart {
-  background-color: #5ece7b;
-  padding: 0;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+  position: relative;
+  width: 292px;
+  height: 52px;
+
+  background: #5ece7b;
+
+  margin-top: 25px;
+  margin-bottom: 25px;
+
+  /* --button-font */
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 600;
   font-size: 16px;
+  line-height: 120%;
+
+  /* identical to box height, or 19px */
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+
+  /* --c-white */
+  color: #ffffff;
 }

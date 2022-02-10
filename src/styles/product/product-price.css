@@ -1,0 +1,49 @@
+.product-page-cart-product-price {
+  padding-top: 0px;
+  margin-top: 0px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+  color: #1d1f22;
+}
+
+.product-price {
+  font-weight: 500;
+  color: #1d1f22;
+}
+
+.product-price-product-view {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 18px;
+
+  /* or 75% */
+  display: flex;
+  align-items: center;
+
+  color: #1d1f22;
+}
+
+.shopping-cart-single-price {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 18px;
+  padding-bottom: 30px;
+
+  /* or 75% */
+  display: flex;
+  align-items: center;
+
+  color: #1d1f22;
+}
+
+.shopping-cart-mod-prod-single-price {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+
+  color: #1d1f22;
+}

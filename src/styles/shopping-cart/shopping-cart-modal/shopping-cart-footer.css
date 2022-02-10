@@ -6,7 +6,8 @@
   padding-top: 20px;
 }
 
-.view-bag-button {
+.view-bag-button,
+.view-bag-button:visited {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,6 +45,7 @@
   left: 0px;
   top: 0px;
 
+  color: white;
   background: #5ece7b;
   box-sizing: border-box;
 

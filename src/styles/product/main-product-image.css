@@ -15,12 +15,21 @@
 }
 
 .main-image-product-view {
-  width: 40%;
-  height: 40%;
+  width: 100%;
+  height: 100%;
 }
 
 .product-out-of-stock-product-view {
-  width: 40%;
-  height: 40%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   opacity: 0.5;
+}
+
+.shopping-cart-modal-prod-single-main-img {
+  width: 105px;
+  height: 137px;
 }

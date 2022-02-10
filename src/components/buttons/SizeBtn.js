@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import "../../styles/buttons/size-btn.css";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-export class SizeBtn extends Component {
+export default class SizeBtn extends Component {
   render() {
     const { selectSizeButton, size, selectedSize } = this.props;
 
-    let sizeBtnClass = "size-modal-btn";
+    let sizeBtnClass = "size-attr-btn";
 
     if (selectedSize === size) {
-      sizeBtnClass = "size-selected-modal-btn";
+      sizeBtnClass = "size-selected-attr-btn";
     } else {
-      sizeBtnClass = "size-modal-btn";
+      sizeBtnClass = "size-attr-btn";
     }
     return (
       <button className={sizeBtnClass} onClick={selectSizeButton}>
@@ -33,9 +32,3 @@ SizeBtn.defaultProps = {
   size: "S",
   selectedSize: "S",
 };
-
-const mapStateToProps = (state) => ({
-  cart: state.cart,
-});
-
-export default connect(mapStateToProps)(SizeBtn);

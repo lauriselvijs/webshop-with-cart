@@ -16,6 +16,18 @@
   padding-left: 100px;
 }
 
+.product-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 40%;
+}
+
 .price-value {
   font-size: 22px;
+}
+
+.swatch-attribute {
+  margin-top: 20px;
 }

@@ -1,4 +1,9 @@
 hr {
   width: 95%;
   color: lightgrey;
+  opacity: 0.2;
+}
+
+.shopping-cart {
+  height: fit-content;
 }
