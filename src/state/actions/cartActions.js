@@ -6,10 +6,14 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   SET_SELECTED_ATTRIBUTE,
-  UPDATE_CART,
 } from "./types";
 import store from "../store";
 import { v4 as uuidv4 } from "uuid";
+import {
+  checkIfArrHasSameAttribute,
+  findProductWithSameProps,
+  checkIfObjHasSameAttribute,
+} from "./cartHelpers";
 
 export const getCartItems = () => {
   return {
@@ -25,43 +29,27 @@ export const removeItem = (id) => {
 };
 
 export const addItem = (item) => {
-  const hasItem = store
-    .getState()
-    .cart.cartItems.some((cartItem) => cartItem.id === item.id);
+  const hasSameAttribute = checkIfArrHasSameAttribute(item);
+  const getElementWithSameProps = findProductWithSameProps(item);
 
   let newItem = {};
 
-  if (!hasItem) {
+  if (!hasSameAttribute) {
     const uniqueId = uuidv4();
     newItem = { ...item, uniqueId };
-  } else {
-    Object.assign(newItem, item);
   }
 
-  const hasSameAttribute = store
-    .getState()
-    .cart.cartItems.some(
-      (cartItem) =>
-        cartItem.uniqueId === newItem.uniqueId &&
-        newItem.attrObj.size === cartItem.attrObj.size &&
-        newItem.attrObj.usbType === cartItem.attrObj.usbType &&
-        newItem.attrObj.touchId === cartItem.attrObj.touchId &&
-        newItem.attrObj.color === cartItem.attrObj.color
-    );
-
-  console.log(hasSameAttribute);
-
-  const { id, attrObj } = item;
+  const { uniqueId } = getElementWithSameProps || {};
 
   if (hasSameAttribute) {
     return {
       type: INCREASE_QUANTITY,
-      payload: { id },
+      payload: { uniqueId },
     };
   } else {
     return {
       type: ADD_ITEM,
-      payload: item,
+      payload: newItem,
     };
   }
 };
@@ -73,13 +61,13 @@ export const openCart = (open) => {
   };
 };
 
-export const incQuantity = (id) => {
+export const incQuantity = (uniqueId) => {
   return {
     type: INCREASE_QUANTITY,
-    payload: { id },
+    payload: { uniqueId },
   };
 };
-export const decQuantity = (id) => {
+export const decQuantity = (uniqueId) => {
   const oneItemLeft = store
     .getState()
     .cart.cartItems.some((cartItem) => cartItem.count === 1);
@@ -87,19 +75,22 @@ export const decQuantity = (id) => {
   if (!oneItemLeft) {
     return {
       type: DECREASE_QUANTITY,
-      payload: { id },
+      payload: { uniqueId },
     };
   } else {
     return {
       type: REMOVE_ITEM,
-      payload: { id },
+      payload: { uniqueId },
     };
   }
 };
 
-export const setSelectedAttribute = (id, attrObj) => {
-  return {
-    type: SET_SELECTED_ATTRIBUTE,
-    payload: { id, attrObj },
-  };
+export const setSelectedAttribute = (uniqueId, attrObj) => {
+  const hasSameAttribute = checkIfObjHasSameAttribute(attrObj);
+
+  if (!hasSameAttribute)
+    return {
+      type: SET_SELECTED_ATTRIBUTE,
+      payload: { uniqueId, attrObj },
+    };
 };

@@ -31,36 +31,39 @@ export class ShoppingCartModProdSingle extends Component {
     this.selectTouchId = this.selectTouchId.bind(this);
   }
 
-  selectSizeButton(id, size) {
+  selectSizeButton(uniqueId, size) {
     const { attrObj } = this.props.item;
 
-    this.props.setSelectedAttribute(id, { ...attrObj, size });
+    this.props.setSelectedAttribute(uniqueId, { ...attrObj, size });
   }
 
-  selectUsbPort(id, usbAttribute) {
+  selectUsbPort(uniqueId, usbAttribute) {
     const { attrObj } = this.props.item;
 
-    this.props.setSelectedAttribute(id, { ...attrObj, usbType: usbAttribute });
+    this.props.setSelectedAttribute(uniqueId, {
+      ...attrObj,
+      usbType: usbAttribute,
+    });
   }
 
-  selectTouchId(id, touchIdAttribute) {
+  selectTouchId(uniqueId, touchIdAttribute) {
     const { attrObj } = this.props.item;
 
-    this.props.setSelectedAttribute(id, {
+    this.props.setSelectedAttribute(uniqueId, {
       ...attrObj,
       touchId: touchIdAttribute,
     });
   }
 
-  selectColorButton(id, color) {
+  selectColorButton(uniqueId, color) {
     const { attrObj } = this.props.item;
 
-    this.props.setSelectedAttribute(id, { ...attrObj, color });
+    this.props.setSelectedAttribute(uniqueId, { ...attrObj, color });
   }
 
   render() {
     const { item } = this.props;
-    const { id, brand, name, count, gallery, attrObj } = this.props.item;
+    const { uniqueId, brand, name, count, gallery, attrObj } = this.props.item;
 
     const { chosenCurrencyName } = this.props.currency;
 
@@ -97,7 +100,7 @@ export class ShoppingCartModProdSingle extends Component {
                               size={size.displayValue}
                               selectSizeButton={this.selectSizeButton.bind(
                                 this,
-                                item.id,
+                                uniqueId,
                                 size.displayValue
                               )}
                               selectedSize={attrObj.size}
@@ -114,7 +117,7 @@ export class ShoppingCartModProdSingle extends Component {
                               size={size.displayValue}
                               selectSizeButton={this.selectSizeButton.bind(
                                 this,
-                                item.id,
+                                uniqueId,
                                 size.displayValue
                               )}
                               selectedSize={attrObj.size}
@@ -132,7 +135,7 @@ export class ShoppingCartModProdSingle extends Component {
                               optionalAttribute={optAttribute.displayValue}
                               selectOptAttrButton={this.selectUsbPort.bind(
                                 this,
-                                item.id,
+                                uniqueId,
                                 optAttribute.displayValue
                               )}
                               selectedOptAttribute={attrObj.usbType}
@@ -150,7 +153,7 @@ export class ShoppingCartModProdSingle extends Component {
                               optionalAttribute={size.displayValue}
                               selectOptAttrButton={this.selectTouchId.bind(
                                 this,
-                                item.id,
+                                uniqueId,
                                 size.displayValue
                               )}
                               selectedOptAttribute={attrObj.touchId}
@@ -177,7 +180,7 @@ export class ShoppingCartModProdSingle extends Component {
                         colorName={color.displayValue}
                         selectColorButton={this.selectColorBtn.bind(
                           this,
-                          item.id,
+                          uniqueId,
                           color.value
                         )}
                         selectedColorCode={attrObj.color}
@@ -196,7 +199,7 @@ export class ShoppingCartModProdSingle extends Component {
             minusBtnClass="shopping-cart-modal-prod-single-minus-btn"
             itemCountClass="shopping-cart-modal-prod-single-item-count-btn"
             itemCount={count}
-            itemId={id}
+            itemId={uniqueId}
           />
         </div>
 

@@ -6,7 +6,6 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   SET_SELECTED_ATTRIBUTE,
-  UPDATE_CART,
 } from "../actions/types";
 
 const initialState = {
@@ -26,7 +25,7 @@ export default function cartReducer(state = initialState, action) {
       return {
         ...state,
         cartItems: state.cartItems.filter(
-          (item) => item.id !== action.payload.id
+          (item) => item.uniqueId !== action.payload.uniqueId
         ),
       };
     case ADD_ITEM:
@@ -43,7 +42,7 @@ export default function cartReducer(state = initialState, action) {
       return {
         ...state,
         cartItems: state.cartItems.map((item) => {
-          if (item.id === action.payload.id)
+          if (item.uniqueId === action.payload.uniqueId)
             return {
               ...item,
               count: parseInt(item.count) + 1,
@@ -55,19 +54,18 @@ export default function cartReducer(state = initialState, action) {
       return {
         ...state,
         cartItems: state.cartItems.map((item) => {
-          if (item.id === action.payload.id) {
+          if (item.uniqueId === action.payload.uniqueId) {
             if (item.count > 1)
               return { ...item, count: parseInt(item.count) - 1 };
           }
           return item;
         }),
       };
-    case UPDATE_CART:
     case SET_SELECTED_ATTRIBUTE:
       return {
         ...state,
         cartItems: state.cartItems.map((item) => {
-          if (item.id === action.payload.id) {
+          if (item.uniqueId === action.payload.uniqueId) {
             return { ...item, attrObj: action.payload.attrObj };
           }
           return item;
