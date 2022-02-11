@@ -70,7 +70,11 @@ export const incQuantity = (uniqueId) => {
 export const decQuantity = (uniqueId) => {
   const oneItemLeft = store
     .getState()
-    .cart.cartItems.some((cartItem) => cartItem.count === 1);
+    .cart.cartItems.some(
+      (cartItem) => cartItem.id === uniqueId || cartItem.count === 1
+    );
+
+  console.log(oneItemLeft);
 
   if (!oneItemLeft) {
     return {

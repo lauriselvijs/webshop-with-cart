@@ -49,18 +49,26 @@ export class ShoppingCartModal extends Component {
 }
 
 ShoppingCartModal.propTypes = {
-  cartOpen: PropTypes.bool,
-  cartItems: PropTypes.array,
-  chosenSymbol: PropTypes.string,
-  chosenCurrencyName: PropTypes.string,
+  cart: PropTypes.shape({
+    cartOpen: PropTypes.bool,
+    cartItems: PropTypes.array,
+  }),
+  currency: PropTypes.shape({
+    chosenSymbol: PropTypes.string,
+    chosenCurrencyName: PropTypes.string,
+  }),
   getCartItems: PropTypes.func,
 };
 
 ShoppingCartModal.defaultProps = {
-  cartOpen: false,
-  cartItems: [],
-  chosenSymbol: "$",
-  chosenCurrencyName: "USD",
+  cart: {
+    cartOpen: false,
+    cartItems: [],
+  },
+  currency: {
+    chosenSymbol: "$",
+    chosenCurrencyName: "USD",
+  },
   getCartItems: () => {},
 };
 

@@ -19,11 +19,15 @@ export class ShoppingCartProductView extends Component {
 }
 
 ShoppingCartProductView.propTypes = {
-  cartItems: PropTypes.array,
+  cart: PropTypes.shape({
+    cartItems: PropTypes.array,
+  }),
 };
 
 ShoppingCartProductView.defaultProps = {
-  cartItems: [],
+  cart: {
+    cartItems: [],
+  },
 };
 
 const mapStateToProps = (state) => ({

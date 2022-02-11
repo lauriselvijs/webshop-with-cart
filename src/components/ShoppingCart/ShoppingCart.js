@@ -9,9 +9,11 @@ export class ShoppingCart extends Component {
     const { cartItems } = this.props.cart;
     return (
       <div className="shopping-cart">
+        <hr />
         {cartItems.map((item, index) => (
           <div key={index}>
             <ShoppingCartSingle item={item} />
+            <hr />
           </div>
         ))}
       </div>
@@ -20,11 +22,15 @@ export class ShoppingCart extends Component {
 }
 
 ShoppingCart.propTypes = {
-  cartItems: PropTypes.array,
+  cart: PropTypes.shape({
+    cartItems: PropTypes.array,
+  }),
 };
 
 ShoppingCart.defaultProps = {
-  cartItems: [],
+  cart: {
+    cartItems: [],
+  },
 };
 
 const mapStateToProps = (state) => ({

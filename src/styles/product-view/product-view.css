@@ -1,5 +1,10 @@
+.outer-container {
+  height: 100vh;
+}
+
 .product-view-container {
   display: flex;
+  flex: 1;
 }
 
 .thumbnails {

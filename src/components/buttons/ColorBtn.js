@@ -4,8 +4,7 @@ import PropTypes from "prop-types";
 
 export default class ColorBtn extends Component {
   render() {
-    const { colorName, colorCode, selectedColorCode, selectColorButton } =
-      this.props;
+    const { colorCode, selectedColorCode, selectColorButton } = this.props;
 
     let colorBtnClass = "color-btn";
 
@@ -26,14 +25,12 @@ export default class ColorBtn extends Component {
 }
 
 ColorBtn.propTypes = {
-  colorName: PropTypes.string,
   colorCode: PropTypes.string,
   selectedColorCode: PropTypes.string,
   selectColorButton: PropTypes.func,
 };
 
 ColorBtn.defaultProps = {
-  colorName: "white",
   colorCode: "#00000",
   selectedColorCode: "#00000",
   selectColorButton: () => {},

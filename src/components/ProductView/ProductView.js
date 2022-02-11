@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../../styles/product-view/product-view.css";
-import { withRouter } from "../../helpers/routerHOC";
+import { withRouterHOC } from "../../helpers/routerHOC";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { addItem } from "../../state/actions/cartActions";
@@ -24,6 +24,7 @@ import PropTypes from "prop-types";
 import OutOfStock from "../ProductPage/OutOfStock";
 import ProductPrice from "../product/ProductPrice";
 import OptAttributeBtn from "../buttons/OptAttributeBtn";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
 
 const PRODUCT_QUERY = gql`
   query ProductQuery($id: String!) {
@@ -122,8 +123,9 @@ class ProductView extends Component {
     return (
       <Query query={PRODUCT_QUERY} variables={{ id }}>
         {({ loading, error, data }) => {
-          if (loading) return <Loader />;
-          if (error) console.log(error);
+          if (loading) return <Loader className="product-view-loader" />;
+          if (error) return <ErrorMsg errorMsg={"Cant find product"} />;
+
           const { product } = data;
 
           const price = findPrice(product, chosenCurrencyName);
@@ -141,168 +143,172 @@ class ProductView extends Component {
           };
 
           return (
-            <div className="product-view-container">
-              <div className="thumbnails">
-                {product.gallery.map((image, index) => (
-                  <ProductThumbnail
-                    key={index}
-                    setMainImage={this.setMainImage.bind(this, image)}
-                    src={image}
-                  />
-                ))}
-              </div>
-              <div className="product-image-container">
-                {!inStock && (
-                  <OutOfStock className="out-of-stock-product-view" />
-                )}
-                <MainProductImage
-                  className={
-                    inStock
-                      ? "main-image-product-view"
-                      : "product-out-of-stock-product-view"
-                  }
-                  src={mainImageUrl || gallery[0]}
-                />
-              </div>
-              <div className="product-view-right-section">
-                <ProductName name={name} brand={brand} />
-
-                <div className="text-attribute">
-                  {checkIfHasAttribute(product, "text") && (
-                    <div>
-                      {textAttrArr.map((attribute, index) => (
-                        <div key={index}>
-                          {attribute.name === "Capacity" && (
-                            <>
-                              <ProductAttrName name={attribute.name} />
-                              {attribute.items.map((size, index) => (
-                                <SizeBtn
-                                  key={index}
-                                  size={size.displayValue}
-                                  selectSizeButton={this.selectSizeBtn.bind(
-                                    this,
-                                    size.displayValue
-                                  )}
-                                  selectedSize={
-                                    selectedSize ||
-                                    attribute.items[0].displayValue
-                                  }
-                                />
-                              ))}
-                            </>
-                          )}
-
-                          {attribute.name === "Size" && (
-                            <>
-                              <ProductAttrName name={attribute.name} />
-                              {attribute.items.map((size, index) => (
-                                <SizeBtn
-                                  key={index}
-                                  size={size.displayValue}
-                                  selectSizeButton={this.selectSizeBtn.bind(
-                                    this,
-                                    size.displayValue
-                                  )}
-                                  selectedSize={
-                                    selectedSize ||
-                                    attribute.items[0].displayValue
-                                  }
-                                />
-                              ))}
-                            </>
-                          )}
-
-                          {attribute.name === "With USB 3 ports" && (
-                            <>
-                              <ProductAttrName name={attribute.name} />
-                              {attribute.items.map((optAttribute, index) => (
-                                <OptAttributeBtn
-                                  key={index}
-                                  optionalAttribute={optAttribute.displayValue}
-                                  selectOptAttrButton={this.selectUsbPort.bind(
-                                    this,
-                                    optAttribute.displayValue
-                                  )}
-                                  selectedOptAttribute={
-                                    usbAttribute ||
-                                    attribute.items[0].displayValue
-                                  }
-                                />
-                              ))}
-                            </>
-                          )}
-
-                          {attribute.name === "Touch ID in keyboard" && (
-                            <>
-                              <ProductAttrName name={attribute.name} />
-                              {attribute.items.map((size, index) => (
-                                <OptAttributeBtn
-                                  key={index}
-                                  optionalAttribute={size.displayValue}
-                                  selectOptAttrButton={this.selectTouchId.bind(
-                                    this,
-                                    size.displayValue
-                                  )}
-                                  selectedOptAttribute={
-                                    touchIdAttribute ||
-                                    attribute.items[0].displayValue
-                                  }
-                                />
-                              ))}
-                            </>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+            <div className="outer-container">
+              <div className="product-view-container">
+                <div className="thumbnails">
+                  {product.gallery.map((image, index) => (
+                    <ProductThumbnail
+                      key={index}
+                      setMainImage={this.setMainImage.bind(this, image)}
+                      src={image}
+                    />
+                  ))}
                 </div>
-                <div className="swatch-attribute">
-                  {checkIfHasAttribute(product, "swatch") && (
-                    <>
-                      {swatchAttrArr.map((attribute, index) => (
-                        <div key={index}>
-                          <ProductAttrName name={attribute.name} />
-                          {attribute.items.map((color, index) => (
-                            <ColorBtn
-                              key={index}
-                              colorCode={color.value}
-                              colorName={color.displayValue}
-                              selectColorButton={this.selectColorBtn.bind(
-                                this,
-                                color.value
-                              )}
-                              selectedColorCode={
-                                selectedColorCode || attribute.items[0].value
-                              }
-                            />
-                          ))}
-                        </div>
-                      ))}
-                    </>
+                <div className="product-image-container">
+                  {!inStock && (
+                    <OutOfStock className="out-of-stock-product-view" />
                   )}
-                </div>
-
-                <div className="price-section">
-                  <h4>PRICE:</h4>
-                  <ProductPrice
-                    price={price}
-                    chosenCurrencyName={chosenCurrencyName}
-                    className="product-price-product-view"
+                  <MainProductImage
+                    className={
+                      inStock
+                        ? "main-image-product-view"
+                        : "product-out-of-stock-product-view"
+                    }
+                    src={mainImageUrl || gallery[0]}
                   />
                 </div>
-                {inStock && (
-                  <div className="add-to-cart-section">
-                    <AddBtn
-                      addToCart={this.addToCart.bind(
-                        this,
-                        product,
-                        attrObj || {},
-                        itemCount
-                      )}
+                <div className="product-view-right-section">
+                  <ProductName name={name} brand={brand} />
+
+                  <div className="text-attribute">
+                    {checkIfHasAttribute(product, "text") && (
+                      <div>
+                        {textAttrArr.map((attribute, index) => (
+                          <div key={index}>
+                            {attribute.name === "Capacity" && (
+                              <>
+                                <ProductAttrName name={attribute.name} />
+                                {attribute.items.map((size, index) => (
+                                  <SizeBtn
+                                    key={index}
+                                    size={size.displayValue}
+                                    selectSizeButton={this.selectSizeBtn.bind(
+                                      this,
+                                      size.displayValue
+                                    )}
+                                    selectedSize={
+                                      selectedSize ||
+                                      attribute.items[0].displayValue
+                                    }
+                                  />
+                                ))}
+                              </>
+                            )}
+
+                            {attribute.name === "Size" && (
+                              <>
+                                <ProductAttrName name={attribute.name} />
+                                {attribute.items.map((size, index) => (
+                                  <SizeBtn
+                                    key={index}
+                                    size={size.displayValue}
+                                    selectSizeButton={this.selectSizeBtn.bind(
+                                      this,
+                                      size.displayValue
+                                    )}
+                                    selectedSize={
+                                      selectedSize ||
+                                      attribute.items[0].displayValue
+                                    }
+                                  />
+                                ))}
+                              </>
+                            )}
+
+                            {attribute.name === "With USB 3 ports" && (
+                              <>
+                                <ProductAttrName name={attribute.name} />
+                                {attribute.items.map((optAttribute, index) => (
+                                  <OptAttributeBtn
+                                    key={index}
+                                    optionalAttribute={
+                                      optAttribute.displayValue
+                                    }
+                                    selectOptAttrButton={this.selectUsbPort.bind(
+                                      this,
+                                      optAttribute.displayValue
+                                    )}
+                                    selectedOptAttribute={
+                                      usbAttribute ||
+                                      attribute.items[0].displayValue
+                                    }
+                                  />
+                                ))}
+                              </>
+                            )}
+
+                            {attribute.name === "Touch ID in keyboard" && (
+                              <>
+                                <ProductAttrName name={attribute.name} />
+                                {attribute.items.map((size, index) => (
+                                  <OptAttributeBtn
+                                    key={index}
+                                    optionalAttribute={size.displayValue}
+                                    selectOptAttrButton={this.selectTouchId.bind(
+                                      this,
+                                      size.displayValue
+                                    )}
+                                    selectedOptAttribute={
+                                      touchIdAttribute ||
+                                      attribute.items[0].displayValue
+                                    }
+                                  />
+                                ))}
+                              </>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="swatch-attribute">
+                    {checkIfHasAttribute(product, "swatch") && (
+                      <>
+                        {swatchAttrArr.map((attribute, index) => (
+                          <div key={index}>
+                            <ProductAttrName name={attribute.name} />
+                            {attribute.items.map((color, index) => (
+                              <ColorBtn
+                                key={index}
+                                colorCode={color.value}
+                                colorName={color.displayValue}
+                                selectColorButton={this.selectColorBtn.bind(
+                                  this,
+                                  color.value
+                                )}
+                                selectedColorCode={
+                                  selectedColorCode || attribute.items[0].value
+                                }
+                              />
+                            ))}
+                          </div>
+                        ))}
+                      </>
+                    )}
+                  </div>
+
+                  <div className="price-section">
+                    <h4>PRICE:</h4>
+                    <ProductPrice
+                      price={price}
+                      chosenCurrencyName={chosenCurrencyName}
+                      className="product-price-product-view"
                     />
                   </div>
-                )}
-                <ProductDesc description={description} />
+                  {inStock && (
+                    <div className="add-to-cart-section">
+                      <AddBtn
+                        addToCart={this.addToCart.bind(
+                          this,
+                          product,
+                          attrObj || {},
+                          itemCount
+                        )}
+                      />
+                    </div>
+                  )}
+                  <ProductDesc description={description} />
+                </div>
               </div>
             </div>
           );
@@ -313,15 +319,25 @@ class ProductView extends Component {
 }
 
 ProductView.propTypes = {
-  chosenCurrencyName: PropTypes.string,
-  id: PropTypes.string,
+  currency: PropTypes.shape({
+    chosenCurrencyName: PropTypes.string,
+  }),
+  match: PropTypes.shape({
+    params: {
+      id: PropTypes.string,
+    },
+  }),
   product: PropTypes.object,
   addItem: PropTypes.func,
 };
 
 ProductView.defaultProps = {
-  chosenCurrencyName: "USD",
-  id: "1",
+  currency: { chosenCurrencyName: "USD" },
+  match: {
+    params: {
+      id: "1",
+    },
+  },
   product: {},
   addItem: () => {},
 };
@@ -332,7 +348,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default compose(
-  withRouter,
+  withRouterHOC,
   connect(mapStateToProps, {
     addItem,
   })

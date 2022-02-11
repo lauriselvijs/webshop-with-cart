@@ -7,6 +7,7 @@ import { Query } from "@apollo/client/react/components";
 import Loader from "../Loader";
 import PropTypes from "prop-types";
 import { setCurrentSelectedCategory } from "../../state/actions/categoriesActions";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
 
 const PRODUCTS_QUERY = gql`
   query ProductsQuery($title: String!) {
@@ -49,12 +50,12 @@ export class ProductPage extends Component {
     return (
       <Query query={PRODUCTS_QUERY} variables={{ title: category }}>
         {({ loading, error, data }) => {
-          if (loading) return <Loader />;
-          if (error) console.log(error);
+          if (loading) return <Loader className="product-page-loader" />;
+          if (error) return <ErrorMsg errorMsg={"Cant find products"} />;
 
           const { products } = data.category;
           return (
-            <div className="grid-container">
+            <div className="product-page-grid-container">
               {products.map((product, index) => (
                 <ProductPageSingle key={index} product={product} />
               ))}
@@ -67,12 +68,12 @@ export class ProductPage extends Component {
 }
 
 ProductPage.propTypes = {
-  products: PropTypes.array,
+  category: PropTypes.string,
   setCurrentSelectedCategory: PropTypes.func,
 };
 
 ProductPage.defaultProps = {
-  products: [],
+  category: "All",
   setCurrentSelectedCategory: () => {},
 };
 

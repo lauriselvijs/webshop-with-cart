@@ -12,11 +12,15 @@ export class CategoryName extends Component {
 }
 
 CategoryName.propTypes = {
-  selectedCategory: PropTypes.string,
+  categories: PropTypes.shape({
+    selectedCategory: PropTypes.string,
+  }),
 };
 
 CategoryName.defaultProps = {
-  selectedCategory: "All",
+  categories: {
+    selectedCategory: "All",
+  },
 };
 
 const mapStateToProps = (state) => ({

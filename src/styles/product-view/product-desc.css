@@ -1,7 +1,7 @@
 .product-desc {
   position: absolute;
   width: 292px;
-  height: 103px;
+  height: fit-content;
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;

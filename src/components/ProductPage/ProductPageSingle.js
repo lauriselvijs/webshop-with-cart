@@ -136,18 +136,22 @@ export class ProductPageSingle extends Component {
 }
 
 ProductPageSingle.propTypes = {
+  categories: PropTypes.shape({
+    selectedCategory: PropTypes.string,
+  }),
+  currency: PropTypes.shape({
+    chosenCurrencyName: PropTypes.string,
+  }),
   product: PropTypes.object,
-  chosenCurrencyName: PropTypes.string,
-  selectedCategory: PropTypes.string,
   addItem: PropTypes.func,
   decQuantity: PropTypes.func,
   setSelectedAttribute: PropTypes.func,
 };
 
 ProductPageSingle.defaultProps = {
+  categories: { selectedCategory: "All" },
   product: {},
-  chosenCurrencyName: "USD",
-  selectedCategory: "All",
+  currency: { chosenCurrencyName: "USD" },
   addItem: () => {},
   decQuantity: () => {},
   setSelectedAttribute: () => {},

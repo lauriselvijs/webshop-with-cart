@@ -51,6 +51,8 @@ QuantityBtn.propTypes = {
   plusBtnClass: PropTypes.string,
   minusBtnClass: PropTypes.string,
   itemCountClass: PropTypes.string,
+  incQuantity: PropTypes.func,
+  decQuantity: PropTypes.func,
 };
 
 QuantityBtn.defaultProps = {
@@ -59,6 +61,8 @@ QuantityBtn.defaultProps = {
   plusBtnClass: "plus-button-modal",
   minusBtnClass: "minus-button-modal",
   itemCountClass: "item-count",
+  incQuantity: () => {},
+  decQuantity: () => {},
 };
 
 const mapStateToProps = (state) => ({

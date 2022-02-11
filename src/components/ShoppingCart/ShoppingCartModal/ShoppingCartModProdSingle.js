@@ -215,6 +215,9 @@ export class ShoppingCartModProdSingle extends Component {
 }
 
 ShoppingCartModProdSingle.propTypes = {
+  currency: PropTypes.shape({
+    chosenCurrencyName: PropTypes.string,
+  }),
   item: PropTypes.object,
   chosenCurrencyName: PropTypes.string,
   cartOpen: PropTypes.bool,
@@ -223,6 +226,9 @@ ShoppingCartModProdSingle.propTypes = {
 };
 
 ShoppingCartModProdSingle.defaultProps = {
+  currency: {
+    chosenCurrencyName: "USD",
+  },
   item: {},
   chosenCurrencyName: "USD",
   cartOpen: false,

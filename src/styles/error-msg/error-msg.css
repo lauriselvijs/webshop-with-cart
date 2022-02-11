@@ -1,0 +1,10 @@
+.error-msg {
+  font-family: "Raleway", sans-serif;
+  padding-top: 5px;
+  padding-left: 20px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  height: 100vh;
+}

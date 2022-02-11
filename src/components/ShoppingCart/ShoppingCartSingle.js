@@ -60,38 +60,39 @@ export class ShoppingCartSingle extends Component {
     }
   }
 
-  selectSizeButton(id, size) {
-    console.log(size);
-
+  selectSizeButton(uniqueId, size) {
     const { attrObj } = this.props.item;
 
-    this.props.setSelectedAttribute(id, { ...attrObj, size });
+    this.props.setSelectedAttribute(uniqueId, { ...attrObj, size });
   }
 
-  selectUsbPort(id, usbAttribute) {
+  selectUsbPort(uniqueId, usbAttribute) {
     const { attrObj } = this.props.item;
 
-    this.props.setSelectedAttribute(id, { ...attrObj, usbType: usbAttribute });
+    this.props.setSelectedAttribute(uniqueId, {
+      ...attrObj,
+      usbType: usbAttribute,
+    });
   }
 
-  selectTouchId(id, touchIdAttribute) {
+  selectTouchId(uniqueId, touchIdAttribute) {
     const { attrObj } = this.props.item;
 
-    this.props.setSelectedAttribute(id, {
+    this.props.setSelectedAttribute(uniqueId, {
       ...attrObj,
       touchId: touchIdAttribute,
     });
   }
 
-  selectColorButton(id, color) {
+  selectColorButton(uniqueId, color) {
     const { attrObj } = this.props.item;
 
-    this.props.setSelectedAttribute(id, { ...attrObj, color });
+    this.props.setSelectedAttribute(uniqueId, { ...attrObj, color });
   }
 
   render() {
     const { item } = this.props;
-    const { id, brand, name, count, gallery, attrObj } = this.props.item;
+    const { uniqueId, brand, name, count, gallery, attrObj } = this.props.item;
 
     const { chosenCurrencyName } = this.props.currency;
 
@@ -129,7 +130,7 @@ export class ShoppingCartSingle extends Component {
                             size={size.displayValue}
                             selectSizeButton={this.selectSizeButton.bind(
                               this,
-                              item.id,
+                              uniqueId,
                               size.displayValue
                             )}
                             selectedSize={attrObj.size}
@@ -146,7 +147,7 @@ export class ShoppingCartSingle extends Component {
                             size={size.displayValue}
                             selectSizeButton={this.selectSizeButton.bind(
                               this,
-                              item.id,
+                              uniqueId,
                               size.displayValue
                             )}
                             selectedSize={attrObj.size}
@@ -164,7 +165,7 @@ export class ShoppingCartSingle extends Component {
                             optionalAttribute={optAttribute.displayValue}
                             selectOptAttrButton={this.selectUsbPort.bind(
                               this,
-                              item.id,
+                              uniqueId,
                               optAttribute.displayValue
                             )}
                             selectedOptAttribute={attrObj.usbType}
@@ -182,7 +183,7 @@ export class ShoppingCartSingle extends Component {
                             optionalAttribute={size.displayValue}
                             selectOptAttrButton={this.selectTouchId.bind(
                               this,
-                              item.id,
+                              uniqueId,
                               size.displayValue
                             )}
                             selectedOptAttribute={attrObj.touchId}
@@ -207,7 +208,7 @@ export class ShoppingCartSingle extends Component {
                         colorName={color.displayValue}
                         selectColorButton={this.selectColorBtn.bind(
                           this,
-                          item.id,
+                          uniqueId,
                           color.value
                         )}
                         selectedColorCode={attrObj.color}
@@ -221,7 +222,7 @@ export class ShoppingCartSingle extends Component {
         </div>
         <div className="white-space"></div>
         <div className="qty-section">
-          <QuantityBtn itemCount={count} itemId={id} />
+          <QuantityBtn itemCount={count} itemId={uniqueId} />
         </div>
 
         <div className="gallery-arrow-section">
@@ -245,16 +246,20 @@ export class ShoppingCartSingle extends Component {
 }
 
 ShoppingCartSingle.propTypes = {
+  currency: PropTypes.shape({
+    chosenCurrencyName: PropTypes.string,
+  }),
   item: PropTypes.object,
-  chosenCurrencyName: PropTypes.string,
   cartOpen: PropTypes.bool,
   removeItem: PropTypes.func,
   setSelectedAttribute: PropTypes.func,
 };
 
 ShoppingCartSingle.defaultProps = {
+  currency: {
+    chosenCurrencyName: "USD",
+  },
   item: {},
-  chosenCurrencyName: "USD",
   cartOpen: false,
   removeItem: () => {},
   setSelectedAttribute: () => {},

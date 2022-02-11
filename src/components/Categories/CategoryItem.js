@@ -43,12 +43,17 @@ export class CategoryItem extends Component {
 }
 
 CategoryItem.propTypes = {
+  categories: PropTypes.shape({
+    selectedCategory: PropTypes.string,
+  }),
   category: PropTypes.object,
-  selectedCategory: PropTypes.string,
   setCurrentSelectedCategory: PropTypes.func,
 };
 
 CategoryItem.defaultProps = {
+  categories: {
+    selectCategory: "All",
+  },
   category: {},
   selectedCategory: "All",
   setCurrentSelectedCategory: () => {},

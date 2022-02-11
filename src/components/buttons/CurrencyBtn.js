@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../../styles/buttons/currency-btn.css";
-import Currency from "../../img/currency.png";
 import { connect } from "react-redux";
 import {
   setCurrency,
@@ -11,6 +10,7 @@ import gql from "graphql-tag";
 import { Query } from "@apollo/client/react/components";
 import Loader from "../Loader";
 import PropTypes from "prop-types";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
 
 const CURRENCY_QUERY = gql`
   query {
@@ -66,7 +66,7 @@ export class CurrencyBtn extends Component {
       <Query query={CURRENCY_QUERY}>
         {({ loading, error, data }) => {
           if (loading) return <Loader />;
-          if (error) console.log(error);
+          if (error) return <ErrorMsg errorMsg={"Cant find currency values"} />;
 
           const { currencies } = data;
           return (
@@ -107,15 +107,25 @@ export class CurrencyBtn extends Component {
 }
 
 CurrencyBtn.propTypes = {
-  currencySelected: PropTypes.bool,
+  currency: PropTypes.shape({
+    currencySelected: PropTypes.bool,
+    chosenSymbol: PropTypes.string,
+  }),
   cartOpen: PropTypes.bool,
   currencies: PropTypes.array,
+  setCurrencySelected: PropTypes.func,
+  setCurrency: PropTypes.func,
 };
 
 CurrencyBtn.defaultProps = {
-  currencySelected: false,
+  currency: {
+    currencySelected: false,
+    chosenSymbol: "$",
+  },
   cartOpen: false,
   currencies: [],
+  setCurrencySelected: () => {},
+  setCurrency: () => {},
 };
 
 const mapStateToProps = (state) => ({

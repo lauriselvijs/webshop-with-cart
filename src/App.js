@@ -13,6 +13,7 @@ import ProductView from "./components/ProductView/ProductView";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import { connect } from "react-redux";
 import LoadingOverlay from "react-loading-overlay";
+import PropTypes from "prop-types";
 
 export class App extends Component {
   render() {
@@ -69,7 +70,10 @@ export class App extends Component {
               path={`/${selectedCategory}/:id`}
               element={
                 <>
-                  <LoadingOverlay active={cartOpen} className="loading-overlay">
+                  <LoadingOverlay
+                    active={cartOpen}
+                    className="loading-overlay-product-view"
+                  >
                     <ProductView />
                   </LoadingOverlay>
                 </>
@@ -79,7 +83,10 @@ export class App extends Component {
               path="shopping-cart"
               element={
                 <>
-                  <LoadingOverlay active={cartOpen} className="loading-overlay">
+                  <LoadingOverlay
+                    active={cartOpen}
+                    className="loading-overlay-shopping-cart"
+                  >
                     <ShoppingCart />
                   </LoadingOverlay>
                 </>
@@ -91,6 +98,20 @@ export class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  categories: PropTypes.shape({
+    selectedCategory: PropTypes.string,
+  }),
+  cart: PropTypes.shape({
+    cartOpen: PropTypes.bool,
+  }),
+};
+
+App.defaultProps = {
+  categories: { selectedCategory: "All" },
+  cart: { cartOpen: false },
+};
 
 const mapStateToProps = (state) => ({
   categories: state.categories,

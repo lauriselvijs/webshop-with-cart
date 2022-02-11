@@ -32,7 +32,6 @@ export class ShoppingCartBtn extends Component {
 
   onCartBtnClick() {
     const { cartOpen } = this.props.cart;
-    const { currencySelected } = this.props.currency;
 
     cartOpen && this.props.openCart(false);
     !cartOpen && this.props.openCart(true);
@@ -73,12 +72,18 @@ export class ShoppingCartBtn extends Component {
 }
 
 ShoppingCartBtn.propTypes = {
-  cartItems: PropTypes.array,
+  cart: PropTypes.shape({
+    cartOpen: PropTypes.bool,
+    cartItems: PropTypes.array,
+  }),
   openCart: PropTypes.func,
 };
 
 ShoppingCartBtn.defaultProps = {
-  cartItems: [],
+  cart: {
+    cartOpen: false,
+    cartItems: [],
+  },
   openCart: () => {},
 };
 

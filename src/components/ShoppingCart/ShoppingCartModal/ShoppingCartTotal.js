@@ -5,7 +5,7 @@ import { formatMoney } from "../../../utils/formatUtils";
 
 export default class ShoppingCartTotal extends Component {
   render() {
-    const { chosenSymbol, totalAmount, chosenCurrencyName } = this.props;
+    const { totalAmount, chosenCurrencyName } = this.props;
 
     return (
       <>
@@ -19,13 +19,11 @@ export default class ShoppingCartTotal extends Component {
 }
 
 ShoppingCartTotal.propTypes = {
-  chosenSymbol: PropTypes.string,
   totalAmount: PropTypes.number,
   chosenCurrencyName: PropTypes.string,
 };
 
 ShoppingCartTotal.defaultProps = {
-  chosenSymbol: "$",
   totalAmount: 100.0,
   chosenCurrencyName: "USD",
 };
