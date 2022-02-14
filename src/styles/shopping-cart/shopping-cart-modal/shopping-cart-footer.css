@@ -24,10 +24,6 @@
   border: 1px solid #1d1f22;
   box-sizing: border-box;
 
-  /* Inside auto layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
   margin: 0px 10px;
 }
 
@@ -49,9 +45,5 @@
   background: #5ece7b;
   box-sizing: border-box;
 
-  /* Inside auto layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
   margin: 0px 10px;
 }

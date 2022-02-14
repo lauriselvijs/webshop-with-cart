@@ -143,172 +143,168 @@ class ProductView extends Component {
           };
 
           return (
-            <div className="outer-container">
-              <div className="product-view-container">
-                <div className="thumbnails">
-                  {product.gallery.map((image, index) => (
-                    <ProductThumbnail
-                      key={index}
-                      setMainImage={this.setMainImage.bind(this, image)}
-                      src={image}
-                    />
-                  ))}
-                </div>
-                <div className="product-image-container">
-                  {!inStock && (
-                    <OutOfStock className="out-of-stock-product-view" />
-                  )}
-                  <MainProductImage
-                    className={
-                      inStock
-                        ? "main-image-product-view"
-                        : "product-out-of-stock-product-view"
-                    }
-                    src={mainImageUrl || gallery[0]}
+            <div className="product-view-container">
+              <div className="thumbnails">
+                {product.gallery.map((image, index) => (
+                  <ProductThumbnail
+                    key={index}
+                    setMainImage={this.setMainImage.bind(this, image)}
+                    src={image}
                   />
-                </div>
-                <div className="product-view-right-section">
-                  <ProductName name={name} brand={brand} />
+                ))}
+              </div>
+              <div className="product-image-container">
+                {!inStock && (
+                  <OutOfStock className="out-of-stock-product-view" />
+                )}
+                <MainProductImage
+                  className={
+                    inStock
+                      ? "main-image-product-view"
+                      : "product-out-of-stock-product-view"
+                  }
+                  src={mainImageUrl || gallery[0]}
+                />
+              </div>
+              <div className="product-view-right-section">
+                <ProductName name={name} brand={brand} />
 
-                  <div className="text-attribute">
-                    {checkIfHasAttribute(product, "text") && (
-                      <div>
-                        {textAttrArr.map((attribute, index) => (
-                          <div key={index}>
-                            {attribute.name === "Capacity" && (
-                              <>
-                                <ProductAttrName name={attribute.name} />
-                                {attribute.items.map((size, index) => (
-                                  <SizeBtn
-                                    key={index}
-                                    size={size.displayValue}
-                                    selectSizeButton={this.selectSizeBtn.bind(
-                                      this,
-                                      size.displayValue
-                                    )}
-                                    selectedSize={
-                                      selectedSize ||
-                                      attribute.items[0].displayValue
-                                    }
-                                  />
-                                ))}
-                              </>
-                            )}
+                <div className="text-attribute">
+                  {checkIfHasAttribute(product, "text") && (
+                    <div>
+                      {textAttrArr.map((attribute, index) => (
+                        <div key={index}>
+                          {attribute.name === "Capacity" && (
+                            <>
+                              <ProductAttrName name={attribute.name} />
+                              {attribute.items.map((size, index) => (
+                                <SizeBtn
+                                  key={index}
+                                  size={size.displayValue}
+                                  selectSizeButton={this.selectSizeBtn.bind(
+                                    this,
+                                    size.displayValue
+                                  )}
+                                  selectedSize={
+                                    selectedSize ||
+                                    attribute.items[0].displayValue
+                                  }
+                                />
+                              ))}
+                            </>
+                          )}
 
-                            {attribute.name === "Size" && (
-                              <>
-                                <ProductAttrName name={attribute.name} />
-                                {attribute.items.map((size, index) => (
-                                  <SizeBtn
-                                    key={index}
-                                    size={size.displayValue}
-                                    selectSizeButton={this.selectSizeBtn.bind(
-                                      this,
-                                      size.displayValue
-                                    )}
-                                    selectedSize={
-                                      selectedSize ||
-                                      attribute.items[0].displayValue
-                                    }
-                                  />
-                                ))}
-                              </>
-                            )}
+                          {attribute.name === "Size" && (
+                            <>
+                              <ProductAttrName name={attribute.name} />
+                              {attribute.items.map((size, index) => (
+                                <SizeBtn
+                                  key={index}
+                                  size={size.displayValue}
+                                  selectSizeButton={this.selectSizeBtn.bind(
+                                    this,
+                                    size.displayValue
+                                  )}
+                                  selectedSize={
+                                    selectedSize ||
+                                    attribute.items[0].displayValue
+                                  }
+                                />
+                              ))}
+                            </>
+                          )}
 
-                            {attribute.name === "With USB 3 ports" && (
-                              <>
-                                <ProductAttrName name={attribute.name} />
-                                {attribute.items.map((optAttribute, index) => (
-                                  <OptAttributeBtn
-                                    key={index}
-                                    optionalAttribute={
-                                      optAttribute.displayValue
-                                    }
-                                    selectOptAttrButton={this.selectUsbPort.bind(
-                                      this,
-                                      optAttribute.displayValue
-                                    )}
-                                    selectedOptAttribute={
-                                      usbAttribute ||
-                                      attribute.items[0].displayValue
-                                    }
-                                  />
-                                ))}
-                              </>
-                            )}
+                          {attribute.name === "With USB 3 ports" && (
+                            <>
+                              <ProductAttrName name={attribute.name} />
+                              {attribute.items.map((optAttribute, index) => (
+                                <OptAttributeBtn
+                                  key={index}
+                                  optionalAttribute={optAttribute.displayValue}
+                                  selectOptAttrButton={this.selectUsbPort.bind(
+                                    this,
+                                    optAttribute.displayValue
+                                  )}
+                                  selectedOptAttribute={
+                                    usbAttribute ||
+                                    attribute.items[0].displayValue
+                                  }
+                                />
+                              ))}
+                            </>
+                          )}
 
-                            {attribute.name === "Touch ID in keyboard" && (
-                              <>
-                                <ProductAttrName name={attribute.name} />
-                                {attribute.items.map((size, index) => (
-                                  <OptAttributeBtn
-                                    key={index}
-                                    optionalAttribute={size.displayValue}
-                                    selectOptAttrButton={this.selectTouchId.bind(
-                                      this,
-                                      size.displayValue
-                                    )}
-                                    selectedOptAttribute={
-                                      touchIdAttribute ||
-                                      attribute.items[0].displayValue
-                                    }
-                                  />
-                                ))}
-                              </>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <div className="swatch-attribute">
-                    {checkIfHasAttribute(product, "swatch") && (
-                      <>
-                        {swatchAttrArr.map((attribute, index) => (
-                          <div key={index}>
-                            <ProductAttrName name={attribute.name} />
-                            {attribute.items.map((color, index) => (
-                              <ColorBtn
-                                key={index}
-                                colorCode={color.value}
-                                colorName={color.displayValue}
-                                selectColorButton={this.selectColorBtn.bind(
-                                  this,
-                                  color.value
-                                )}
-                                selectedColorCode={
-                                  selectedColorCode || attribute.items[0].value
-                                }
-                              />
-                            ))}
-                          </div>
-                        ))}
-                      </>
-                    )}
-                  </div>
-
-                  <div className="price-section">
-                    <h4>PRICE:</h4>
-                    <ProductPrice
-                      price={price}
-                      chosenCurrencyName={chosenCurrencyName}
-                      className="product-price-product-view"
-                    />
-                  </div>
-                  {inStock && (
-                    <div className="add-to-cart-section">
-                      <AddBtn
-                        addToCart={this.addToCart.bind(
-                          this,
-                          product,
-                          attrObj || {},
-                          itemCount
-                        )}
-                      />
+                          {attribute.name === "Touch ID in keyboard" && (
+                            <>
+                              <ProductAttrName name={attribute.name} />
+                              {attribute.items.map((size, index) => (
+                                <OptAttributeBtn
+                                  key={index}
+                                  optionalAttribute={size.displayValue}
+                                  selectOptAttrButton={this.selectTouchId.bind(
+                                    this,
+                                    size.displayValue
+                                  )}
+                                  selectedOptAttribute={
+                                    touchIdAttribute ||
+                                    attribute.items[0].displayValue
+                                  }
+                                />
+                              ))}
+                            </>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   )}
-                  <ProductDesc description={description} />
                 </div>
+                <div className="swatch-attribute">
+                  {checkIfHasAttribute(product, "swatch") && (
+                    <>
+                      {swatchAttrArr.map((attribute, index) => (
+                        <div key={index}>
+                          <ProductAttrName name={attribute.name} />
+                          {attribute.items.map((color, index) => (
+                            <ColorBtn
+                              key={index}
+                              colorCode={color.value}
+                              colorName={color.displayValue}
+                              selectColorButton={this.selectColorBtn.bind(
+                                this,
+                                color.value
+                              )}
+                              selectedColorCode={
+                                selectedColorCode || attribute.items[0].value
+                              }
+                            />
+                          ))}
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+
+                <div className="price-section">
+                  <h4>PRICE:</h4>
+                  <ProductPrice
+                    price={price}
+                    chosenCurrencyName={chosenCurrencyName}
+                    className="product-price-product-view"
+                  />
+                </div>
+                {inStock && (
+                  <div className="add-to-cart-section">
+                    <AddBtn
+                      addToCart={this.addToCart.bind(
+                        this,
+                        product,
+                        attrObj || {},
+                        itemCount
+                      )}
+                    />
+                  </div>
+                )}
+                <ProductDesc description={description} />
               </div>
             </div>
           );

@@ -70,10 +70,7 @@ export class App extends Component {
               path={`/${selectedCategory}/:id`}
               element={
                 <>
-                  <LoadingOverlay
-                    active={cartOpen}
-                    className="loading-overlay-product-view"
-                  >
+                  <LoadingOverlay active={cartOpen} className="loading-overlay">
                     <ProductView />
                   </LoadingOverlay>
                 </>

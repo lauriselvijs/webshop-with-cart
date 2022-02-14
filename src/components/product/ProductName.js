@@ -22,7 +22,7 @@ ProductName.propTypes = {
 };
 
 ProductName.defaultProps = {
-  className: "product-name",
+  className: "shopping-cart-product-name",
   brand: "Sony",
   name: "Headphones",
 };

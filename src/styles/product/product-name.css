@@ -5,6 +5,8 @@
   font-size: 30px;
   line-height: 27px;
 
+  padding-top: 10px;
+
   display: flex;
   align-items: center;
 
@@ -17,6 +19,9 @@
   font-weight: normal;
   font-size: 30px;
   line-height: 27px;
+
+  padding-top: 10px;
+  padding-bottom: 20px;
 
   /* identical to box height, or 90% */
   display: flex;
