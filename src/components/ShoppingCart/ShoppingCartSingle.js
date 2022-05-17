@@ -206,7 +206,7 @@ export class ShoppingCartSingle extends Component {
                         key={index}
                         colorCode={color.value}
                         colorName={color.displayValue}
-                        selectColorButton={this.selectColorBtn.bind(
+                        selectColorButton={this.selectColorButton.bind(
                           this,
                           uniqueId,
                           color.value
