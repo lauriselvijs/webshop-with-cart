@@ -8,6 +8,7 @@ import Loader from "../Loader";
 import PropTypes from "prop-types";
 import { setCurrentSelectedCategory } from "../../state/actions/categoriesActions";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
+import ProductFilter from "../ProductFilter";
 
 const PRODUCTS_QUERY = gql`
   query ProductsQuery($title: String!) {
@@ -54,8 +55,20 @@ export class ProductPage extends Component {
           if (error) return <ErrorMsg errorMsg={"Cant find products"} />;
 
           const { products } = data.category;
+
+          const attributes = products
+            .map(({ attributes }) =>
+              attributes.map(({ name, items }) => {
+                return { name, items };
+              })
+            )
+            .flat();
+
+          console.log(attributes);
+
           return (
             <div className="product-page-grid-container">
+              <ProductFilter productAttributes={products} />
               {products.map((product, index) => (
                 <ProductPageSingle key={index} product={product} />
               ))}
