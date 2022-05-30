@@ -57,18 +57,12 @@ export class ProductPage extends Component {
           const { products } = data.category;
 
           const attributes = products
-            .map(({ attributes }) =>
-              attributes.map(({ name, items }) => {
-                return { name, items };
-              })
-            )
+            .map(({ attributes }) => attributes)
             .flat();
-
-          console.log(attributes);
 
           return (
             <div className="product-page-grid-container">
-              <ProductFilter productAttributes={products} />
+              {category === "all" && <ProductFilter attributes={attributes} />}
               {products.map((product, index) => (
                 <ProductPageSingle key={index} product={product} />
               ))}
