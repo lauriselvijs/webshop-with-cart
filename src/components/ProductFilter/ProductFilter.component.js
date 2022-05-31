@@ -1,18 +1,19 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import "./ProductFilter.style.scss";
 import { withRouterHOC } from "../../helpers/routerHOC";
 import { compose } from "redux";
-
-export class ProductFilter extends Component {
+import { objToUrlQuery } from "../../utils/formatUtils";
+export class ProductFilter extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      colors: [],
-      yesNo: [],
+      colorsAttrValue: [],
+      yesNoAttr: [],
       restAttributes: ["None"],
+      restAttributeValues: [],
     };
   }
 
@@ -21,36 +22,38 @@ export class ProductFilter extends Component {
     categories: PropTypes.shape({
       selectedCategory: PropTypes.string,
     }),
-    colors: PropTypes.arrayOf(PropTypes.string),
+    colorsAttrValue: PropTypes.arrayOf(PropTypes.string),
     navigate: PropTypes.func,
   };
 
   setFilterColor = (event) => {
-    const { colors } = this.state;
+    const { colorsAttrValue } = this.state;
 
-    if (colors.includes(event.target.value)) {
+    if (colorsAttrValue.includes(event.target.value)) {
       this.setState((prevState) => ({
-        colors: prevState.colors.filter(
+        colorsAttrValue: prevState.colorsAttrValue.filter(
           (color) => color !== event.target.value
         ),
       }));
     } else {
       this.setState((prevState) => ({
-        colors: [...prevState.colors, event.target.value],
+        colorsAttrValue: [...prevState.colorsAttrValue, event.target.value],
       }));
     }
   };
 
-  setYesNoAttributes = (event) => {
-    const { yesNo } = this.state;
+  setYesNoAttrAttributes = (event) => {
+    const { yesNoAttr } = this.state;
 
-    if (yesNo.includes(event.target.value)) {
+    if (yesNoAttr.includes(event.target.value)) {
       this.setState((prevState) => ({
-        yesNo: prevState.yesNo.filter((yesNo) => yesNo !== event.target.value),
+        yesNoAttr: prevState.yesNoAttr.filter(
+          (yesNoAttr) => yesNoAttr !== event.target.value
+        ),
       }));
     } else {
       this.setState((prevState) => ({
-        yesNo: [...prevState.yesNo, event.target.value],
+        yesNoAttr: [...prevState.yesNoAttr, event.target.value],
       }));
     }
   };
@@ -58,29 +61,70 @@ export class ProductFilter extends Component {
   setRestAttributes = (event) => {
     this.setState({
       restAttributes: [event.target.value],
+      restAttributeValues: [],
     });
+  };
+
+  setRestAttributeValues = (event) => {
+    const { restAttributeValues } = this.state;
+
+    if (restAttributeValues.includes(event.target.value)) {
+      this.setState((prevState) => ({
+        restAttributeValues: prevState.restAttributeValues.filter(
+          (color) => color !== event.target.value
+        ),
+      }));
+    } else {
+      this.setState((prevState) => ({
+        restAttributeValues: [
+          ...prevState.restAttributeValues,
+          event.target.value,
+        ],
+      }));
+    }
   };
 
   showColorAttributes = () => {
     const { attributes } = this.props;
+    const { colorsAttrValue } = this.state;
 
-    const colorAttributesObj = attributes.find(
+    const attributeColorArr = attributes.filter(
       (attribute) => attribute.name === "Color"
+    );
+
+    const attributeColorValueArr = attributeColorArr
+      .map((attributeColorValue) => attributeColorValue.items)
+      .flat();
+
+    let repeatValuesArr = [];
+
+    const individualColorAttributesArr = attributeColorValueArr.filter(
+      (attributeColorValue) => {
+        if (!repeatValuesArr.includes(attributeColorValue.value)) {
+          repeatValuesArr.push(attributeColorValue.value);
+          return true;
+        }
+        return false;
+      }
     );
 
     return (
       <>
-        {colorAttributesObj && (
+        {attributeColorArr[0]?.name && (
           <div className="color-attribute">
             <div className="color-attribute-name">
-              {colorAttributesObj?.name}:{" "}
+              {attributeColorArr[0]?.name}:{" "}
             </div>
-            {colorAttributesObj?.items.map((colorAttributeItem, index) => (
+            {individualColorAttributesArr.map((colorAttributeItem, index) => (
               <button
                 value={colorAttributeItem.value}
                 onClick={this.setFilterColor}
                 key={index}
-                className="color-btn"
+                className={
+                  colorsAttrValue.includes(colorAttributeItem.value)
+                    ? "color-selected-btn"
+                    : "color-btn"
+                }
                 style={{ backgroundColor: colorAttributeItem.value }}
               />
             ))}
@@ -90,19 +134,19 @@ export class ProductFilter extends Component {
     );
   };
 
-  showYesNoAttributes = () => {
+  showYesNoAttrAttributes = () => {
     const { attributes } = this.props;
 
-    const yesNoAttributeRepeatArr = [];
+    let yesNoAttrAttributeRepeatArr = [];
 
-    const yesNoAttributeArr = attributes.filter((attribute) => {
+    const yesNoAttrAttributeArr = attributes.filter((attribute) => {
       if (
         attribute.items.some((attributeItem) => attributeItem.value === "Yes")
       ) {
-        if (yesNoAttributeRepeatArr.includes(attribute.name)) {
+        if (yesNoAttrAttributeRepeatArr.includes(attribute.name)) {
           return false;
         } else {
-          yesNoAttributeRepeatArr.push(attribute.name);
+          yesNoAttrAttributeRepeatArr.push(attribute.name);
           return true;
         }
       }
@@ -110,13 +154,15 @@ export class ProductFilter extends Component {
 
     return (
       <>
-        {yesNoAttributeArr.map((yesNoAttribute, index) => (
+        {yesNoAttrAttributeArr.map((yesNoAttrAttribute, index) => (
           <div className="yes-no-attribute" key={index}>
-            <div className="yes-attribute-name">{yesNoAttribute.name}: </div>
+            <div className="yes-attribute-name">
+              {yesNoAttrAttribute.name}:{" "}
+            </div>
             <input
-              value={yesNoAttribute.name}
+              value={yesNoAttrAttribute.name}
               type="checkbox"
-              onChange={this.setYesNoAttributes}
+              onChange={this.setYesNoAttrAttributes}
             />
           </div>
         ))}
@@ -126,38 +172,79 @@ export class ProductFilter extends Component {
 
   showRestAttributes = () => {
     const { attributes } = this.props;
+    const { restAttributes, restAttributeValues } = this.state;
 
-    const restAttributeRepeatArr = [];
-
-    const restAttributesArr = attributes.filter((attribute) => {
+    const restAttributesTestArr = attributes.filter((attribute) => {
       if (
-        restAttributeRepeatArr.includes(attribute.name) ||
         attribute.name === "Color" ||
         attribute.items.some((attributeItem) => attributeItem.value === "Yes")
       ) {
         return false;
-      } else {
-        restAttributeRepeatArr.push(attribute.name);
-        return true;
       }
+      return true;
     });
+
+    let restAttributeItemValueTestRepeatArr = [];
+    let restUniqAttr = [];
+
+    restAttributesTestArr.forEach((restAttribute) => {
+      restAttribute.items.forEach((restAttributeItem) => {
+        if (
+          !restAttributeItemValueTestRepeatArr
+            .flat()
+            .includes(restAttributeItem.value)
+        ) {
+          restUniqAttr.push({
+            name: restAttribute.name,
+            value: restAttributeItem.value,
+          });
+        }
+      });
+
+      restAttributeItemValueTestRepeatArr.push(
+        restAttribute.items.map((restAttributeItem) => restAttributeItem.value)
+      );
+    });
+
+    const uniqueAttrName = [...new Set(restUniqAttr.map((item) => item.name))];
 
     return (
       <>
-        {restAttributesArr.length !== 0 && (
+        {restUniqAttr.length !== 0 && (
           <div className="select-attribute">
-            Filter by:
-            <select
-              className="select-attribute-options"
-              onChange={this.setRestAttributes}
-            >
-              <option>None</option>
-              {restAttributesArr.map((restAttribute, index) => (
-                <option key={index} value={restAttribute.name}>
-                  {restAttribute.name}
-                </option>
-              ))}
-            </select>
+            <div className="select-options">
+              <div className="filter-by"> Filter by:</div>
+              <select
+                className="select-attribute-options"
+                onChange={this.setRestAttributes}
+              >
+                <option>None</option>
+                {uniqueAttrName.map((restAttributeName, index) => (
+                  <option key={index} value={restAttributeName}>
+                    {restAttributeName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="rest-attr-values">
+              {restUniqAttr.map(
+                (restAttribute, index) =>
+                  restAttributes.includes(restAttribute.name) && (
+                    <button
+                      key={index}
+                      value={restAttribute.value}
+                      className={
+                        restAttributeValues.includes(restAttribute.value)
+                          ? "size-selected-attr-btn"
+                          : "size-attr-btn"
+                      }
+                      onClick={this.setRestAttributeValues}
+                    >
+                      {restAttribute.value}
+                    </button>
+                  )
+              )}
+            </div>
           </div>
         )}
       </>
@@ -165,48 +252,34 @@ export class ProductFilter extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      this.state.colors !== prevState.colors ||
-      this.state.yesNo !== prevState.yesNo ||
-      this.state.restAttributes !== prevState.restAttributes
-    ) {
-      const colorSlug =
-        this.state.colors.length !== 0
-          ? `color=${this.state.colors.join("&color=")}`
-          : "";
-      const yesNoSlug =
-        this.state.yesNo.length !== 0
-          ? `attribute=${this.state.yesNo
-              .join("&attribute=")
-              .replace(/\s/g, "-")}`
-          : "";
-      const restAttrSlug =
-        this.state.restAttributes[0] !== "None"
-          ? `rest-attributes=${this.state.restAttributes}`
-          : "";
+    const { colorsAttrValue, yesNoAttr, restAttributes, restAttributeValues } =
+      this.state;
 
-      const attrSlug =
-        colorSlug +
-        (yesNoSlug && "&") +
-        yesNoSlug +
-        (restAttrSlug && "&") +
-        restAttrSlug;
+    if (
+      colorsAttrValue !== prevState.colorsAttrValue ||
+      yesNoAttr !== prevState.yesNoAttr ||
+      restAttributes !== prevState.restAttributes ||
+      restAttributeValues !== prevState.restAttributeValues
+    ) {
+      const urlObj = {
+        color: colorsAttrValue,
+        attribute: yesNoAttr,
+        [restAttributes]: restAttributeValues,
+      };
+
+      const attrUrlQuery = objToUrlQuery(urlObj);
 
       this.props.navigate.to({
-        search: attrSlug.toLowerCase(),
+        search: attrUrlQuery,
       });
     }
   }
 
   render() {
-    // const { colors } = this.state;
-
-    // console.log(colors);
-
     return (
       <div className="attribute-items">
         {this.showColorAttributes()}
-        {this.showYesNoAttributes()}
+        {this.showYesNoAttrAttributes()}
         {this.showRestAttributes()}
       </div>
     );

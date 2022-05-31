@@ -9,6 +9,9 @@ import PropTypes from "prop-types";
 import { setCurrentSelectedCategory } from "../../state/actions/categoriesActions";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
 import ProductFilter from "../ProductFilter";
+import { withRouterHOC } from "../../helpers/routerHOC";
+import { compose } from "redux";
+import { urlQueryToArr } from "../../utils/formatUtils";
 
 const PRODUCTS_QUERY = gql`
   query ProductsQuery($title: String!) {
@@ -47,6 +50,8 @@ export class ProductPage extends Component {
   }
   render() {
     const { category } = this.props;
+    const urlQuery = this.props.location.search.substring(1);
+    const urlQueryArr = urlQueryToArr(urlQuery);
 
     return (
       <Query query={PRODUCTS_QUERY} variables={{ title: category }}>
@@ -60,10 +65,44 @@ export class ProductPage extends Component {
             .map(({ attributes }) => attributes)
             .flat();
 
+          const filteredProducts = products.filter((product) => {
+            for (const attribute of product.attributes) {
+              if (
+                urlQueryArr.some((urlQueryAttr) =>
+                  urlQueryAttr.includes(attribute.name)
+                )
+              ) {
+                return true;
+              }
+              for (const attributeValue of attribute.items) {
+                if (
+                  urlQueryArr.some((urlQueryAttr) =>
+                    attributeValue.value.includes(urlQueryAttr)
+                  )
+                ) {
+                  return true;
+                }
+              }
+            }
+
+            return false;
+          });
+
+          // products.forEach((product) => {
+          //   console.log(product);
+          //   filteredProducts.length !== 0 &&
+          //     console.log(filteredProducts.includes(product));
+          // });
+
+          // console.log(filteredProducts);
+
           return (
             <div className="product-page-grid-container">
-              {category === "all" && <ProductFilter attributes={attributes} />}
-              {products.map((product, index) => (
+              <ProductFilter attributes={attributes} />
+              {(filteredProducts.length !== 0
+                ? filteredProducts
+                : products
+              ).map((product, index) => (
                 <ProductPageSingle key={index} product={product} />
               ))}
             </div>
@@ -77,6 +116,9 @@ export class ProductPage extends Component {
 ProductPage.propTypes = {
   category: PropTypes.string,
   setCurrentSelectedCategory: PropTypes.func,
+  location: PropTypes.shape({
+    search: PropTypes.string,
+  }),
 };
 
 ProductPage.defaultProps = {
@@ -84,4 +126,7 @@ ProductPage.defaultProps = {
   setCurrentSelectedCategory: () => {},
 };
 
-export default connect(null, { setCurrentSelectedCategory })(ProductPage);
+export default compose(
+  withRouterHOC,
+  connect(null, { setCurrentSelectedCategory })
+)(ProductPage);
