@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import "./ProductFilter.style.scss";
 import { withRouterHOC } from "../../helpers/routerHOC";
 import { compose } from "redux";
-import { objToUrlQuery } from "../../utils/formatUtils";
+import { objToUrlQuery, urlQueryToArr } from "../../utils/formatUtils";
+import { getRestAttributes } from "./ProductFilter.component.util";
+
 export class ProductFilter extends PureComponent {
   constructor(props) {
     super(props);
@@ -12,7 +14,7 @@ export class ProductFilter extends PureComponent {
     this.state = {
       colorsAttrValue: [],
       yesNoAttr: [],
-      restAttributes: ["None"],
+      restAttributes: [],
       restAttributeValues: [],
     };
   }
@@ -24,7 +26,56 @@ export class ProductFilter extends PureComponent {
     }),
     colorsAttrValue: PropTypes.arrayOf(PropTypes.string),
     navigate: PropTypes.func,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }),
   };
+
+  componentDidMount() {
+    const { attributes } = this.props;
+    const urlQuery = this.props.location.search.substring(1);
+    const urlQueryArr = urlQueryToArr(urlQuery);
+    const restAttributes = getRestAttributes(attributes);
+
+    urlQueryArr.forEach((queryParam) => {
+      if (queryParam.includes("color=")) {
+        this.setState((prevState) => ({
+          colorsAttrValue: [
+            ...prevState.colorsAttrValue,
+            queryParam.split("=")[1],
+          ],
+        }));
+      } else if (queryParam.includes("attribute=")) {
+        this.setState((prevState) => ({
+          yesNoAttr: [...prevState.yesNoAttr, queryParam.split("=")[1]],
+        }));
+      } else {
+        queryParam.split("=")[1] !== "" &&
+          this.setState((prevState) => ({
+            restAttributeValues: [
+              ...prevState.restAttributeValues,
+              queryParam.split("=")[1],
+            ],
+          }));
+
+        for (let urlAttribute of urlQueryArr) {
+          if (
+            restAttributes.some((restAttribute) =>
+              urlAttribute.includes(restAttribute.name)
+            )
+          ) {
+            this.setState({
+              restAttributes: queryParam.split("=")[0],
+            });
+          } else {
+            this.setState({
+              restAttributes: getRestAttributes(attributes)[0].name,
+            });
+          }
+        }
+      }
+    });
+  }
 
   setFilterColor = (event) => {
     const { colorsAttrValue } = this.state;
@@ -71,7 +122,7 @@ export class ProductFilter extends PureComponent {
     if (restAttributeValues.includes(event.target.value)) {
       this.setState((prevState) => ({
         restAttributeValues: prevState.restAttributeValues.filter(
-          (color) => color !== event.target.value
+          (restAttributeValue) => restAttributeValue !== event.target.value
         ),
       }));
     } else {
@@ -136,6 +187,7 @@ export class ProductFilter extends PureComponent {
 
   showYesNoAttrAttributes = () => {
     const { attributes } = this.props;
+    const { yesNoAttr } = this.state;
 
     let yesNoAttrAttributeRepeatArr = [];
 
@@ -160,6 +212,8 @@ export class ProductFilter extends PureComponent {
               {yesNoAttrAttribute.name}:{" "}
             </div>
             <input
+              className="yes-no-checkbox"
+              checked={yesNoAttr.includes(yesNoAttrAttribute.name)}
               value={yesNoAttrAttribute.name}
               type="checkbox"
               onChange={this.setYesNoAttrAttributes}
@@ -174,23 +228,13 @@ export class ProductFilter extends PureComponent {
     const { attributes } = this.props;
     const { restAttributes, restAttributeValues } = this.state;
 
-    const restAttributesTestArr = attributes.filter((attribute) => {
-      if (
-        attribute.name === "Color" ||
-        attribute.items.some((attributeItem) => attributeItem.value === "Yes")
-      ) {
-        return false;
-      }
-      return true;
-    });
-
-    let restAttributeItemValueTestRepeatArr = [];
+    let restAttributeItemValueRepeatArr = [];
     let restUniqAttr = [];
 
-    restAttributesTestArr.forEach((restAttribute) => {
+    getRestAttributes(attributes).forEach((restAttribute) => {
       restAttribute.items.forEach((restAttributeItem) => {
         if (
-          !restAttributeItemValueTestRepeatArr
+          !restAttributeItemValueRepeatArr
             .flat()
             .includes(restAttributeItem.value)
         ) {
@@ -201,7 +245,7 @@ export class ProductFilter extends PureComponent {
         }
       });
 
-      restAttributeItemValueTestRepeatArr.push(
+      restAttributeItemValueRepeatArr.push(
         restAttribute.items.map((restAttributeItem) => restAttributeItem.value)
       );
     });
@@ -218,9 +262,12 @@ export class ProductFilter extends PureComponent {
                 className="select-attribute-options"
                 onChange={this.setRestAttributes}
               >
-                <option>None</option>
                 {uniqueAttrName.map((restAttributeName, index) => (
-                  <option key={index} value={restAttributeName}>
+                  <option
+                    selected={restAttributeName === restAttributes}
+                    key={index}
+                    value={restAttributeName}
+                  >
                     {restAttributeName}
                   </option>
                 ))}
@@ -229,7 +276,9 @@ export class ProductFilter extends PureComponent {
             <div className="rest-attr-values">
               {restUniqAttr.map(
                 (restAttribute, index) =>
-                  restAttributes.includes(restAttribute.name) && (
+                  restAttributes.includes(
+                    restAttribute.name || restAttributes[0]
+                  ) && (
                     <button
                       key={index}
                       value={restAttribute.value}

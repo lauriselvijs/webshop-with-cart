@@ -17,3 +17,34 @@ export const getTotalItemAmount = (cartItems, chosenCurrencyName) =>
       total + findPrice(item, chosenCurrencyName) * parseInt(item.count),
     0
   );
+
+//TODO:
+//[ ] fix color filter
+export const filterProducts = (products, urlQueryArr) => {
+  // console.log(urlQueryArr);
+
+  const filteredProducts = products.filter((product) => {
+    for (let attribute of product.attributes) {
+      if (
+        urlQueryArr.some((urlQueryAttr) =>
+          urlQueryAttr.includes(attribute.name)
+        )
+      ) {
+        return true;
+      }
+      for (let attributeValue of attribute.items) {
+        if (
+          urlQueryArr.some((urlQueryAttr) =>
+            attributeValue.value.includes(urlQueryAttr.split("=")[1])
+          )
+        ) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  });
+
+  return filteredProducts;
+};

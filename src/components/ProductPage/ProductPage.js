@@ -12,6 +12,7 @@ import ProductFilter from "../ProductFilter";
 import { withRouterHOC } from "../../helpers/routerHOC";
 import { compose } from "redux";
 import { urlQueryToArr } from "../../utils/formatUtils";
+import { filterProducts } from "../../utils/reduceUtils";
 
 const PRODUCTS_QUERY = gql`
   query ProductsQuery($title: String!) {
@@ -65,36 +66,7 @@ export class ProductPage extends Component {
             .map(({ attributes }) => attributes)
             .flat();
 
-          const filteredProducts = products.filter((product) => {
-            for (const attribute of product.attributes) {
-              if (
-                urlQueryArr.some((urlQueryAttr) =>
-                  urlQueryAttr.includes(attribute.name)
-                )
-              ) {
-                return true;
-              }
-              for (const attributeValue of attribute.items) {
-                if (
-                  urlQueryArr.some((urlQueryAttr) =>
-                    attributeValue.value.includes(urlQueryAttr)
-                  )
-                ) {
-                  return true;
-                }
-              }
-            }
-
-            return false;
-          });
-
-          // products.forEach((product) => {
-          //   console.log(product);
-          //   filteredProducts.length !== 0 &&
-          //     console.log(filteredProducts.includes(product));
-          // });
-
-          // console.log(filteredProducts);
+          const filteredProducts = filterProducts(products, urlQueryArr);
 
           return (
             <div className="product-page-grid-container">
