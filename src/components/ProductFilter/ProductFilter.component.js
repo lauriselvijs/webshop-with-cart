@@ -24,6 +24,7 @@ export class ProductFilter extends PureComponent {
     categories: PropTypes.shape({
       selectedCategory: PropTypes.string,
     }),
+    category: PropTypes.string,
     colorsAttrValue: PropTypes.arrayOf(PropTypes.string),
     navigate: PropTypes.func,
     location: PropTypes.shape({
@@ -35,7 +36,6 @@ export class ProductFilter extends PureComponent {
     const { attributes } = this.props;
     const urlQuery = this.props.location.search.substring(1);
     const urlQueryArr = urlQueryToArr(urlQuery);
-    const restAttributes = getRestAttributes(attributes);
 
     urlQueryArr.forEach((queryParam) => {
       if (queryParam.includes("color=")) {
@@ -50,7 +50,10 @@ export class ProductFilter extends PureComponent {
           yesNoAttr: [...prevState.yesNoAttr, queryParam.split("=")[1]],
         }));
       } else {
-        queryParam.split("=")[1] !== "" &&
+        if (
+          queryParam.split("=")[1] !== "" &&
+          queryParam.split("=")[0] !== ""
+        ) {
           this.setState((prevState) => ({
             restAttributeValues: [
               ...prevState.restAttributeValues,
@@ -58,20 +61,13 @@ export class ProductFilter extends PureComponent {
             ],
           }));
 
-        for (let urlAttribute of urlQueryArr) {
-          if (
-            restAttributes.some((restAttribute) =>
-              urlAttribute.includes(restAttribute.name)
-            )
-          ) {
-            this.setState({
-              restAttributes: queryParam.split("=")[0],
-            });
-          } else {
-            this.setState({
-              restAttributes: getRestAttributes(attributes)[0].name,
-            });
-          }
+          this.setState({
+            restAttributes: queryParam.split("=")[0],
+          });
+        } else {
+          this.setState({
+            restAttributes: getRestAttributes(attributes)[0].name,
+          });
         }
       }
     });
@@ -166,19 +162,21 @@ export class ProductFilter extends PureComponent {
             <div className="color-attribute-name">
               {attributeColorArr[0]?.name}:{" "}
             </div>
-            {individualColorAttributesArr.map((colorAttributeItem, index) => (
-              <button
-                value={colorAttributeItem.value}
-                onClick={this.setFilterColor}
-                key={index}
-                className={
-                  colorsAttrValue.includes(colorAttributeItem.value)
-                    ? "color-selected-btn"
-                    : "color-btn"
-                }
-                style={{ backgroundColor: colorAttributeItem.value }}
-              />
-            ))}
+            <div className="color-btn-container">
+              {individualColorAttributesArr.map((colorAttributeItem, index) => (
+                <button
+                  value={colorAttributeItem.value}
+                  onClick={this.setFilterColor}
+                  key={index}
+                  className={
+                    colorsAttrValue.includes(colorAttributeItem.value)
+                      ? "color-selected-btn"
+                      : "color-btn"
+                  }
+                  style={{ backgroundColor: colorAttributeItem.value }}
+                />
+              ))}
+            </div>
           </div>
         )}
       </>
@@ -257,7 +255,6 @@ export class ProductFilter extends PureComponent {
         {restUniqAttr.length !== 0 && (
           <div className="select-attribute">
             <div className="select-options">
-              <div className="filter-by"> Filter by:</div>
               <select
                 className="select-attribute-options"
                 onChange={this.setRestAttributes}
@@ -268,7 +265,7 @@ export class ProductFilter extends PureComponent {
                     key={index}
                     value={restAttributeName}
                   >
-                    {restAttributeName}
+                    {restAttributeName}:
                   </option>
                 ))}
               </select>
@@ -303,6 +300,13 @@ export class ProductFilter extends PureComponent {
   componentDidUpdate(prevProps, prevState) {
     const { colorsAttrValue, yesNoAttr, restAttributes, restAttributeValues } =
       this.state;
+    const { attributes } = this.props;
+
+    if (attributes !== prevProps.attributes) {
+      this.setState({
+        restAttributes: getRestAttributes(attributes)[0].name,
+      });
+    }
 
     if (
       colorsAttrValue !== prevState.colorsAttrValue ||

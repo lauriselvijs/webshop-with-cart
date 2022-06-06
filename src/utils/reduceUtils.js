@@ -18,16 +18,14 @@ export const getTotalItemAmount = (cartItems, chosenCurrencyName) =>
     0
   );
 
-//TODO:
-//[ ] fix color filter
 export const filterProducts = (products, urlQueryArr) => {
-  // console.log(urlQueryArr);
-
   const filteredProducts = products.filter((product) => {
     for (let attribute of product.attributes) {
       if (
-        urlQueryArr.some((urlQueryAttr) =>
-          urlQueryAttr.includes(attribute.name)
+        urlQueryArr.some(
+          (urlQueryAttr) =>
+            urlQueryAttr.includes(attribute.name) &&
+            urlQueryAttr.split("=")[0] === "attribute"
         )
       ) {
         return true;

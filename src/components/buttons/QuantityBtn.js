@@ -15,10 +15,13 @@ export class QuantityBtn extends Component {
   }
 
   increaseQuantity(id) {
+    console.log(id);
+
     this.props.incQuantity(id);
   }
 
   decreaseQuantity(id) {
+    console.log(id);
     this.props.decQuantity(id);
   }
 

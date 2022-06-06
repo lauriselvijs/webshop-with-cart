@@ -9,6 +9,6 @@
   width: 335px;
   height: fit-content;
   max-height: 540px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }

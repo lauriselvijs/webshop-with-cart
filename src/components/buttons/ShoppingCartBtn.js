@@ -56,7 +56,11 @@ export class ShoppingCartBtn extends Component {
         {cartItems.length !== 0 ? (
           <div className="cart-item-counter">
             <img
-              className="black-circle"
+              className={
+                totalAmountItems > 9
+                  ? "black-circle-multiple-items"
+                  : "black-circle"
+              }
               src={BlackCircle}
               alt="black-circle"
             />

@@ -10,6 +10,14 @@
   left: 20px;
 }
 
+.black-circle-multiple-items {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: -5px;
+  left: 20px;
+}
+
 .quantity-count {
   position: absolute;
   color: white;

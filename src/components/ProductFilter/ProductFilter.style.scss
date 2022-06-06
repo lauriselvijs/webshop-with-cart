@@ -1,22 +1,23 @@
 .attribute-items {
+  width: auto;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
 
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 18px;
 
-  button.color-btn {
-    padding: 8px 8px;
-  }
+  color: #1d1f22;
+  padding-top: 20px;
+  padding-left: 4px;
+  margin: 0px;
 
-  button.color-selected-btn {
-    padding: 8px 8px;
-  }
+  text-transform: uppercase;
 
   button.color-btn:active,
   button.color-selected-btn:active {
@@ -26,7 +27,10 @@
   .color-attribute,
   .yes-no-attribute {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 298px;
     gap: 5px;
   }
 
@@ -43,11 +47,22 @@
     }
   }
 
+  input.yes-no-checkbox {
+    width: 25px;
+    height: 25px;
+  }
+
   select.select-attribute-options {
-    color: black;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 18px;
+
+    color: #1d1f22;
+    padding: 5px;
+    margin: 0px;
+
+    text-transform: uppercase;
   }
 }

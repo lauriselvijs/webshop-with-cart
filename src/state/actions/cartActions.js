@@ -67,16 +67,15 @@ export const incQuantity = (uniqueId) => {
     payload: { uniqueId },
   };
 };
+
 export const decQuantity = (uniqueId) => {
   const oneItemLeft = store
     .getState()
     .cart.cartItems.some(
-      (cartItem) => cartItem.id === uniqueId || cartItem.count === 1
+      (cartItem) => cartItem.uniqueId === uniqueId && cartItem.count !== 1
     );
 
-  console.log(oneItemLeft);
-
-  if (!oneItemLeft) {
+  if (oneItemLeft) {
     return {
       type: DECREASE_QUANTITY,
       payload: { uniqueId },
