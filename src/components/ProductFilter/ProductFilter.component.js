@@ -21,11 +21,6 @@ export class ProductFilter extends PureComponent {
 
   static propTypes = {
     attributes: PropTypes.arrayOf(PropTypes.object),
-    categories: PropTypes.shape({
-      selectedCategory: PropTypes.string,
-    }),
-    category: PropTypes.string,
-    colorsAttrValue: PropTypes.arrayOf(PropTypes.string),
     navigate: PropTypes.func,
     location: PropTypes.shape({
       search: PropTypes.string,
