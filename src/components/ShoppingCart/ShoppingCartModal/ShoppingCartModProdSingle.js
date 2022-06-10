@@ -20,6 +20,8 @@ import PropTypes from "prop-types";
 import OptAttributeBtn from "../../buttons/OptAttributeBtn";
 import ProductAttrName from "../../product/ProductAttrName";
 
+// TODO:
+// [] change color box size in css
 export class ShoppingCartModProdSingle extends Component {
   constructor(props) {
     super(props);
@@ -87,92 +89,103 @@ export class ShoppingCartModProdSingle extends Component {
           />
 
           <div className="attribute-section">
-            <div className="text-attribute">
-              {checkIfHasAttribute(item, "text") && (
-                <div>
-                  {textAttrArr.map((attribute, index) => (
-                    <div key={index}>
-                      {attribute.name === "Capacity" && (
-                        <>
-                          {attribute.items.map((size, index) => (
-                            <SizeBtn
-                              key={index}
-                              size={size.displayValue}
-                              selectSizeButton={this.selectSizeButton.bind(
-                                this,
-                                uniqueId,
-                                size.displayValue
-                              )}
-                              selectedSize={attrObj.size}
-                            />
-                          ))}
-                        </>
-                      )}
-
-                      {attribute.name === "Size" && (
-                        <>
-                          {attribute.items.map((size, index) => (
-                            <SizeBtn
-                              key={index}
-                              size={size.displayValue}
-                              selectSizeButton={this.selectSizeButton.bind(
-                                this,
-                                uniqueId,
-                                size.displayValue
-                              )}
-                              selectedSize={attrObj.size}
-                            />
-                          ))}
-                        </>
-                      )}
-
-                      {attribute.name === "With USB 3 ports" && (
-                        <>
-                          <ProductAttrName name={attribute.name} />
-                          {attribute.items.map((optAttribute, index) => (
-                            <OptAttributeBtn
-                              key={index}
-                              optionalAttribute={optAttribute.displayValue}
-                              selectOptAttrButton={this.selectUsbPort.bind(
-                                this,
-                                uniqueId,
-                                optAttribute.displayValue
-                              )}
-                              selectedOptAttribute={attrObj.usbType}
-                            />
-                          ))}
-                        </>
-                      )}
-
-                      {attribute.name === "Touch ID in keyboard" && (
-                        <>
-                          <ProductAttrName name={attribute.name} />
-                          {attribute.items.map((size, index) => (
-                            <OptAttributeBtn
-                              key={index}
-                              optionalAttribute={size.displayValue}
-                              selectOptAttrButton={this.selectTouchId.bind(
-                                this,
-                                uniqueId,
-                                size.displayValue
-                              )}
-                              selectedOptAttribute={attrObj.touchId}
-                            />
-                          ))}
-                        </>
-                      )}
-                    </div>
-                  ))}
+            {checkIfHasAttribute(item, "text") &&
+              textAttrArr.map((attribute, index) => (
+                <div className="text-attribute" key={index}>
+                  {attribute.name === "Capacity" && (
+                    <>
+                      <div className="shopping-cart-modal-attr-name">
+                        {attribute.name}:
+                      </div>
+                      {attribute.items.map((size, index) => (
+                        <SizeBtn
+                          className={"capacity-attr-btn-cart-modal"}
+                          classNameSelected={
+                            "capacity-attr-btn-cart-modal-selected"
+                          }
+                          key={index}
+                          size={size.displayValue}
+                          selectSizeButton={this.selectSizeButton.bind(
+                            this,
+                            uniqueId,
+                            size.displayValue
+                          )}
+                          selectedSize={attrObj.size}
+                        />
+                      ))}
+                    </>
+                  )}
+                  {attribute.name === "Size" && (
+                    <>
+                      <div className="shopping-cart-modal-attr-name">
+                        {attribute.name}:
+                      </div>
+                      {attribute.items.map((size, index) => (
+                        <SizeBtn
+                          className={"size-attr-btn-cart-modal"}
+                          classNameSelected={
+                            "size-attr-btn-cart-modal-selected"
+                          }
+                          key={index}
+                          size={size.value}
+                          selectSizeButton={this.selectSizeButton.bind(
+                            this,
+                            uniqueId,
+                            size.value
+                          )}
+                          selectedSize={attrObj.size}
+                        />
+                      ))}
+                    </>
+                  )}
+                  {attribute.name === "With USB 3 ports" && (
+                    <>
+                      <ProductAttrName name={attribute.name} />
+                      {attribute.items.map((optAttribute, index) => (
+                        <OptAttributeBtn
+                          className={"opt-attr-btn-modal"}
+                          classNameSelected={"opt-attr-selected-btn-modal"}
+                          key={index}
+                          optionalAttribute={optAttribute.displayValue}
+                          selectOptAttrButton={this.selectUsbPort.bind(
+                            this,
+                            uniqueId,
+                            optAttribute.displayValue
+                          )}
+                          selectedOptAttribute={attrObj.usbType}
+                        />
+                      ))}
+                    </>
+                  )}
+                  {attribute.name === "Touch ID in keyboard" && (
+                    <>
+                      <ProductAttrName name={attribute.name} />
+                      {attribute.items.map((size, index) => (
+                        <OptAttributeBtn
+                          className={"opt-attr-btn-modal"}
+                          classNameSelected={"opt-attr-selected-btn-modal"}
+                          key={index}
+                          optionalAttribute={size.displayValue}
+                          selectOptAttrButton={this.selectTouchId.bind(
+                            this,
+                            uniqueId,
+                            size.displayValue
+                          )}
+                          selectedOptAttribute={attrObj.touchId}
+                        />
+                      ))}
+                    </>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
+              ))}
 
-          <div className="swatch-attribute">
-            {checkIfHasAttribute(item, "swatch") && (
-              <>
-                {swatchAttrArr.map((attribute, index) => (
-                  <div key={index}>
+            {checkIfHasAttribute(item, "swatch") &&
+              swatchAttrArr.map((attribute, index) => (
+                <div key={index} className="swatch-attribute">
+                  <div className="shopping-cart-modal-attr-name">
+                    {attribute.name}:
+                  </div>
+                  <div className="swatch-attribute-values">
                     {attribute.items.map((color, index) => (
                       <ColorBtn
                         key={index}
@@ -184,15 +197,16 @@ export class ShoppingCartModProdSingle extends Component {
                           color.value
                         )}
                         selectedColorCode={attrObj.color}
+                        className={"color-btn-product-modal"}
+                        classNameSelected={"color-btn-product-modal-selected"}
                       />
                     ))}
                   </div>
-                ))}
-              </>
-            )}
+                </div>
+              ))}
           </div>
         </div>
-        <div className="white-space"></div>
+        <div className="white-space-shopping-cart-mod-prod-single"></div>
         <div className="qty-section">
           <QuantityBtn
             plusBtnClass="shopping-cart-modal-prod-single-plus-btn"

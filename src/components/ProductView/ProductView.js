@@ -136,7 +136,7 @@ class ProductView extends Component {
           const swatchAttrArr = getAttributeArr(product, "swatch");
 
           const attrObj = {
-            size: selectedSize || textAttrArr[0]?.items[0].displayValue,
+            size: selectedSize || textAttrArr[0]?.items[0].value,
             usbType: usbAttribute || textAttrArr[1]?.items[0].displayValue,
             touchId: touchIdAttribute || textAttrArr[2]?.items[0].displayValue,
             color: selectedColorCode || swatchAttrArr[0]?.items[0].value,
@@ -200,14 +200,13 @@ class ProductView extends Component {
                               {attribute.items.map((size, index) => (
                                 <SizeBtn
                                   key={index}
-                                  size={size.displayValue}
+                                  size={size.value}
                                   selectSizeButton={this.selectSizeBtn.bind(
                                     this,
-                                    size.displayValue
+                                    size.value
                                   )}
                                   selectedSize={
-                                    selectedSize ||
-                                    attribute.items[0].displayValue
+                                    selectedSize || attribute.items[0].value
                                   }
                                 />
                               ))}

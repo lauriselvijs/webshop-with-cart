@@ -4,14 +4,20 @@ import PropTypes from "prop-types";
 
 export default class SizeBtn extends Component {
   render() {
-    const { selectSizeButton, size, selectedSize } = this.props;
+    const {
+      selectSizeButton,
+      size,
+      selectedSize,
+      className,
+      classNameSelected,
+    } = this.props;
 
-    let sizeBtnClass = "size-attr-btn";
+    let sizeBtnClass = className;
 
     if (selectedSize === size) {
-      sizeBtnClass = "size-selected-attr-btn";
+      sizeBtnClass = classNameSelected;
     } else {
-      sizeBtnClass = "size-attr-btn";
+      sizeBtnClass = className;
     }
     return (
       <button className={sizeBtnClass} onClick={selectSizeButton}>
@@ -25,10 +31,14 @@ SizeBtn.propTypes = {
   selectSizeButton: PropTypes.func,
   size: PropTypes.string,
   selectedSize: PropTypes.string,
+  className: PropTypes.string,
+  classNameSelected: PropTypes.string,
 };
 
 SizeBtn.defaultProps = {
   selectSizeButton: () => {},
   size: "S",
   selectedSize: "S",
+  className: "size-attr-btn",
+  classNameSelected: "size-selected-attr-btn",
 };

@@ -1,6 +1,6 @@
 .size-attr-btn {
-  width: fit-content;
-  height: fit-content;
+  width: 63px;
+  height: 45px;
 
   color: black;
   background: white;
@@ -17,9 +17,8 @@
 }
 
 .size-selected-attr-btn {
-  width: fit-content;
-  height: fit-content;
-
+  width: 63px;
+  height: 45px;
   color: white;
   background: #1d1f22;
   border: 1px solid #1d1f22;
@@ -32,4 +31,90 @@
   font-size: 16px;
   line-height: 18px;
   margin: 5px;
+}
+
+.size-attr-btn-cart-modal {
+  width: 24px;
+  height: 24px;
+
+  color: black;
+  background: white;
+  border: 1px solid #1d1f22;
+  box-sizing: border-box;
+
+  padding: 0px;
+
+  /* btn text */
+  font-family: "Source Sans Pro", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+
+  text-align: center;
+}
+
+.size-attr-btn-cart-modal-selected {
+  width: 24px;
+  height: 24px;
+  color: white;
+  background: #1d1f22;
+  border: 1px solid #1d1f22;
+  box-sizing: border-box;
+
+  padding: 0px;
+
+  /* btn text */
+  font-family: "Source Sans Pro", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+
+  text-align: center;
+}
+
+.capacity-attr-btn-cart-modal {
+  width: fit-content;
+  height: fit-content;
+
+  color: black;
+  background: white;
+  border: 1px solid #1d1f22;
+  box-sizing: border-box;
+
+  /* btn text */
+  font-family: "Source Sans Pro", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+
+.capacity-attr-btn-cart-modal-selected {
+  width: fit-content;
+  height: fit-content;
+  color: white;
+  background: #1d1f22;
+  border: 1px solid #1d1f22;
+  box-sizing: border-box;
+
+  /* btn text */
+  font-family: "Source Sans Pro", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 18px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
 }

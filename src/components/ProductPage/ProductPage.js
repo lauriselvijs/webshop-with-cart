@@ -70,7 +70,7 @@ export class ProductPage extends Component {
 
           return (
             <div className="product-page-grid-container">
-              <ProductFilter attributes={attributes} />
+              <ProductFilter attributes={attributes} category={category} />
               {(filteredProducts.length !== 0
                 ? filteredProducts
                 : products

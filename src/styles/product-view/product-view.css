@@ -30,5 +30,12 @@
 }
 
 .swatch-attribute {
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.swatch-attribute-values {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

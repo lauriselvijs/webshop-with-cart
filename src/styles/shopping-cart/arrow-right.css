@@ -1,6 +1,6 @@
 .right-arrow {
   position: absolute;
-  margin-left: -14%;
-  padding-top: 55%;
+  left: 85%;
+  top: 90%;
   z-index: 1;
 }

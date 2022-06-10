@@ -1,9 +1,27 @@
 hr {
-  width: 95%;
+  width: 92%;
   color: lightgrey;
   opacity: 0.2;
 }
 
 .shopping-cart {
   height: fit-content;
+}
+
+.shopping-cart-main-title {
+  width: 84px;
+  height: 40px;
+
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  /* identical to box height, or 125% */
+
+  padding-left: 60px;
+  padding-bottom: 40px;
+  text-transform: uppercase;
+
+  color: #1d1f22;
 }

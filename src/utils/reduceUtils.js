@@ -46,3 +46,6 @@ export const filterProducts = (products, urlQueryArr) => {
 
   return filteredProducts;
 };
+
+export const getTaxValue = (totalValue, taxPercent) =>
+  (parseFloat(totalValue) * (taxPercent / 100)).toFixed(2);

@@ -1,0 +1,29 @@
+.order-btn {
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+
+  width: 210px;
+  height: 18px;
+
+  /* --c-primary */
+
+  background: #5ece7b;
+  color: white;
+
+  /* Inside auto layout */
+
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}

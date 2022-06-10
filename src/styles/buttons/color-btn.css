@@ -1,14 +1,39 @@
 .color-btn {
-  padding: 8px 16px;
+  width: 32px;
+  height: 32px;
   display: inline-block;
   font-size: 12px;
   margin: 4px;
+  border: 2px solid white;
 }
 
 .color-selected-btn {
-  border: 2px;
+  width: 32px;
+  height: 32px;
+  outline: 1px solid hsla(136, 53%, 59%, 1);
+  border: 1px;
   border-style: solid;
-  border-color: orange;
-  padding: 8px 16px;
+  border-color: white;
   margin: 4px;
+}
+
+.color-btn-product-modal {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  font-size: 12px;
+  margin-right: 10px;
+  border: 2px solid white;
+}
+
+.color-btn-product-modal-selected {
+  width: 16px;
+  height: 16px;
+  outline: 1px solid hsla(136, 53%, 59%, 1);
+  border: 1px;
+  border-style: solid;
+  border-color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
 }

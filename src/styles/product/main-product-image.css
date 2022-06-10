@@ -33,3 +33,15 @@
   width: 105px;
   height: 137px;
 }
+
+.shopping-cart-single-main-img {
+  position: relative;
+  width: 200px;
+  height: auto;
+  left: 16px;
+  top: 16px;
+
+  padding: 0px;
+  margin: 0px 0px;
+  align-content: center;
+}

@@ -1,15 +1,41 @@
 .attribute-section {
-  transform: scale(1, 0.8);
   padding: 0px;
   margin: 0px;
 }
 
 .container-shopping-cart-mod-prod-single {
   display: flex;
+  padding-bottom: 30px;
 }
 
 .shopping-cart-modal-prod-single-main-img-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.shopping-cart-modal-attr-name {
+  width: 30px;
+  height: 16px;
+
+  padding: 4px;
+  padding-left: 0px;
+
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height, or 114% */
+
+  display: flex;
+  align-items: center;
+
+  margin: 0px;
+
+  color: #1d1f22;
+}
+
+.white-space-shopping-cart-mod-prod-single {
+  width: 15%;
 }

@@ -82,7 +82,7 @@ export class ProductPageSingle extends Component {
     const swatchAttrArr = getAttributeArr(product, "swatch");
 
     const attrObj = {
-      size: textAttrArr[0]?.items[0].displayValue,
+      size: textAttrArr[0]?.items[0].value,
       usbType: textAttrArr[1]?.items[0].displayValue,
       touchId: textAttrArr[2]?.items[0].displayValue,
       color: swatchAttrArr[0]?.items[0].value,

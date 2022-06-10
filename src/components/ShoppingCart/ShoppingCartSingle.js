@@ -104,8 +104,8 @@ export class ShoppingCartSingle extends Component {
     const swatchAttrArr = getAttributeArr(item, "swatch");
 
     return (
-      <div className="container">
-        <div className="left-section">
+      <div className="shopping-cart-single-container">
+        <div className="shopping-cart-single-left-section">
           <ProductName
             brand={brand}
             name={name}
@@ -124,6 +124,7 @@ export class ShoppingCartSingle extends Component {
                   <div key={index}>
                     {attribute.name === "Capacity" && (
                       <>
+                        <ProductAttrName name={attribute.name} />
                         {attribute.items.map((size, index) => (
                           <SizeBtn
                             key={index}
@@ -141,14 +142,15 @@ export class ShoppingCartSingle extends Component {
 
                     {attribute.name === "Size" && (
                       <>
+                        <ProductAttrName name={attribute.name} />
                         {attribute.items.map((size, index) => (
                           <SizeBtn
                             key={index}
-                            size={size.displayValue}
+                            size={size.value}
                             selectSizeButton={this.selectSizeButton.bind(
                               this,
                               uniqueId,
-                              size.displayValue
+                              size.value
                             )}
                             selectedSize={attrObj.size}
                           />
@@ -201,6 +203,7 @@ export class ShoppingCartSingle extends Component {
               <>
                 {swatchAttrArr.map((attribute, index) => (
                   <div key={index}>
+                    <ProductAttrName name={attribute.name} />
                     {attribute.items.map((color, index) => (
                       <ColorBtn
                         key={index}
@@ -220,25 +223,28 @@ export class ShoppingCartSingle extends Component {
             )}
           </div>
         </div>
-        <div className="white-space"></div>
-        <div className="qty-section">
-          <QuantityBtn itemCount={count} itemId={uniqueId} />
-        </div>
-
-        <div className="gallery-arrow-section">
-          {gallery.length > 1 && (
-            <ArrowLeft
-              src={LeftArrow}
-              onLeftArrowClick={this.onLeftArrowClick}
-            />
-          )}
-          <MainProductImg src={gallery[itemIndex]} />
-          {gallery.length > 1 && (
-            <ArrowRight
-              src={RightArrow}
-              onRightArrowClick={this.onRightArrowClick}
-            />
-          )}
+        <div className="shopping-cart-single-right-section">
+          <div className="qty-section">
+            <QuantityBtn itemCount={count} itemId={uniqueId} />
+          </div>
+          <div className="gallery-arrow-section">
+            {gallery.length > 1 && (
+              <ArrowLeft
+                src={LeftArrow}
+                onLeftArrowClick={this.onLeftArrowClick}
+              />
+            )}
+            <MainProductImg
+              className={"shopping-cart-single-main-img"}
+              src={gallery[itemIndex]}
+            ></MainProductImg>
+            {gallery.length > 1 && (
+              <ArrowRight
+                src={RightArrow}
+                onRightArrowClick={this.onRightArrowClick}
+              />
+            )}
+          </div>
         </div>
       </div>
     );

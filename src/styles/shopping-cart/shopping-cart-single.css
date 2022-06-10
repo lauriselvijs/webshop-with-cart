@@ -1,11 +1,13 @@
-.container {
+.shopping-cart-single-container {
   display: flex;
+  justify-content: space-between;
   padding: 10px;
-  padding-left: 20px;
+  padding-left: 60px;
+  padding-right: 80px;
 }
 
-.white-space {
-  width: 40%;
+.shopping-cart-single-right-section {
+  display: flex;
 }
 
 .qty-section {
@@ -19,4 +21,8 @@
 
 .gallery-arrow-section {
   position: relative;
+}
+
+.shopping-cart-single-left-section {
+  width: fit-content;
 }

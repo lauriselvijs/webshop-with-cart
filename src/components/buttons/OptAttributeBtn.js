@@ -4,15 +4,20 @@ import PropTypes from "prop-types";
 
 export default class OptAttributeBtn extends Component {
   render() {
-    const { selectOptAttrButton, optionalAttribute, selectedOptAttribute } =
-      this.props;
+    const {
+      selectOptAttrButton,
+      optionalAttribute,
+      selectedOptAttribute,
+      className,
+      classNameSelected,
+    } = this.props;
 
-    let OptAttributeBtnClass = "opt-attr-btn";
+    let OptAttributeBtnClass = className;
 
     if (selectedOptAttribute === optionalAttribute) {
-      OptAttributeBtnClass = "opt-attr-selected-btn";
+      OptAttributeBtnClass = classNameSelected;
     } else {
-      OptAttributeBtnClass = "opt-attr-btn";
+      OptAttributeBtnClass = className;
     }
     return (
       <button className={OptAttributeBtnClass} onClick={selectOptAttrButton}>
@@ -26,10 +31,14 @@ OptAttributeBtn.propTypes = {
   selectOptAttrButton: PropTypes.func,
   optionalAttribute: PropTypes.string,
   selectedOptAttribute: PropTypes.string,
+  className: PropTypes.string,
+  classNameSelected: PropTypes.string,
 };
 
 OptAttributeBtn.defaultProps = {
   selectOptAttrButton: () => {},
   optionalAttribute: "Yes",
   selectedOptAttribute: "Yes",
+  className: "opt-attr-btn",
+  classNameSelected: "opt-attr-selected-btn",
 };

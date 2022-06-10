@@ -1,6 +1,6 @@
 .left-arrow {
   position: absolute;
-  padding-left: 0%;
-  padding-top: 55%;
+  left: 65%;
+  top: 90%;
   z-index: 1;
 }

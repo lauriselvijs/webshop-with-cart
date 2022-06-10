@@ -21,10 +21,11 @@ export class ProductFilter extends PureComponent {
 
   static propTypes = {
     attributes: PropTypes.arrayOf(PropTypes.object),
-    navigate: PropTypes.func,
+    navigate: PropTypes.object,
     location: PropTypes.shape({
       search: PropTypes.string,
     }),
+    category: PropTypes.string,
   };
 
   componentDidMount() {
@@ -61,7 +62,7 @@ export class ProductFilter extends PureComponent {
           });
         } else {
           this.setState({
-            restAttributes: getRestAttributes(attributes)[0].name,
+            restAttributes: [getRestAttributes(attributes)[0].name],
           });
         }
       }
@@ -297,9 +298,9 @@ export class ProductFilter extends PureComponent {
       this.state;
     const { attributes } = this.props;
 
-    if (attributes !== prevProps.attributes) {
+    if (attributes.length !== prevProps.attributes.length) {
       this.setState({
-        restAttributes: getRestAttributes(attributes)[0].name,
+        restAttributes: [getRestAttributes(attributes)[0].name],
       });
     }
 

@@ -6,7 +6,7 @@ export default class ProductAttrName extends Component {
   render() {
     const { name, className } = this.props;
 
-    return <h4 className={className}>{name.toUpperCase()}:</h4>;
+    return <h4 className={className}>{name}:</h4>;
   }
 }
 
